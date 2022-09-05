@@ -1,0 +1,8 @@
+{
+  "short_name": "M&E",
+  "name": "Employee_webapp",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
