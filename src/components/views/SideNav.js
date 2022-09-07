@@ -15,7 +15,7 @@ export default function SideNav() {
   const Menus = [
     {title: "DASHBOARD", src:`${dashboard}`, link: '/dashboard'},
     {title: "ATTENDANCE", src:`${attendance}`, link: '/attendenceHistory'},
-    {title: "WORK SCHEDULE", src:`${workschedule}`, link: '/calendar'},
+    {title: "WORK SCHEDULE", src:`${workschedule}`, link: '/work'},
     {title: "TASKS", src:`${tasks}`, link: '/tasks'},
     {title: "PROFILE", src:`${profile}`, link: '/profile'},
     {title: "MEMBERS", src:`${members}`, link: '/members'},
@@ -41,7 +41,7 @@ export default function SideNav() {
                 <span className={`${!open && "hidden"} origin-left duration-200`}>
                   {Menu.title}
                 </span>
-                {[2, 3].includes(index) && (
+                {[2,3].includes(index) && (
                       <i
                         // className={`${
                         //   index === selectedIndex ? "rotate-180" : ""
