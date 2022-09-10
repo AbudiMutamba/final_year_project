@@ -8,6 +8,7 @@ import tasks from '../assets/pin-note-icon.png'
 import profile from '../assets/user-profile-icon.png'
 import members from '../assets/members-icon.png'
 import { NavLink } from 'react-router-dom'
+import { FaBeer } from 'react-icons/fa';
 import { MdKeyboardArrowDown } from 'react-icons/md'
 
 export default function SideNav() {
@@ -19,6 +20,7 @@ export default function SideNav() {
     {title: "TASKS", src:`${tasks}`, link: '/tasks'},
     {title: "PROFILE", src:`${profile}`, link: '/profile'},
     {title: "MEMBERS", src:`${members}`, link: '/members'},
+    {title: "Health Status", src: `${<FaBeer />}`, link: '/myhealth'},
 
   ]
   return (
@@ -41,7 +43,7 @@ export default function SideNav() {
                 <span className={`${!open && "hidden"} origin-left duration-200`}>
                   {Menu.title}
                 </span>
-                {[2,3].includes(index) && (
+                {[2,3,6].includes(index) && (
                       <i
                         // className={`${
                         //   index === selectedIndex ? "rotate-180" : ""

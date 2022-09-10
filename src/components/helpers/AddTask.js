@@ -6,7 +6,7 @@ import * as Yup from "yup";
 // import { useAuth } from "./hooks/useAuth";
 import { Loader } from "../helpers/Loader";
 import Alert from "../helpers/Alert";
-export default function AssignWork() {
+export default function AddTask() {
 	const [submitting, setSubmitting] = React.useState(false);
 	const [error, setError] = React.useState(false);
 	const [msg, setMsg] = React.useState("");
@@ -872,7 +872,7 @@ export default function AssignWork() {
                                             name="workon"
                                         />
                                     </div>
-                                    <div className="py-2">
+                                    {/* <div className="py-2">
                                         <label>Who will do the task?</label>
                                         <Field
                                             as="select"
@@ -883,34 +883,53 @@ export default function AssignWork() {
                                             <option value="David">David</option>
                                             <option value="Charles">Charles</option>
                                         </Field>
-                                    </div>
+                                    </div> */}
                                     <div className="py-2">
                                         <label>Description of task</label>
                                         <Field
                                             as="textarea"
                                             name="moredetials"
-                        className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline " />
+                                        className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline " />
                                     </div>
                                     <div className="py-2">
-                                        <label>Deadline day</label>
+                                        <label>Challenges</label>
+                                        <Field
+                                            as="textarea"
+                                            name="moredetials"
+                                            className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline " />
+                                    </div>
+                                    <div className="py-2">
+                                        <label>Started At</label>
                                         <Field
                                             as="select"
                                             name="priority"
-                        className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline dark:focus:bg-orange-600 dark:focus:border-orange-600">
-                                            <option value="">- Arrange -</option>
+                                            className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline dark:focus:bg-orange-600 dark:focus:border-orange-600">
+                                            <option value="">- Select time -</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                         </Field>
                                     </div>
                                     <div className="py-2">
-                                        <label>On what project?</label>
+                                        <label>Finished At</label>
+                                        <Field
+                                            as="select"
+                                            name="priority"
+                                            className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline dark:focus:bg-orange-600 dark:focus:border-orange-600">
+                                            <option value="">- Select time -</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </Field>
+                                    </div>
+                                    <div className="py-2">
+                                        <label>Worked with?</label>
                                         <Field
                                             as="select"
                                             name="project"
-                        className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline  dark:focus:bg-orange-600 dark:focus:border-orange-600">
+                                            className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline  dark:focus:bg-orange-600 dark:focus:border-orange-600">
                                             <option value="">
-                                                - Select Project -
+                                                - Select Member -
                                             </option>
                                             <option value="Tube App">
                                                 Tube App

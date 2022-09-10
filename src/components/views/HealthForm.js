@@ -6,7 +6,7 @@ import * as Yup from "yup";
 // import { useAuth } from "./hooks/useAuth";
 import { Loader } from "../helpers/Loader";
 import Alert from "../helpers/Alert";
-export default function AssignWork() {
+export default function HealthForm() {
 	const [submitting, setSubmitting] = React.useState(false);
 	const [error, setError] = React.useState(false);
 	const [msg, setMsg] = React.useState("");
@@ -83,8 +83,8 @@ export default function AssignWork() {
 					/>
 				)}
 			</header>
-			<main >
-				{/* <div className="p-8 rounded-xl bg-zinc-100 border">
+			<main className="py-10">
+				<div className="p-8 rounded-xl bg-zinc-100 border">
 					<h4 className="mb-5 text-x font-bold ">
 						Start by Checking in!
 					</h4>
@@ -830,105 +830,105 @@ export default function AssignWork() {
 							</Form>
 						)}
 					</Formik>
-				</div> */}
-				<div>
-                    <h1>Assign Work</h1>
-                        <ul>
-                            {activities.map((activity) => (
-                            <li key={activity.id}>
-                                    <div className="flex">
-                                        {activity.workon}
-                                        {activity.workwith}
-                                        {activity.priority}
-                                        {activity.project}
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                        <Formik
-                            initialValues={{
-                                workon:"",
-                                workwith: "",
-                                priority: "",
-                                project: "",
-                                moredetails:""
-                            }}
-                            onSubmit={(values, { setSubmitting }) => {
-                            // setTimeout(() => {
-                            //   alert(JSON.stringify(values, null, 2));
-                            //   setSubmitting(false);
-                            // }, 400);
-                            setActivities([...activities, values]);
-                            }}
-                            >
-                            {({ isSubmitting, isValid }) => (
-                                <Form>
-                                    <div className="py-2">
-                                        <label>Title of Task</label>
-                                        <Field
-                                            placeholder="title"
-                        className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline dark:focus:bg-orange-600 dark:focus:border-orange-600"
-                                            type="text"
-                                            name="workon"
-                                        />
-                                    </div>
-                                    <div className="py-2">
-                                        <label>Who will do the task?</label>
-                                        <Field
-                                            as="select"
-                                            name="workwith"
-                        className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline dark:focus:bg-orange-600 dark:focus:border-orange-600">
-                                            <option value="">- Select -</option>
-                                            <option value="John">John</option>
-                                            <option value="David">David</option>
-                                            <option value="Charles">Charles</option>
-                                        </Field>
-                                    </div>
-                                    <div className="py-2">
-                                        <label>Description of task</label>
-                                        <Field
-                                            as="textarea"
-                                            name="moredetials"
-                        className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline " />
-                                    </div>
-                                    <div className="py-2">
-                                        <label>Deadline day</label>
-                                        <Field
-                                            as="select"
-                                            name="priority"
-                        className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline dark:focus:bg-orange-600 dark:focus:border-orange-600">
-                                            <option value="">- Arrange -</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </Field>
-                                    </div>
-                                    <div className="py-2">
-                                        <label>On what project?</label>
-                                        <Field
-                                            as="select"
-                                            name="project"
-                        className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline  dark:focus:bg-orange-600 dark:focus:border-orange-600">
-                                            <option value="">
-                                                - Select Project -
-                                            </option>
-                                            <option value="Tube App">
-                                                Tube App
-                                            </option>
-                                            <option value="Ablestate Workspace">
-                                                Ablestate Workspace
-                                            </option>
-                                        </Field>
-                                    </div>
-                                    <button
-                                        type="submit"
-                                        className="px-4 py-1 transition hover:-translate-y-1 hover:bg-orange-600 duration-300 mx-auto max-w-md rounded-full border bg-emerald-300">
-                                        Assign
-                                    </button>
-                                </Form>
-                            )}
-                        </Formik>
 				</div>
+				{/* <div>
+          <h1>Assign Work</h1>
+          <ul>
+            {activities.map((activity) => (
+              <li key={activity.id}>
+                <div className="flex">
+                  {activity.workon}
+                  {activity.workwith}
+                  {activity.priority}
+                  {activity.project}
+                  </div>
+                  </li>
+            ))}
+          </ul>
+					<Formik
+						initialValues={{
+              workon:"",
+							workwith: "",
+							priority: "",
+							project: "",
+              moredetails:""
+						}}
+            onSubmit={(values, { setSubmitting }) => {
+              // setTimeout(() => {
+              //   alert(JSON.stringify(values, null, 2));
+              //   setSubmitting(false);
+              // }, 400);
+              setActivities([...activities, values]);
+            }}
+            >
+						{({ isSubmitting, isValid }) => (
+							<Form>
+								<div className="py-2">
+									<label>Title of Task</label>
+									<Field
+										placeholder="title"
+                    className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline dark:focus:bg-orange-600 dark:focus:border-orange-600"
+										type="text"
+										name="workon"
+									/>
+								</div>
+								<div className="py-2">
+									<label>Who will do the task?</label>
+									<Field
+										as="select"
+										name="workwith"
+                    className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline dark:focus:bg-orange-600 dark:focus:border-orange-600">
+										<option value="">- Select -</option>
+										<option value="John">John</option>
+										<option value="David">David</option>
+										<option value="Charles">Charles</option>
+									</Field>
+								</div>
+								<div className="py-2">
+									<label>Description of task</label>
+									<Field
+										as="textarea"
+										name="moredetials"
+                    className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline " />
+								</div>
+								<div className="py-2">
+									<label>Deadline day</label>
+									<Field
+										as="select"
+										name="priority"
+                    className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline dark:focus:bg-orange-600 dark:focus:border-orange-600">
+										<option value="">- Arrange -</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+									</Field>
+								</div>
+								<div className="py-2">
+									<label>On what project?</label>
+									<Field
+										as="select"
+										name="project"
+                    className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline  dark:focus:bg-orange-600 dark:focus:border-orange-600">
+										<option value="">
+											- Select Project -
+										</option>
+										<option value="Tube App">
+											Tube App
+										</option>
+										<option value="Ablestate Workspace">
+											Ablestate Workspace
+										</option>
+									</Field>
+								</div>
+								<button
+									type="submit"
+									className="px-4 py-1 transition hover:-translate-y-1 hover:bg-orange-600 duration-300 mx-auto max-w-md rounded-full border bg-emerald-300">
+									Assign
+								</button>
+							</Form>
+						)}
+					</Formik>
+				</div> */}
 			</main>
 		</section>
 	);

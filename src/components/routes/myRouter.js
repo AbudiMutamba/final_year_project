@@ -6,6 +6,9 @@ import MyCalendar from '../views/MyCalendar'
 import AttendenceHistory from '../views/AttendenceHistory';
 // import TopNav from '../views/TopNav';
 import AssignWork from '../helpers/AssignWork';
+import Profile from '../views/Profile';
+import HealthForm from '../views/HealthForm'
+import AddTask from '../helpers/AddTask';
 import { 
     BrowserRouter as Router, Routes, Route
 } from 'react-router-dom'
@@ -25,6 +28,9 @@ export default function myRouter() {
               <Route path="/attendencehistory" element={<AttendenceHistory/>} />
               <Route path="/calendar" element={<MyCalendar/>} />
               <Route path="/work" element={<AssignWork/>} />
+              <Route path="/profile" element={<Profile/>} />
+              <Route path="/myhealth" element={<HealthForm/>} />    
+              <Route path="/tasks" element={<AddTask/>} />    
           </Route>
         </Routes>
    </Router>
