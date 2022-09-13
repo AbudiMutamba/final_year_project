@@ -1,33 +1,18 @@
 import React, {useState} from 'react'
-import logo from '../assets/logo.png'
 import control from '../assets/control.png'
-import dashboard from '../assets/homepage-icon.png'
-import attendance from '../assets/timer-icon.png'
-import workschedule from '../assets/work-schedule-icon.png'
-import tasks from '../assets/pin-note-icon.png'
-import profile from '../assets/user-profile-icon.png'
-import members from '../assets/members-icon.png'
 import { NavLink } from 'react-router-dom'
-import { FaBeer } from 'react-icons/fa';
 import { MdKeyboardArrowDown } from 'react-icons/md'
+import { Menus } from '../../helpers/menudata'
+import logo from '../assets/logo.png'
 
-export default function SideNav() {
-  const [open, setOpen] = useState(false)
-  const Menus = [
-    {title: "DASHBOARD", src:`${dashboard}`, link: '/dashboard'},
-    {title: "ATTENDANCE", src:`${attendance}`, link: '/attendenceHistory'},
-    {title: "WORK SCHEDULE", src:`${workschedule}`, link: '/work'},
-    {title: "TASKS", src:`${tasks}`, link: '/tasks'},
-    {title: "PROFILE", src:`${profile}`, link: '/profile'},
-    {title: "MEMBERS", src:`${members}`, link: '/members'},
-    {title: "Health Status", src: `${<FaBeer />}`, link: '/myhealth'},
-
-  ]
+export default function SideNav({open , setOpen}) {
+  const [selectedIndex, setSelectedIndex] = useState(null)
+  
   return (
-    <div className='flex'>
+    <div className='flex fixed bottom-0 left-0'>
         <div className={`${open ? 'w-72' : 'w-20'} duration-300 p-5 pt-8 w-72 h-screen bg-zinc-100 relative`}>
 
-          <img src={control} alt='control'className={`absolute rounded-full cursor-pointer -right-3 top-9 w-7 border-2 border-orange-600 ${!open && "rotate-180"}`} onClick={() => setOpen(!open)}></img>
+          <img src={control} alt='control'className={`absolute rounded-full cursor-pointer -right-3 top-16 w-7 border-2 border-orange-600 ${!open && "rotate-180"}`} onClick={() => setOpen(!open)}></img>
 
           <div className= 'flex gap-x-4 items-center' >
             <img src={logo} alt='logo' width="64" height="64" className='{`cursor-pointer duration-500 `}'></img>
@@ -35,25 +20,39 @@ export default function SideNav() {
           </div>
           <ul className='pt-8'>
             {Menus.map((Menu,index)=> (
-              <NavLink to={`${Menu.link}`} 
-              activeClassName={`bg-red-600`} 
-              key={index} className={`flex rounded-md p-2 cursor-pointer hover:bg-orange-600 text-sm items-center gap-x-4 ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"}`} >
-                <img src={Menu.src} alt="dash" width="20" height="30" />
-              <div className='flex justify-between items-center w-full'>
-                <span className={`${!open && "hidden"} origin-left duration-200`}>
-                  {Menu.title}
-                </span>
-                {[2,3,6].includes(index) && (
-                      <i
-                        // className={`${
-                        //   index === selectedIndex ? "rotate-180" : ""
-                        // } transition ease-in-out font-bold flex justify-center items-center`}
+              <>
+                <NavLink to={`${Menu.link}`} 
+                activeClassName={`bg-red-600`} 
+                key={index} className={`flex rounded-md p-2 cursor-pointer hover:bg-teal-400 hover:bg-opacity-40 text-sm items-center gap-x-4 ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"}`} >
+                  {/* <img src={Menu.src} alt="dash" width="20" height="30" /> */}
+                  <i>{Menu.src}</i>
+                <div className='flex justify-between items-center w-full'>
+                  <span className={`${!open && "hidden"} origin-left duration-200`}>
+                    {Menu.title}
+                  </span>
+                  {[2,3,6].includes(index) && (
+                        <i onClick={() => {
+                          selectedIndex === index ? setSelectedIndex(null) : setSelectedIndex(index)
+                        }}>
+                          <MdKeyboardArrowDown />
+                        </i>
+                  )}
+                </div>
+                </NavLink>
+                {selectedIndex === index &&
+                  <div className='bg-white rounded-lg'>
+                    {Menu.subLinks.map((item, index) =>
+                    <div className="py-1 px-3 cursor-pointer dark:text-secondary-text ">
+                      <NavLink to={`${item.link}`}
+                        className="px-2 py-1 rounded-lg"
                       >
-                        <MdKeyboardArrowDown />
-                      </i>
-                )}
-              </div>
-              </NavLink>
+                        {item.title}
+                      </NavLink>
+                    </div>)}
+                  </div>
+                }
+              </>
+              
             ))}
           </ul>
         </div>

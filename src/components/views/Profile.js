@@ -27,7 +27,7 @@ const [ profile, setProfile ] = useState({
 
   
   return (
-    <div className="mx-5 mt-2 h-[calc(100vh-70px)]">
+    <div className="mx-5 mt-2 h-[calc(100vh-70px)] px-10">
       <div className="flex flex-col justify-between pb-3 h-[60px]">
 
         <h1 className="mb-5 mt-2 font-bold uppercase text">

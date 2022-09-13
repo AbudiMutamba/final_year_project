@@ -22,6 +22,7 @@ const PrivateRoute = ({ allowedRoles }) => {
   const [roles, setRoles] = useState(null);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
+  const [open, setOpen] = useState(true)
 
   // useEffect(() => {
   //   // Getting information that is required in all components.
@@ -47,8 +48,8 @@ const PrivateRoute = ({ allowedRoles }) => {
           <div
             className={`h-[calc(100vh-68px)] overflow-hidden w-screen flex`}
           >
-            <SideNav />
-            <div className="flex-grow mx-5 mt-5 overflow-y-auto">
+            <SideNav open={open} setOpen={setOpen} />
+            <div className={`flex-grow mx-5 mt-5 overflow-y-auto ${open ? 'ml-72' : 'ml-20'}`}>
               <Outlet context={[]} />
             </div>
           </div>

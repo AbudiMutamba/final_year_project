@@ -68,7 +68,7 @@ export default function AssignWork() {
 	}
 
 	return (
-		<section>
+		<section className="px-10">
 			<header>
 				{error && msg && (
 					<Alert

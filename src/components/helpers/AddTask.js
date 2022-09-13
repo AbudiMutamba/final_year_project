@@ -68,7 +68,7 @@ export default function AddTask() {
 	}
 
 	return (
-		<section>
+		<section className="px-10">
 			<header>
 				{error && msg && (
 					<Alert

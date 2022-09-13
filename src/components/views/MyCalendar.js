@@ -47,7 +47,7 @@ export default function MyCalendar() {
   }
   return (
     
-    <div className=""> 
+    <div className="px-10"> 
       <h1>Calender</h1>
       <h2>Add New Event</h2>
       <input type="text" placeholder="Add Title" style={{ width: "20%", marginRight: "10px"}} value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title:e.target.value})} />
