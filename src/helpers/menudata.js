@@ -1,10 +1,5 @@
-import dashboard from '../components/assets/homepage-icon.png'
-import attendance from '../components/assets/timer-icon.png'
-import workschedule from '../components/assets/work-schedule-icon.png'
-import tasks from '../components/assets/pin-note-icon.png'
-import profile from '../components/assets/user-profile-icon.png'
-import members from '../components/assets/members-icon.png'
-import { FaBeer, FaTasks, FaUserFriends } from 'react-icons/fa';
+
+import { FaTasks, FaUserFriends } from 'react-icons/fa';
 import { ImHome } from 'react-icons/im'
 import { RiTimerLine } from 'react-icons/ri'
 import { TbCalendarTime } from 'react-icons/tb'
@@ -13,16 +8,16 @@ import { GiHealthNormal } from 'react-icons/gi'
 
 export const Menus = [
   {title: "DASHBOARD", src: <ImHome size={25} />, link: '/dashboard'},
-  {title: "ATTENDANCE", src:<RiTimerLine size={25} />, link: '/attendenceHistory'},
-  {title: "WORK SCHEDULE", src:<TbCalendarTime size={25} />, link: '/work', subLinks: [
-    {title: "calendar", link: 'calendar'},
-    {title: "Assign work", link: 'assign-work'},
-    {title: "Need based work", link: 'work'},
-    {title: "History", link: 'history'},
-    {title: "Work progress", link: 'progress'},
+  {title: "ATTENDENCE", src:<RiTimerLine size={25} />, link: '/attendence'},
+  {title: "WORK SCHEDULE", src:<TbCalendarTime size={25} />, link: '/calendar', subLinks: [
+    {title: "Calendar", link: '/calendar'},
+    {title: "Assign Task", link: '/assigntask'},
+    {title: "Need based Task", link: 'needbasedtask'},
+    {title: "Schedule History", link: 'schedulehistory'},
+    {title: "Task Progress", link: 'taskprogress'},
   ]},
-  {title: "TASKS", src:<FaTasks size={25} />, link: '/tasks', subLinks: [
-    {title: "My tasks", link: 'calendar'},
+  {title: "TASKS", src:<FaTasks size={25} />, link: '/mytasks', subLinks: [
+    {title: "My tasks", link: 'mytasks'},
     {title: "Add tasks", link: 'tasks'},
   ]},
   {title: "PROFILE", src:<BsPersonCircle size={25} />, link: '/profile'},

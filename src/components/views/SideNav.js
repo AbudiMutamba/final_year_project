@@ -23,7 +23,7 @@ export default function SideNav({open , setOpen}) {
               <>
                 <NavLink to={`${Menu.link}`} 
                 activeClassName={`bg-red-600`} 
-                key={index} className={`flex rounded-md p-2 cursor-pointer hover:bg-teal-400 hover:bg-opacity-40 text-sm items-center gap-x-4 ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"}`} >
+                key={index} className={`flex rounded-md p-2 cursor-pointer hover:bg-orange-600 text-sm items-center gap-x-4 ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"}`} >
                   {/* <img src={Menu.src} alt="dash" width="20" height="30" /> */}
                   <i>{Menu.src}</i>
                 <div className='flex justify-between items-center w-full'>
@@ -42,7 +42,7 @@ export default function SideNav({open , setOpen}) {
                 {selectedIndex === index &&
                   <div className='bg-white rounded-lg'>
                     {Menu.subLinks.map((item, index) =>
-                    <div className="py-1 px-3 cursor-pointer dark:text-secondary-text ">
+                    <div className="py-1 px-3 cursor-pointer dark:text-secondary-text hover:bg-orange-600">
                       <NavLink to={`${item.link}`}
                         className="px-2 py-1 rounded-lg"
                       >

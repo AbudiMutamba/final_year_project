@@ -27,7 +27,7 @@ const [ profile, setProfile ] = useState({
 
   
   return (
-    <div className="mx-5 mt-2 h-[calc(100vh-70px)] px-10">
+    <div className="mx-5 mt-2 h-[calc(100vh-70px)] px-10 ">
       <div className="flex flex-col justify-between pb-3 h-[60px]">
 
         <h1 className="mb-5 mt-2 font-bold uppercase text">
@@ -35,7 +35,7 @@ const [ profile, setProfile ] = useState({
         </h1>
       </div>
       <ToastContainer />
-      <div className="bg-white p-6 overflow-y-auto  md:h-[calc(100%-65px)] ">
+      <div className="rounded-xl bg-zinc-100 border p-6 overflow-y-auto  md:h-[calc(100%-65px)] ">
         {profile?.fullname ? (
           <>
             <h1 className="font-semibold mb-3">Profile Details</h1>
@@ -165,7 +165,7 @@ const [ profile, setProfile ] = useState({
               }}
             </Formik>
             {/* handleTermination */}
-            <Formik initialValues={{ password: "" }}>
+            {/* <Formik initialValues={{ password: "" }}>
               {({ values, errors, touched, handleChange, handleBlur }) => {
                 return (
                   <Form
@@ -210,7 +210,7 @@ const [ profile, setProfile ] = useState({
                   </Form>
                 );
               }}
-            </Formik>
+            </Formik> */}
           </>
         ) : (
           <div className="display flex justify-center">

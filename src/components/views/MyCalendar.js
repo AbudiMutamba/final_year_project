@@ -48,14 +48,19 @@ export default function MyCalendar() {
   return (
     
     <div className="px-10"> 
-      <h1>Calender</h1>
-      <h2>Add New Event</h2>
-      <input type="text" placeholder="Add Title" style={{ width: "20%", marginRight: "10px"}} value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title:e.target.value})} />
-      <DatePicker placeholderText="Start Date" style={{marginRight: "10px"}} selected={newEvent.start} onChange={(start) => setNewEvent({...newEvent, start})} />
-      <DatePicker placeholderText="End Date" style={{marginRight: "10px"}} selected={newEvent.end} onChange={(end) => setNewEvent({...newEvent, end})} />
-      <button style={{marginTop: "10px" }} onClick={handleAddEvent}> Add Event</button>
-  
-      <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: 500, margin: "50px" }} />
+      <h1 className='font-bold p-5'>CALENDAR</h1>
+      <div className='p-8 rounded-xl bg-zinc-100 border'>
+          
+          <h2 className='flex justify-center'>Add New Event</h2>
+          <div className='flex flex-row justify-center'>
+            <input type="text" placeholder="Add Title"  value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title:e.target.value})} />
+            <DatePicker placeholderText="Start Date"  selected={newEvent.start} onChange={(start) => setNewEvent({...newEvent, start})} />
+            <DatePicker placeholderText="End Date" selected={newEvent.end} onChange={(end) => setNewEvent({...newEvent, end})} />
+            <button className="px-4 py-1 transition hover:-translate-y-1 hover:bg-orange-600 duration-300 mx-auto max-w-md rounded-full border bg-emerald-300" onClick={handleAddEvent}> Add Event</button>
+          </div>
+      
+          <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: 500, margin: "50px" }} />
+        </div>
     </div>
   )
 }

@@ -29,11 +29,13 @@ export default function TopNav() {
             {showMenu && 
               <ul className="bg-white absolute z-10 outline outline-1 outline-[#E4E6E5] top-[60px] right-0 py-2">
               <Link to="/profile">
-                <li className="w-full p-2 px-12 mb-1 hover:bg-[#ececec]">
+                <li className="w-full p-2 px-12 mb-1 hover:bg-orange-600
+">
                   Profile
                 </li>
               </Link>
-              <li className="w-full p-2 px-12 hover:bg-[#ececec]">
+              <li className="w-full p-2 px-12 hover:bg-orange-600
+">
                 <button
                   onClick={() => {
                   }}
