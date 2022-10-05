@@ -1,31 +1,75 @@
 
 import { FaTasks, FaUserFriends } from 'react-icons/fa';
 import { ImHome } from 'react-icons/im'
-import { RiTimerLine } from 'react-icons/ri'
+import { RiTimerLine, RiHealthBookFill, RiHealthBookLine } from 'react-icons/ri'
 import { TbCalendarTime } from 'react-icons/tb'
-import { BsPersonCircle } from 'react-icons/bs'
+import { BsPersonCircle, BsListTask} from 'react-icons/bs'
 import { GiHealthNormal } from 'react-icons/gi'
+import { MdAddTask } from 'react-icons/md';
 
-export const Menus = [
-  {title: "DASHBOARD", src: <ImHome size={25} />, link: '/dashboard'},
-  {title: "ATTENDENCE", src:<RiTimerLine size={25} />, link: '/attendence'},
-  {title: "WORK SCHEDULE", src:<TbCalendarTime size={25} />, link: '/calendar', subLinks: [
-    {title: "Calendar", link: '/calendar'},
-    {title: "Assign Task", link: '/assigntask'},
-    {title: "Need based Task", link: 'needbasedtask'},
-    {title: "Schedule History", link: 'schedulehistory'},
-    {title: "Task Progress", link: 'taskprogress'},
-  ]},
-  {title: "TASKS", src:<FaTasks size={25} />, link: '/mytasks', subLinks: [
-    {title: "My tasks", link: 'mytasks'},
-    {title: "Add tasks", link: 'tasks'},
-  ]},
-  {title: "PROFILE", src:<BsPersonCircle size={25} />, link: '/profile'},
-  {title: "MEMBERS", src:<FaUserFriends size={25} />, link: '/members'},
-  {title: "Health Status", src: <GiHealthNormal size={25} />, link: '/myhealth', subLinks: [
-    {title: "Health form", link: 'calendar'},
-    {title: "My status", link: 'tasks'},
-  ]},
+export const Menus = {
+  
+  member : [
+    {title: "DASHBOARD", src: <ImHome size={25} />, link: '/dashboard'},
+    {title: "ATTENDENCE", src:<RiTimerLine size={25} />, link: '/attendence'},
+    {title: "WORK SCHEDULE", src:<TbCalendarTime size={25} />, link: '/schedule'},
+  
+    {title: "TASKS", src:<FaTasks size={25} />, link: '/mytasks', subLinks: [
+      {title: "MY TASKS", src:<BsListTask size={25}/>, link: '/mytasks'},
+      {title: "ADD TASKS", src:<MdAddTask size={25}/>, link: '/tasks'},
+    ]},
+    {title: "PROFILE", src:<BsPersonCircle size={25} />, link: '/profile'},
+    {title: "HEALTH FORM", src: <GiHealthNormal size={25} />, link: '/healthform', subLinks: [
+      {title: "HEALTH FORM", src:<RiHealthBookFill size={25}/>, link: '/healthform'},
+      {title: "MY STATUS", src:<RiHealthBookLine size={25}/>, link: '/mystatus'},
+    ]},
+  ],
 
-]
+  admin : [
+    {title: "DASHBOARD", src: <ImHome size={25} />, link: '/dashboard'},
+    {title: "ATTENDENCE", src:<RiTimerLine size={25} />, link: '/allattendence'},
+    {title: "WORK SCHEDULE", src:<TbCalendarTime size={25} />, link: '/assigntask', subLinks: [
+      // {title: "CALENDER", link: '/calendar'},
+      {title: "ASSIGN TASK", link: '/assigntask'},
+      {title: "NEED BASED TASK", link: '/needbasedtask'},
+      {title: "SCHEDULE HISTORY", link: '/schedulehistory'},
+      {title: "TASK PROGRESS", link: '/taskprogress'},
+    ]},
+  
+    {title: "TASKS", src:<FaTasks size={25} />, link: '/verifytask', subLinks: [
+      {title: "VERIFY TASK", link: '/verifytask'},
+      {title: "VERIFIED TASKS", link: '/verifiedtasks'},
+    ]},
+    {title: "PROFILE", src:<BsPersonCircle size={25} />, link: '/profile'},
+    {title: "MEMBERS", src:<FaUserFriends size={25} />, link: '/members'},
+    {title: "HEALTH STATUS", src: <GiHealthNormal size={25} />, link: '/allhealthstatus'},
+  ],
+
+  super_admin: [
+    {title: "DASHBOARD", src: <ImHome size={25} />, link: '/dashboard'},
+    {title: "ATTENDENCE", src:<RiTimerLine size={25} />, link: '/allattendence'},
+    {title: "WORK SCHEDULE", src:<TbCalendarTime size={25} />, link: '/assigntask', subLinks: [
+      // {title: "CALENDER", link: '/calendar'},
+      {title: "ASSIGN TASK", link: '/assigntask'},
+      {title: "NEED BASED TASK", link: '/needbasedtask'},
+      {title: "SCHEDULE HISTORY", link: '/schedulehistory'},
+      {title: "TASK PROGRESS", link: '/taskprogress'},
+    ]},
+  
+    {title: "TASKS", src:<FaTasks size={25} />, link: '/mytasks', subLinks: [
+      {title: "MY TASKS", link: '/mytasks'},
+      {title: "ADD TASKS", link: '/tasks'},
+      {title: "VERIFY TASK", link: '/verifytask'},
+      {title: "VERIFIED TASKS", link: '/verifiedtasks'},
+    ]},
+    {title: "PROFILE", src:<BsPersonCircle size={25} />, link: '/profile'},
+    {title: "MEMBERS", src:<FaUserFriends size={25} />, link: '/members'},
+    {title: "HEALTH STATUS", src: <GiHealthNormal size={25} />, link: '/healthform', subLinks: [
+      {title: "HEALTH FORM", link: '/healthform'},
+      {title: "MY STATUS", link: '/mystatus'},
+      {title: "OVERALL STATUS", link: '/allhealthstatus'}
+    ]},
+  ],
+
+}
 

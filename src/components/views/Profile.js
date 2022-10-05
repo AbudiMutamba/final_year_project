@@ -1,42 +1,48 @@
+import React from "react";
 import { FaRegEdit } from "react-icons/fa";
-// import { ConfirmModal } from "../components";
+import  ConfirmModal  from "../modals/ConfirmModal";
+import { supabase } from "../helpers/supabase";
 import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { toast, ToastContainer } from "react-toastify";
+import { useAuth } from "../auth/AuthContext";
+import Spinner from "../loader/Spinner";
 
 function Profile() {
 
 
-//   const [ popUp, setPopUp ] = useState(false);
+  const [ popUp, setPopUp ] = useState(false);
   const [ editPop, setEditPop ] = useState(false);
-//   const { 1: profile } = useOutletContext();
-const [ profile, setProfile ] = useState({
-    fullname: "Mutamba Abudi",
-    roles: [
-        "member"
-    ],
-    phone_number: "0706929732",
-    email_address:"Mutambaabudi@gmail.com",
-    member_status:"active",
-    marital_status:"single",
-    position_in_startup:"Employee",
+  const { 1: profile } = useOutletContext();
+  console.log(profile);
+  const { id } = supabase.auth.user();
+  const { signOut } = useAuth();
+//   const [ profile, setProfile ] = useState({
+//     fullname: "",
+//     roles: [
+//         ""
+//     ],
+//     phone_number: "",
+//     email_address:"",
+//     member_status:"",
+//     marital_status:"",
+//     position_in_startup:"",
 
 
-})
+// })
 
-  
+
   return (
     <div className="mx-5 mt-2 h-[calc(100vh-70px)] px-10 ">
       <div className="flex flex-col justify-between pb-3 h-[60px]">
-
         <h1 className="mb-5 mt-2 font-bold uppercase text">
           Profile
         </h1>
       </div>
       <ToastContainer />
       <div className="rounded-xl bg-zinc-100 border p-6 overflow-y-auto  md:h-[calc(100%-65px)] ">
-        {profile?.fullname ? (
+        {profile?.username ? (
           <>
             <h1 className="font-semibold mb-3">Profile Details</h1>
             <div className="flex justify-between items-start mb-5">
@@ -47,9 +53,9 @@ const [ profile, setProfile ] = useState({
                 ></div>
               ) : (
                 <span className="h-16 w-16 bg-accent dark:bg-dark-bg-600 rounded-full flex justify-center font-bold items-center overflow-hidden">
-                  {profile?.fullname !== undefined &&
-                    profile.fullname !== null &&
-                    ` ${profile?.fullname.split("")[0]}`}
+                  {profile?.username !== undefined &&
+                    profile.username !== null &&
+                    ` ${profile?.username.split("")[0]}`}
                 </span>
               )}
               <i
@@ -157,7 +163,7 @@ const [ profile, setProfile ] = useState({
                       <input
                         type="submit"
                         value="Save"
-                        className="bg-primary px-3 py-1 outline outline-1 outline-primary rounded-md text-white cursor-pointer"
+                        className="bg-emerald-300 px-4 py-1 outline-1 outline-primary rounded-full hover:bg-orange-600 cursor-pointer"
                       />
                     </div>
                   </Form>
@@ -165,7 +171,7 @@ const [ profile, setProfile ] = useState({
               }}
             </Formik>
             {/* handleTermination */}
-            {/* <Formik initialValues={{ password: "" }}>
+            <Formik initialValues={{ password: "" }}>
               {({ values, errors, touched, handleChange, handleBlur }) => {
                 return (
                   <Form
@@ -210,11 +216,11 @@ const [ profile, setProfile ] = useState({
                   </Form>
                 );
               }}
-            </Formik> */}
+            </Formik>
           </>
         ) : (
           <div className="display flex justify-center">
-            {/* <Spinner /> */}
+            <Spinner />
           </div>
         )}
       </div>

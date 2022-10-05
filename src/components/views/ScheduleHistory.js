@@ -1,24 +1,36 @@
-import React, {useState} from 'react'
-
+import React, {useEffect, useState} from 'react'
+import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import Table from '../helpers/Table'
+import { supabase } from '../helpers/supabase'
 
 
 export default function ScheduleHistory() {
     const [rowdata, setRowData] = useState([]);
-    const [Checkin, setCheckIn] = useState([]);
+    // const [profile] = useOutletContext();
+    const location = useLocation();
+    const navigate = useNavigate();
 
-    const edit_button = () => {
-        let my_date = new Date();
-        console.log(my_date)
+    useEffect( () =>{
+        let getData = async () => {
+            let { data, error } = await supabase.from('assign_task').select('id, createdat, title, deadline')
+            setRowData (data)
+        }
+        getData()
+    },[])
 
-        // setRowData(
-        // rowdata.concat({ date: "", name:"", checkin:"", checkout:"", duration:"", location:""})
-        // )
+
+    const handleEdit = (value) => {
+        console.log(value)
+        const from = location.state?.from?.pathname || `/edittask/${value}`;
+        navigate(from, { replace: true });
+    }
+    const handleDelete = () => {
+        
     }
     const columns = [
         {
             Header: "Date",
-            accessor: "date",
+            accessor: "createdat",
         },
         {
             Header: "Name",
@@ -29,20 +41,18 @@ export default function ScheduleHistory() {
             accessor: "title",
         },
         {
-            Header: "type",
-            accessor: "type",
-        },
-        {
-            Header: "Deadline Day",
+            Header: "Deadline",
             accessor: "deadline",
         },
         {
-            Header: "Assigned by",
-            accessor: "assigned_by",
+            Header: "Edit",
+            accessor: "id",
+            Cell: ({value}) => <button onClick={() => handleEdit(value)} className="text-black" >Edit</button>
         },
         {
-            Header: "Edit/Delete",
-            accessor: "Edit/Delete",
+            Header: "Delete",
+            accessor: "delete",
+            Cell: ({value}) => <button onClick={() => handleDelete(value)} className="text-black" >Delete</button>
         },
     ]
   return (
@@ -51,9 +61,7 @@ export default function ScheduleHistory() {
         <h1 className='font-bold p-5'>SCHEDULE HISTORY</h1>
 
             <div>
-                <div className='rounded-xl bg-zinc-100 border'>
                     <Table columns={columns} data={rowdata} />
-                </div>
             </div>
     </div>
   );

@@ -2,7 +2,8 @@ import React from 'react'
 
 import MyRouter from './routes/myRouter'
 
-export default function app() {
+
+export default function App() {
   return (
     <MyRouter/>
   )

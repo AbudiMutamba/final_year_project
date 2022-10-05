@@ -1,9 +1,13 @@
 import { MdOutlineNotificationImportant } from 'react-icons/md'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../auth/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function TopNav() {
   const [showMenu, setShowMenu] = useState(false)
+  const { user ,signOut } = useAuth()
+  const navigate = useNavigate()
 
   if (showMenu) {
     window.onclick = (event) => {
@@ -37,7 +41,10 @@ export default function TopNav() {
               <li className="w-full p-2 px-12 hover:bg-orange-600
 ">
                 <button
-                  onClick={() => {
+                  onClick={async () => {
+                    await signOut()
+                    navigate("/")
+                    // console.log(user)
                   }}
                 >
                   Logout

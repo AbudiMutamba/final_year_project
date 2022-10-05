@@ -50,7 +50,7 @@ export default function Members() {
   return (
     <div className="container  mx-auto px-10">
         
-        <h1 className='font-bold p-5'>SCHEDULE HISTORY</h1>
+        <h1 className='font-bold p-5'>MEMBERS LIST</h1>
 
             <div>
                 <div className='rounded-xl bg-zinc-100 border'>
@@ -60,3 +60,4 @@ export default function Members() {
     </div>
   );
 };
+

@@ -1,42 +1,114 @@
-import React, {useState} from 'react'
-
+import React, {useEffect, useState} from 'react'
 import Table from '../helpers/Table'
+import { supabase } from '../helpers/supabase'
+import { useOutletContext } from 'react-router-dom'
+import useGeoLocation from '../helpers/useGeoLocation'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import moment from 'moment'
+// import Moment from 'react-moment';
 
-// import useGeoLocation from '../helpers/useGeoLocation'
+
 
 export default function Attendence() {
     const [rowdata, setRowData] = useState([])
-    const [checkin, setCheckIn] = useState([])
-    // const location = useGeoLocation();
-    const onCheckInClick = () => {
-        let my_date = new Date();
+    // const [show, setShow] = useState(true)
+    const [ profile] = useOutletContext();
+    const [max_date_attendence, setMax_date_attendence] = useState({})
+    const location = useGeoLocation()
+    const currentDateTime = moment().format();
+    
+    useEffect ( () => {
+        let getData = async () => {
+            let { data, error } = await supabase.from('attendence').select('*').eq('user_id', profile.id)
+            if(error) throw error
+            let max_date_attendence = data[0]
+            data.forEach((attendence) => {
+                if (new Date(attendence.checkin) > new Date(max_date_attendence.checkin)) {
+                    max_date_attendence = attendence
+                }
+            })
+            setMax_date_attendence(max_date_attendence)
+            // console.log(console.log(max_date_attendence))
+            
+                // if (max_date_attendence.checkout === null) {
+                //   setShow(false);
+                //   alert("true")
+                // } else 
+                // if (max_date_attendence.checkout === currentDateTime) {
+                //   setShow(true)
+                //   alert('false')
+                // }
+              
+            setRowData (data)
+             
+        }
+        getData().catch(error => console.log(error))
+        
+    },[]) 
 
 
-        //  setRowData(
 
-        // rowdata.concat({ date:"mydate", name:"", checkin:"", checkout:"", duration:"", location:""})
-        // )
-        console.log(my_date)
-        // location.loaded ? JSON.stringify(location): "Location data not available yet"
-    }
+    const onCheckInClick =  async () => {
+        // console.log(location.coordinates)
+        // const {data, error} = await supabase
+        //     .from('attendence')
+        //     .insert ({
+        //         user_id: profile.id,
+        //         username: profile.username,
+        //         checkin: currentDateTime,
+        //         location: location.coordinates
+        //     })
+        //     .eq('id', profile.id)
+        //     .single()
+        //     if (error){
+        //         toast.error(error.message, {
+        //             position: "top-center"
+        //            });
+        //     }else {
+        //         toast.success("Checked In", {
+        //         position: "top-center"
+        //        });
 
-    const onCheckOutClick = () => {
-        let my_date = new Date();
-        console.log(my_date)
+        //     setRowData(
+        //         [...rowdata], 
+        //         {
+        //         checkin: currentDateTime,
+        //     })
+        // }
+        
         // setRowData(
-
-        // rowdata.concat({ date: "", name:"", checkin:"", checkout:"", duration:"", location:""})
-        // )
+        //     [...rowdata],
+        //     { 
+        //         checkin:currentDateTime,
+        //         location: location.coordinates
+        //     })
+        // setShow(false)
     }
+
+              
+    const onCheckOutClick = async() => {
+        
+            const { data, error } = await supabase.rpc('update_duration', { attendence_id: max_date_attendence.id } )
+            console.log(data)
+            if (error){
+                toast.error(error.message, {
+                    position: "top-center"
+                });
+            }else {
+                toast.success("Checked out", {
+                position: "top-center"
+            });
+            setRowData(
+             [...rowdata],
+                {
+                    checkout: currentDateTime,
+                })
+            // setShow(true)
+        }
+    }
+
     const columns = [
-        // {
-        //     Header: "Date",
-        //     accessor: "date",
-        // },
-        {
-            Header: "Name",
-            accessor: "name",
-        },
         {
             Header: "Check in",
             accessor: "checkin",
@@ -49,27 +121,43 @@ export default function Attendence() {
             Header: "Duration",
             accessor: "duration",
         },
-        {
-            Header: "Location",
-            accessor: "location",
-        },
+
     ]
   return (
     <div className="container mx-auto px-10">
         
         <h1 className='font-bold p-5'>ATTENDENCE</h1>
-
+            < ToastContainer />
             <div className='p-8 rounded-xl bg-zinc-100 border'>
+        
                 <div className='flex justify-between my-5 '>
-                    <button onClick={onCheckInClick} className="bg-emerald-300 hover:bg-orange-600 py-2 px-5 rounded-full">
-                        Check In
+                    <button onClick={onCheckInClick}  className="bg-emerald-300 hover:bg-orange-600 py-2 px-4 rounded-full">
+                                    CheckIn
                     </button>
-                    <button onClick={onCheckOutClick} className="bg-emerald-300 hover:bg-orange-600 py-2 px-5 rounded-full">
-                        Check Out
+                    <button onClick={onCheckOutClick} className="bg-emerald-300 hover:bg-orange-600 py-2 px-4 rounded-full">
+                                    CheckOut
                     </button>
-                </div>
+                    {/* {
+                        show?<button onClick={onCheckInClick} className="bg-emerald-300 hover:bg-orange-600 py-2 px-5 rounded-full">
+                                CheckIn
+                        </button>: <button
+                        onClick={onCheckOutClick} className="bg-emerald-300 hover:bg-orange-600 py-2 px-5 rounded-full">
+                                CheckOut
+                        </button>
+                    }  */}
+                    {/* <div className='flex justify-start  my-5'>
+                        <button onClick={onCheckInClick} className="bg-emerald-300 hover:bg-orange-600 py-2 px-5 rounded-full">
+                                    CheckIn
+                        </button>
+                    </div>
+                    <div className='flex justify-start  my-5'>
+                        <button onClick={onCheckOutClick} className="bg-emerald-300 hover:bg-orange-600 py-2 px-5 rounded-full">
+                                    CheckOut
+                        </button>
+                    </div> */}
+                </div> 
                 <div>
-                    <Table columns={columns} data={rowdata} />
+                    <Table columns={columns} data={rowdata} defaultPageSize = {2}/>
                 </div>
             </div>
     </div>

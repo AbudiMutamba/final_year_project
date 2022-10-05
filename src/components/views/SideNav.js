@@ -1,13 +1,16 @@
-import React, {useState} from 'react'
+import React, {useState, Fragment} from 'react'
 import control from '../assets/control.png'
 import { NavLink } from 'react-router-dom'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { Menus } from '../../helpers/menudata'
 import logo from '../assets/logo.png'
 
-export default function SideNav({open , setOpen}) {
+export default function SideNav({user, open, setOpen}) {
+
+  const role = user.roles === "super_admin" ? "super_admin" :
+              user.roles === "admin" ? "admin" : "member"
   const [selectedIndex, setSelectedIndex] = useState(null)
-  
+
   return (
     <div className='flex fixed bottom-0 left-0'>
         <div className={`${open ? 'w-72' : 'w-20'} duration-300 p-5 pt-8 w-72 h-screen bg-zinc-100 relative`}>
@@ -19,18 +22,18 @@ export default function SideNav({open , setOpen}) {
             <h1 className={`origin-left font-medium text-xl duration-500 ${!open && "scale-0"}`}>M&E</h1>
           </div>
           <ul className='pt-8'>
-            {Menus.map((Menu,index)=> (
-              <>
-                <NavLink to={`${Menu.link}`} 
-                activeClassName={`bg-red-600`} 
-                key={index} className={`flex rounded-md p-2 cursor-pointer hover:bg-orange-600 text-sm items-center gap-x-4 ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"}`} >
-                  {/* <img src={Menu.src} alt="dash" width="20" height="30" /> */}
-                  <i>{Menu.src}</i>
-                <div className='flex justify-between items-center w-full'>
+            {Menus[`${role}`].map((Menu,index)=> (
+              <Fragment key={index}>
+                <NavLink  key={index} to={`${Menu.link}`} 
+                activeclassname={`bg-red-600`} 
+                 className={`flex rounded-md p-2 cursor-pointer hover:bg-orange-600 text-sm items-center gap-x-4 ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"}`} >
+                  <i key={index}>{Menu.src}</i>
+                  <div className='flex justify-between items-center w-full'>
+                    
                   <span className={`${!open && "hidden"} origin-left duration-200`}>
                     {Menu.title}
                   </span>
-                  {[2,3,6].includes(index) && (
+                  {[2,3,Menus[`${role}`].length-1].includes(index) && (
                         <i onClick={() => {
                           selectedIndex === index ? setSelectedIndex(null) : setSelectedIndex(index)
                         }}>
@@ -43,7 +46,7 @@ export default function SideNav({open , setOpen}) {
                   <div className='bg-white rounded-lg'>
                     {Menu.subLinks.map((item, index) =>
                     <div className="py-1 px-3 cursor-pointer dark:text-secondary-text hover:bg-orange-600">
-                      <NavLink to={`${item.link}`}
+                      <NavLink key={index} to={`${item.link}`}
                         className="px-2 py-1 rounded-lg"
                       >
                         {item.title}
@@ -51,7 +54,7 @@ export default function SideNav({open , setOpen}) {
                     </div>)}
                   </div>
                 }
-              </>
+              </Fragment>
               
             ))}
           </ul>

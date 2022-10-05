@@ -1,45 +1,38 @@
 
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
-// import * as Yup from "yup";
-// import supabase from "./helpers/supabase";
-// import { useAuth } from "./hooks/useAuth";
-// import { Loader } from "../helpers/Loader";
-// import Alert from "../helpers/Alert";
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { supabase } from "../helpers/supabase";
 import DatePicker from 'react-datepicker';
-import { useOutletContext } from 'react-router-dom'
+import { useOutletContext, useParams } from 'react-router-dom'
 
 
-export default function AssignWork() {
-	// const [submitting, setSubmitting] = React.useState(false);
-	// const [error, setError] = React.useState(false);
-	// const [msg, setMsg] = React.useState("");
-	// const { user } = useAuth();
+export default function EditTask() {
     const [activities,setActivities] = useState([]);
     const [ profile] = useOutletContext();
-    const [ names, setNames] = useState([])
+    const [ names, setNames] = useState({})
+    const {id} = useParams();
 
 	useEffect( () => {
         let getUser = async () => {
-            let { data, error } = await supabase.from('profiles').select('username, id').eq('roles', 'member')
+            let { data, error } = await supabase.from('assign_task').select('*').eq('id', id).single()
             // console.log("data is", data)
-             if(error) throw error
+            //  if(error) throw error
              setNames(data)
         }
         getUser()
-	}, []);
+	}, [names]);
+
     
 
 	const handleSubmit = async (values, { resetForm }) => {
 
         const {data, error} = await supabase
             .from('assign_task')
-            .insert ({
+            .update ({
                 // user_id: names.id,
-                title: values.workon,
+                title: values.title,
                 assignedPerson: values.workwith,
                 description: values.moredetails,
                 deadline: values.date,
@@ -61,27 +54,14 @@ export default function AssignWork() {
 
 	return (
 		<section className="px-10">
-			{/* <header>
-				{error && msg && (
-					<Alert
-						className="bg-red-100 border border-red-700 text-red-700 rounded-md p-2"
-						msg={msg}
-					/>
-				)}
-				{!error && msg && (
-					<Alert
-						className="bg-green-100 border border-green-700 text-green-700 rounded-md p-2"
-						msg={msg}
-					/>
-				)}
-			</header> */}
+			
 			<main >
 			        <div >
                     < ToastContainer />
-					<h1 className='font-bold p-5'> Assign Task</h1>
+					<h1 className='font-bold p-5'> Edit Task</h1>
                         <Formik
                             initialValues={{
-                                workon:"",
+                                title: "",
                                 workwith: "",
                                 date: "",
                                 // project: "",
@@ -89,7 +69,7 @@ export default function AssignWork() {
                             }}
                             onSubmit={ handleSubmit}
                             >
-                            {({ isSubmitting, isValid, values, setFieldValue}) => (
+                            {({ isSubmitting, isValid, values, setFieldValue,  handleChange}) => (
                                 <Form className="p-8 rounded-xl bg-zinc-100 border">
                                     <div className="py-2">
                                         <label>Title of Task</label>
@@ -97,19 +77,23 @@ export default function AssignWork() {
                                             placeholder="title"
                                             className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline "
                                             type="text"
-                                            name="workon"
+                                            name="title"
+                                            onChange={handleChange("title")}
+                                            defaultValue={names.title}
                                         />
+                                        
                                     </div>
                                     <div className="py-2">
                                         <label>Who will do the task?</label>
                                         <Field
                                             as="select"
                                             name="workwith"
-                                            className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline ">
-                                            <option>- Select -</option>
-                                            {names && names.map((name, index) => 
+                                            className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"
+                                            defaultValue={names.assignedPerson}>
+                                            <option >- Select -</option>
+                                            {/* {names && names.map((name, index) => 
                                                 <option value={name.id}>{name.username}</option>
-                                            )}
+                                            )} */}
                                             
                                         </Field>
                                     </div>
@@ -118,39 +102,23 @@ export default function AssignWork() {
                                         <Field
                                             as="textarea"
                                             name="moredetails"
-                                            className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline " />
+                                            className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline " 
+                                            defaultValue={names.description}/>
                                     </div>
                                     <div className="py-2">
                                         <label>Deadline</label>
-                                        <DatePicker placeholderText="Select Date" name="date" selected={values.date } onChange={(date) => setFieldValue("date",date)}  className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"/>
-    
+                                        <DatePicker placeholderText="Select Date" name="date" selected={values.date } onChange={(date) => setFieldValue("date",date)}  className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"
+                                        defaultValue={names.deadline}/>
+                                        
                                     </div>
-                                    {/* <div className="py-2">
-                                        <label>On what project?</label>
-                                        <Field
-                                            as="select"
-                                            name="project"
-                                            className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline  ">
-                                            <option value="">
-                                                - Select Project -
-                                            </option>
-                                            <option value="Tube App">
-                                                Tube App
-                                            </option>
-                                            <option value="Ablestate Workspace">
-                                                Ablestate Workspace
-                                            </option>
-                                        </Field>
-                                    </div> */}
                                     <button
                                         type="submit"
                                         className="py-2 px-5 transition hover:-translate-y-1 hover:bg-orange-600 duration-300 mx-auto max-w-md rounded-full border bg-emerald-300">
-                                        Assign
+                                        Save
                                     </button>
                                 </Form>
                             )}
                         </Formik>
-
 				</div>
                 
 			</main>
