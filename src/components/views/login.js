@@ -2,14 +2,13 @@
 import  React,{ useEffect, useState} from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useLocation, useNavigate, Navigate, useOutletContext, Link} from "react-router-dom";
+import { useLocation, useNavigate, Navigate, Link} from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import { supabase } from "../helpers/supabase";
 import Logo from "../assets/logo1.png";
 
 
 export default function Login() {
-  const { user, setUser, signIn, signUp} = useAuth() 
+  const { user, setUser, signIn,} = useAuth() 
   const [errorMsg, setErrorMsg] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
