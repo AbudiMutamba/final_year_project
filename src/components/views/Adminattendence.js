@@ -30,7 +30,6 @@ export default function Adminattendence() {
             // .from('attendence')
             // .select('location')
             // .match()
-      
     }
     
 

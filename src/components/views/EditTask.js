@@ -9,10 +9,10 @@ import { useOutletContext, useParams } from 'react-router-dom'
 
 
 export default function EditTask() {
-    const [activities,setActivities] = useState([]);
-    const [ profile] = useOutletContext();
+    const [ activities,setActivities ] = useState([]);
+    const [ profile ] = useOutletContext();
     const [ names, setNames] = useState({})
-    const {id} = useParams();
+    const { id } = useParams();
 
 	useEffect( () => {
         let getUser = async () => {
@@ -60,13 +60,13 @@ export default function EditTask() {
                     < ToastContainer />
 					<h1 className='font-bold p-5'> Edit Task</h1>
                         <Formik
-                            initialValues={{
-                                title: "",
-                                workwith: "",
-                                date: "",
-                                // project: "",
-                                moredetails:""
-                            }}
+                            // initialValues={{
+                            //     title: "",
+                            //     workwith: "",
+                            //     date: "",
+                            //     // project: "",
+                            //     moredetails:""
+                            // }}
                             onSubmit={ handleSubmit}
                             >
                             {({ isSubmitting, isValid, values, setFieldValue,  handleChange}) => (
@@ -79,7 +79,7 @@ export default function EditTask() {
                                             type="text"
                                             name="title"
                                             onChange={handleChange("title")}
-                                            defaultValue={names.title}
+                                            defaultValue= {names.title}
                                         />
                                         
                                     </div>
@@ -89,7 +89,8 @@ export default function EditTask() {
                                             as="select"
                                             name="workwith"
                                             className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"
-                                            defaultValue={names.assignedPerson}>
+                                            // defaultValue={names.assignedPerson}
+                                            >
                                             <option >- Select -</option>
                                             {/* {names && names.map((name, index) => 
                                                 <option value={name.id}>{name.username}</option>
@@ -103,12 +104,14 @@ export default function EditTask() {
                                             as="textarea"
                                             name="moredetails"
                                             className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline " 
-                                            defaultValue={names.description}/>
+                                            // defaultValue={names.description}
+                                            />
                                     </div>
                                     <div className="py-2">
                                         <label>Deadline</label>
                                         <DatePicker placeholderText="Select Date" name="date" selected={values.date } onChange={(date) => setFieldValue("date",date)}  className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"
-                                        defaultValue={names.deadline}/>
+                                        // defaultValue={names.deadline}
+                                        />
                                         
                                     </div>
                                     <button

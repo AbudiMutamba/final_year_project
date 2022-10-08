@@ -56,25 +56,12 @@ export default function AssignWork() {
            resetForm();
            setActivities([...activities, values]);
 		
-	};
-}
+	    };
+    }
 
 	return (
 		<section className="px-10">
-			{/* <header>
-				{error && msg && (
-					<Alert
-						className="bg-red-100 border border-red-700 text-red-700 rounded-md p-2"
-						msg={msg}
-					/>
-				)}
-				{!error && msg && (
-					<Alert
-						className="bg-green-100 border border-green-700 text-green-700 rounded-md p-2"
-						msg={msg}
-					/>
-				)}
-			</header> */}
+			
 			<main >
 			        <div >
                     < ToastContainer />
@@ -125,23 +112,7 @@ export default function AssignWork() {
                                         <DatePicker placeholderText="Select Date" name="date" selected={values.date } onChange={(date) => setFieldValue("date",date)}  className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"/>
     
                                     </div>
-                                    {/* <div className="py-2">
-                                        <label>On what project?</label>
-                                        <Field
-                                            as="select"
-                                            name="project"
-                                            className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline  ">
-                                            <option value="">
-                                                - Select Project -
-                                            </option>
-                                            <option value="Tube App">
-                                                Tube App
-                                            </option>
-                                            <option value="Ablestate Workspace">
-                                                Ablestate Workspace
-                                            </option>
-                                        </Field>
-                                    </div> */}
+                    
                                     <button
                                         type="submit"
                                         className="py-2 px-5 transition hover:-translate-y-1 hover:bg-orange-600 duration-300 mx-auto max-w-md rounded-full border bg-emerald-300">

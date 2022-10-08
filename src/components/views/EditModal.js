@@ -1,13 +1,13 @@
 import { Formik, Form } from "formik";
 import { supabase } from "../helpers/supabase";
-import { toBase64 } from "../helpers/toBase64";
-import { ConfirmModal } from "../components";
+import  {toBase64} from "../helpers/toBase64";
+import  ConfirmModal from "../modals/ConfirmModal";
 import { useOutletContext } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import Spinner from "./Loaders/Spinner";
+import Spinner from "../loader/Spinner";
 import * as Yup from "yup";
-import { InputField } from "./Form/CustomInputField";
+import { InputField } from "../helpers/CustomInputField";
 
 function EditModal({ setEditPop }) {
   const [user, profile, setProfile ]= useOutletContext();
@@ -15,7 +15,8 @@ function EditModal({ setEditPop }) {
     ...profile,
     password: "",
   };
-  const { id } = supabase.auth.user();
+  console.log(profile)
+  // const { id } = supabase.auth.user();
   const [loading, setLoading] = useState(false);
 
   return (
@@ -52,7 +53,7 @@ function EditModal({ setEditPop }) {
 
           setLoading(true);
           supabase
-            .rpc("check_password", { current_password: password, _user_id: id })
+            .rpc("check_password", { current_password: password, _user_id: profile.id })
             .then(async ({ data }) => {
               if (data) {
                 const { error, data } = await supabase
@@ -70,7 +71,7 @@ function EditModal({ setEditPop }) {
                     fathers_name: fathers_name,
                     avatar: avatar,
                   })
-                  .eq("id", id)
+                  .eq("id", profile.id)
                   .single();
 
                 if (error) {

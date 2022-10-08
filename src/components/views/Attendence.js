@@ -13,7 +13,7 @@ import moment from 'moment'
 export default function Attendence() {
     const [rowdata, setRowData] = useState([])
     // const [show, setShow] = useState(true)
-    const [ profile] = useOutletContext();
+    const [ user, profile] = useOutletContext();
     const [max_date_attendence, setMax_date_attendence] = useState({})
     const location = useGeoLocation()
     const currentDateTime = moment().format();
@@ -44,45 +44,45 @@ export default function Attendence() {
              
         }
         getData().catch(error => console.log(error))
-        
+        console.log(user)
     },[]) 
 
 
 
     const onCheckInClick =  async () => {
         // console.log(location.coordinates)
-        // const {data, error} = await supabase
-        //     .from('attendence')
-        //     .insert ({
-        //         user_id: profile.id,
-        //         username: profile.username,
-        //         checkin: currentDateTime,
-        //         location: location.coordinates
-        //     })
-        //     .eq('id', profile.id)
-        //     .single()
-        //     if (error){
-        //         toast.error(error.message, {
-        //             position: "top-center"
-        //            });
-        //     }else {
-        //         toast.success("Checked In", {
-        //         position: "top-center"
-        //        });
+        const {data, error} = await supabase
+            .from('attendence')
+            .insert ({
+                user_id: profile.id,
+                username: profile.username,
+                checkin: currentDateTime,
+                location: location.coordinates
+            })
+            .eq('id', profile.id)
+            .single()
+            if (error){
+                toast.error(error.message, {
+                    position: "top-center"
+                   });
+            }else {
+                toast.success("Checked In", {
+                position: "top-center"
+               });
 
-        //     setRowData(
-        //         [...rowdata], 
-        //         {
-        //         checkin: currentDateTime,
-        //     })
-        // }
+            setRowData(
+                [...rowdata], 
+                {
+                checkin: currentDateTime,
+            })
+        }
         
-        // setRowData(
-        //     [...rowdata],
-        //     { 
-        //         checkin:currentDateTime,
-        //         location: location.coordinates
-        //     })
+        setRowData(
+            [...rowdata],
+            { 
+                checkin:currentDateTime,
+                location: location.coordinates
+            })
         // setShow(false)
     }
 
@@ -128,9 +128,10 @@ export default function Attendence() {
         
         <h1 className='font-bold p-5'>ATTENDENCE</h1>
             < ToastContainer />
-            <div className='p-8 rounded-xl bg-zinc-100 border'>
+            {/* <div className='p-8 rounded-xl bg-zinc-100 border'> */}
         
-                <div className='flex justify-between my-5 '>
+                <div className='flex justify-between m-7'>
+                    
                     <button onClick={onCheckInClick}  className="bg-emerald-300 hover:bg-orange-600 py-2 px-4 rounded-full">
                                     CheckIn
                     </button>
@@ -159,7 +160,7 @@ export default function Attendence() {
                 <div>
                     <Table columns={columns} data={rowdata} defaultPageSize = {2}/>
                 </div>
-            </div>
+            {/* </div> */}
     </div>
   );
 };

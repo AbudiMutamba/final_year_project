@@ -3,7 +3,7 @@ import control from '../assets/control.png'
 import { NavLink } from 'react-router-dom'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { Menus } from '../../helpers/menudata'
-import logo from '../assets/logo.png'
+import logo from '../assets/logo1.png'
 
 export default function SideNav({user, open, setOpen}) {
 
@@ -19,13 +19,13 @@ export default function SideNav({user, open, setOpen}) {
 
           <div className= 'flex gap-x-4 items-center' >
             <img src={logo} alt='logo' width="64" height="64" className='{`cursor-pointer duration-500 `}'></img>
-            <h1 className={`origin-left font-medium text-xl duration-500 ${!open && "scale-0"}`}>M&E</h1>
+            <h1 className={`origin-left font-medium text-xl duration-500 ${!open && "scale-0"}`}>Mo-Work</h1>
           </div>
           <ul className='pt-8'>
             {Menus[`${role}`].map((Menu,index)=> (
               <Fragment key={index}>
                 <NavLink  key={index} to={`${Menu.link}`} 
-                activeclassname={`bg-red-600`} 
+                activeclassname={`bg-red-600`} onClick={() => setSelectedIndex(index)}
                  className={`flex rounded-md p-2 cursor-pointer hover:bg-orange-600 text-sm items-center gap-x-4 ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"}`} >
                   <i key={index}>{Menu.src}</i>
                   <div className='flex justify-between items-center w-full'>
@@ -42,7 +42,7 @@ export default function SideNav({user, open, setOpen}) {
                   )}
                 </div>
                 </NavLink>
-                {selectedIndex === index &&
+                {[2,3,Menus[`${role}`].length-1].includes(index) && selectedIndex === index &&
                   <div className='bg-white rounded-lg'>
                     {Menu.subLinks.map((item, index) =>
                     <div className="py-1 px-3 cursor-pointer dark:text-secondary-text hover:bg-orange-600">

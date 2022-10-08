@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     signUp: (data) => supabase.auth.signUp(data),
     signIn: async (data) => await supabase.auth.signInWithPassword(data),
+    Invite: async (data) => await supabase.auth.inviteUserByEmail(data.email),
     resetPassword: (data) => supabase.auth.resetPasswordForEmail(data,{redirectTo: "http://localhost:3000/password_reset"}),
     updatePassword: (data) => supabase.auth.updateUser(data),
     signOut: () => supabase.auth.signOut(),

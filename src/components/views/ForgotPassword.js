@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { supabase } from "../helpers/supabase";
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import Logo from "../assets/Logo.jpg";
+import Logo from "../assets/logo1.png";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';

@@ -1,20 +1,17 @@
 
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-// import supabase from "./helpers/supabase";
-// import { useAuth } from "./hooks/useAuth";
-import { Loader } from "../helpers/Loader";
-import Alert from "../helpers/Alert";
+import { supabase } from "../helpers/supabase";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useOutletContext } from 'react-router-dom';
+
 export default function HealthForm() {
-	const [submitting, setSubmitting] = React.useState(false);
-	const [error, setError] = React.useState(false);
-	const [msg, setMsg] = React.useState("");
-	// const { user } = useAuth();
-	// React.useEffect(() => {
-	// 	document.title = `${document.title} - Dashboard`;
-	// }, []);
-  const [activities,setActivities] = React.useState([]);
+	const [names, setNames] = useState([])
+	const [ profile] = useOutletContext();
+  	const [activities,setActivities] = useState([]);
+
 	const checkinSchema = Yup.object().shape({
 		backpain: Yup.string().required("Required"),
 		chestpain: Yup.string().required("Required"),
@@ -28,68 +25,62 @@ export default function HealthForm() {
 		sleepduration: Yup.number("Numbers only allowed").required("Required"),
 		morningexerciseduration: Yup.number("Numbers only allowed").required(
 			"Required"
-		),
-		intensityofexercise: Yup.string(),
-		breakfast: Yup.string().required("Required"),
-		breakfastdetails: Yup.string(),
+		)
 	});
+
+	useEffect ( () => {
+        let getData = async () => {
+            let { data, error } = await supabase.from('profiles').select('*').eq('id', profile.id).single()
+            // if(error) throw error
+			// console.log(data)
+            setNames(data)
+             
+        }
+        getData().catch(error => console.log(error))
+        
+    },[]) 
+
+
+
 	const handleSubmit = async (values, { resetForm }) => {
-		setSubmitting(true);
-		const date = new Date();
-		date.toLocaleString("en-Us", { timezone: "Africa/Kampala" });
-		values["checkin_at"] = date;
-
-		try {
-			// const { error } = await supabase
-			// 	.from("check_ins_out")
-			// 	.insert([{ meta: values, user_id: user.id }]);
-
-			if (error) {
-				console.log(error);
-				setSubmitting(false);
-				setError(true);
-				setMsg("Something went wrong!");
-			} else {
-				setSubmitting(false);
-				setError(false);
-				setMsg("Checked In Successfully");
-				// resetForm();
-			}
-		} catch (error) {
-			console.log(error);
-			setSubmitting(false);
-			setError(true);
-			setMsg("Something went wrong");
-		}
+		console.log(values)
+		const {data, error} = await supabase
+        .from('health_form')
+        .insert ({
+				user_id: names.id,
+                backpain: values.backpain,
+				chestpain: values.chestpain,
+				cough: values.cough,
+				fever: values.cough,
+				headache: values.headache,
+				sorethroat: values.sorethroat,
+				shortnessofbreath: values.shortnessofbreath,
+				sneezing: values.sneezing,
+				tiredness: values.tiredness,
+				sleepduration: values.sleepduration,
+				morningexerciseduration: values.morningexerciseduration,
+		})	
+        if (error){
+            toast.error(error.message, {
+            position: "top-center"
+        });
+        }else {
+            toast.success("Success", {
+            position: "top-center"
+        });
+           resetForm();
+           setActivities([...activities, values]);
+		
+	    };
 	};
-
-	if (submitting) {
-		return <Loader title="Checking in..." body="Please wait..." />;
-	}
 
 	return (
 		<section className="px-10">
-			<header>
-				{error && msg && (
-					<Alert
-						className="bg-red-100 border border-red-700 text-red-700 rounded-md p-2"
-						msg={msg}
-					/>
-				)}
-				{!error && msg && (
-					<Alert
-						className="bg-green-100 border border-green-700 text-green-700 rounded-md p-2"
-						msg={msg}
-					/>
-				)}
-			</header>
 			<main className="py-10">
 				<div className="p-8 rounded-xl bg-zinc-100 border">
-					<h4 className="mb-5 text-x font-bold ">
-						Start by Checking in!
-					</h4>
+				< ToastContainer />
 					<p className="text-sm teer-emerald-300 mb-5">
-						The information will collect helps discover ways of
+						The information we collect helps discover ways of
 						supporting teammates you and help you work effectively.{" "}
 						<br /> This information will not be shared with anyone.
 					</p>
@@ -106,9 +97,6 @@ export default function HealthForm() {
 							tiredness: "",
 							sleepduration: "",
 							morningexerciseduration: "",
-							intensityofexercise: "",
-							breakfast: "",
-							breakfastdetails: "",
 						}}
 						validationSchema={checkinSchema}
 						onSubmit={handleSubmit}>
@@ -145,7 +133,7 @@ export default function HealthForm() {
 												id="backpain_no"
 											/>
 											<label
-                        className="flex p-2 bg-gray-100 dark:bg-emerald-300 dark:border-emerald-300 border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-1 peer-checked:border-transparent dark:hover:bg-orange-600 dark:hover:border-orange-600"
+                        						className="flex p-2 bg-gray-100 dark:bg-emerald-300 dark:border-emerald-300 border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-1 peer-checked:border-transparent dark:hover:bg-orange-600 dark:hover:border-orange-600"
 												htmlFor="backpain_no">
 												No
 											</label>
@@ -162,7 +150,7 @@ export default function HealthForm() {
 												id="backpain_notsure"
 											/>
 											<label
-                        className="flex p-2 bg-gray-100 dark:bg-emerald-300 dark:border-emerald-300 border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-1 peer-checked:border-transparent dark:hover:bg-orange-600 dark:hover:border-orange-600"
+                       							 className="flex p-2 bg-gray-100 dark:bg-emerald-300 dark:border-emerald-300 border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-1 peer-checked:border-transparent dark:hover:bg-orange-600 dark:hover:border-orange-600"
 												htmlFor="backpain_notsure">
 												Not sure
 											</label>
@@ -687,7 +675,7 @@ export default function HealthForm() {
 									<label
 										className="mb-2 text-sm font-semibold block"
 										htmlFor="sleepduration">
-										How long did you sleep last night?
+										How long do you sleep?
 									</label>
 									<Field
                     className="outline-0 p-3 bg-gray-100  border border-gray-300 w-full rounded-lg"
@@ -706,8 +694,7 @@ export default function HealthForm() {
 									<label
 										className="block mb-2 text-sm font-semibold"
 										htmlFor="morningexerciseduration">
-										How long did you exercise in the
-										morning?
+										How long did you exercise?
 									</label>
 									<Field
                     className="outline-0 p-3 bg-gray-100 border border-gray-300 w-full rounded-lg"
@@ -721,104 +708,6 @@ export default function HealthForm() {
 												{errors.morningexerciseduration}
 											</p>
 										)}
-								</div>
-								<div className="py-2">
-									<label
-										className="block mb-2 text-sm font-semibold"
-										htmlFor="intensityofexercise">
-										How do you describe the intensity of the
-										excercise?
-									</label>
-									<Field
-                    className="p-3 bg-gray-100  border border-gray-300 w-full rounded-lg"
-										as="select"
-										name="intensityofexercise"
-										id="intensityofexercise">
-										<option value="">- Select -</option>
-										<option value="Moderate">
-											Moderate
-										</option>
-										<option value="Intense">Intense</option>
-										<option value="Not sure">
-											Not sure
-										</option>
-									</Field>
-								</div>
-								<div className="py-2">
-									<label className="mb-2 text-sm font-semibold block">
-										Did you have breakfast?
-									</label>
-									<div className="grid grid-cols-3 gap-x-5 ">
-										<div className="relative">
-											<Field
-												className="sr-only peer"
-												type="radio"
-												value="Yes"
-												name="breakfast"
-												id="breakfast_yes"
-											/>
-											<label
-                        className="flex p-2 bg-gray-100 dark:bg-emerald-300 dark:border-emerald-300 border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-1 peer-checked:border-transparent dark:hover:bg-orange-600 dark:hover:border-orange-600"
-												htmlFor="breakfast_yes">
-												Yes
-											</label>
-											<div className="absolute hidden w-5 h-2 peer-checked:block top-2 right-3">
-												👍
-											</div>
-										</div>
-										<div className="relative">
-											<Field
-												className="sr-only peer"
-												type="radio"
-												value="No"
-												name="breakfast"
-												id="breakfast_no"
-											/>
-											<label
-                        className="flex p-2 bg-gray-100 dark:bg-emerald-300 dark:border-emerald-300 border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-1 peer-checked:border-transparent dark:hover:bg-orange-600 dark:hover:border-orange-600"
-												htmlFor="breakfast_no">
-												No
-											</label>
-											<div className="absolute hidden w-5 h-2 peer-checked:block top-2 right-3">
-												👎
-											</div>
-										</div>
-										<div className="relative">
-											<Field
-												className="sr-only peer"
-												type="radio"
-												value="maybe"
-												name="breakfast"
-												id="breakfast_maybe"
-											/>
-											<label
-                        className="flex p-2 bg-gray-100 dark:bg-emerald-300 dark:border-emerald-300 border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-1 peer-checked:border-transparent dark:hover:bg-orange-600 dark:hover:border-orange-600"
-												htmlFor="breakfast_maybe">
-												Maybe
-											</label>
-											<div className="absolute hidden w-5 h-2 peer-checked:block top-2 right-3">
-												🤔
-											</div>
-										</div>
-									</div>
-									{errors.breakfast && touched.breakfast && (
-										<p className="text-red-500 text-xs italic">
-											{errors.breakfast}
-										</p>
-									)}
-								</div>
-								<div className="py-2">
-									<label
-										className="mb-2 text-sm font-semibold block"
-										htmlFor="breakfastdetails">
-										What did you eat for breakfast?
-									</label>
-									<Field
-                    className="p-3 outline-0 bg-gray-100 border border-gray-300 w-full rounded-lg"
-										as="textarea"
-										name="breakfastdetails"
-										id="breakfastdetails"
-									/>
 								</div>
 								<div className="pt-8">
 									<button

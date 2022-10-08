@@ -21,32 +21,31 @@ export default function AdminVerificationHistory() {
             Header: "Date",
             accessor: "date",
         },
-        {
-            Header: "Name",
-            accessor: "id",
-        },
+        // {
+        //     Header: "Name",
+        //     accessor: "id",
+        // },
         {
             Header: "Title",
             accessor: "title",
         },
         {
-            Header: "Edit",
+            Header: "Description",
             accessor: "edit",
         },
-        {
-            Header: "Delete",
-            accessor: "delete",
-        },
+        // {
+        //     Header: "Delete",
+        //     accessor: "delete",
+        // },
     ]
   return (
     <div className="container mx-auto px-10"> 
         <h1 className='font-bold p-5'>VERIFICATION HISTORY</h1>
             < ToastContainer />
-            <div className='p-8 rounded-xl bg-zinc-100 border'>
                 <div>
                     <Table columns={columns} data={rowdata} />
                 </div>
-            </div>
+
     </div>
   );
 };

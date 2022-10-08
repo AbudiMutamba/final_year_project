@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useEffect, useState} from 'react'
 import { useOutletContext } from "react-router-dom";
 import { Line } from "react-chartjs-2";
 import Chart from 'chart.js/auto';
@@ -6,6 +6,11 @@ import {CategoryScale} from 'chart.js';
 Chart.register(CategoryScale);
 
 export default function Dashboard() {
+  const [profile] = useOutletContext();
+   
+  useEffect(() => {
+	document.title = "M&E - Login"
+  },[]);
 
   const data = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],

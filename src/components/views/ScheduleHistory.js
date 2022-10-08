@@ -6,6 +6,7 @@ import { supabase } from '../helpers/supabase'
 
 export default function ScheduleHistory() {
     const [rowdata, setRowData] = useState([]);
+    const [del , setDel] = useState();
     // const [profile] = useOutletContext();
     const location = useLocation();
     const navigate = useNavigate();
@@ -20,12 +21,12 @@ export default function ScheduleHistory() {
 
 
     const handleEdit = (value) => {
-        console.log(value)
         const from = location.state?.from?.pathname || `/edittask/${value}`;
         navigate(from, { replace: true });
+        setDel(value)
     }
-    const handleDelete = () => {
-        
+    const handleDelete = (value) => {
+        console.log(del)
     }
     const columns = [
         {
@@ -45,15 +46,22 @@ export default function ScheduleHistory() {
             accessor: "deadline",
         },
         {
-            Header: "Edit",
-            accessor: "id",
-            Cell: ({value}) => <button onClick={() => handleEdit(value)} className="text-black" >Edit</button>
+            Header: "Edit", 
+            id: "id",
+            accessor: ({value}) => {
+                return(
+                        <div>
+                            <button onClick={() => handleEdit(value)} className="text-black" >Edit</button>
+                            <button onClick={() => handleDelete(value)} className="text-black" >Delete</button>
+                        </div>
+                )
+            }            
         },
-        {
-            Header: "Delete",
-            accessor: "delete",
-            Cell: ({value}) => <button onClick={() => handleDelete(value)} className="text-black" >Delete</button>
-        },
+        // {
+        //     Header: "Delete",
+        //     accessor: "delete",
+        //     Cell: ({value}) => <button onClick={() => handleDelete(value)} className="text-black" >Delete</button>
+        // },
     ]
   return (
     <div className="container  mx-auto px-10">

@@ -8,7 +8,7 @@ import { supabase } from "../helpers/supabase";
 import Logo from "../assets/logo1.png";
 
 
-export default function Login() {
+export default function SignUp() {
   const { user, setUser, signIn, signUp} = useAuth() 
   const [errorMsg, setErrorMsg] = useState(null);
   const location = useLocation();
@@ -19,8 +19,8 @@ export default function Login() {
 	// document.title = "M&E - Login"
   // },[]);
 
-  const loginSchema = Yup.object().shape({
-    // email: Yup.string().email('Invalid email address').required("email is required!"),
+  const signupSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email address').required("email is required!"),
     password: Yup.string().min(6, 'Password has to be longer than 6 characters!').required("Password is required!"),
   });
 
@@ -33,11 +33,11 @@ export default function Login() {
       <div className="p-10 md:bg-white md:border border-gray-300 md:rounded-md w-full md:w-1/3 items-center">
       <div className='flex justify-center'><img src={Logo} alt='logo' width="64" height="64" ></img></div>
         <Formik
-          initialValues={{ email: "", password: "" }}
-          validationSchema={loginSchema}
+          initialValues={{ email: "", password: "", role:"member" }}
+          validationSchema={signupSchema}
           onSubmit={async (values, {setSubmitting, resetForm}) => {
             
-            const { data, error } = await signIn(values);
+            const { data, error } = await signUp(values);
             if (error) { 
               setErrorMsg(error.message);
               // console.log(error)
@@ -94,14 +94,17 @@ export default function Login() {
                   className="px-4 py-1 transition bg-emerald-300 hover:-translate-y-1 hover:bg-orange-600 duration-300 w-full rounded-full border"
                   type="submit"
                 >
-                  Sign In
+                  SignUp
                 </button>
-                <Link to="/signup" className=" p-2 my-2 inline-block align-baseline font-semibold text-sm  hover:text-orange-600">
-						        SignUp
-					      </Link>
-                <Link to="/forgotpassword" className=" p-2 my-2 inline-block align-baseline font-semibold text-sm  hover:text-orange-600">
-						        ForgotPassword?
-					      </Link>
+                <div className="flex flex-row justify-center">
+                  <Link to="/" className=" p-2 my-2 inline-block align-baseline font-semibold text-sm  hover:text-orange-600">
+                      Login
+                  </Link>
+                  <Link to="/forgotpassword" className=" p-2 my-2 inline-block align-baseline font-semibold text-sm  hover:text-orange-600">
+                      ForgotPassword?
+                  </Link>
+                </div>
+                      
               </div>
             </Form>
           )}

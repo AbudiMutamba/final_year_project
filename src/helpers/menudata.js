@@ -12,16 +12,19 @@ export const Menus = {
   member : [
     {title: "DASHBOARD", src: <ImHome size={25} />, link: '/dashboard'},
     {title: "ATTENDENCE", src:<RiTimerLine size={25} />, link: '/attendence'},
-    {title: "WORK SCHEDULE", src:<TbCalendarTime size={25} />, link: '/schedule'},
+    {title: "WORK SCHEDULE", src:<TbCalendarTime size={25} />, link: '/schedule', subLinks:[
+      {title: "ASSIGNED TASKS", link:'/schedule'},
+      {title: "AUDIO TASK", link:'/audio'}
+    ]},
   
     {title: "TASKS", src:<FaTasks size={25} />, link: '/mytasks', subLinks: [
-      {title: "MY TASKS", src:<BsListTask size={25}/>, link: '/mytasks'},
-      {title: "ADD TASKS", src:<MdAddTask size={25}/>, link: '/tasks'},
+      {title: "MY TASKS", link: '/mytasks'},
+      {title: "ADD TASKS", link: '/tasks'},
     ]},
     {title: "PROFILE", src:<BsPersonCircle size={25} />, link: '/profile'},
-    {title: "HEALTH FORM", src: <GiHealthNormal size={25} />, link: '/healthform', subLinks: [
-      {title: "HEALTH FORM", src:<RiHealthBookFill size={25}/>, link: '/healthform'},
-      {title: "MY STATUS", src:<RiHealthBookLine size={25}/>, link: '/mystatus'},
+    {title: "HEALTH FORM",src: <GiHealthNormal size={25} />, link: '/healthform', subLinks: [
+      {title: "HEALTH FORM", link: '/healthform'},
+      {title: "MY STATUS", link: '/mystatus'},
     ]},
   ],
 
@@ -32,6 +35,7 @@ export const Menus = {
       // {title: "CALENDER", link: '/calendar'},
       {title: "ASSIGN TASK", link: '/assigntask'},
       {title: "NEED BASED TASK", link: '/needbasedtask'},
+      {title: "USE AUDIO", link: '/voicenote'},
       {title: "SCHEDULE HISTORY", link: '/schedulehistory'},
       {title: "TASK PROGRESS", link: '/taskprogress'},
     ]},

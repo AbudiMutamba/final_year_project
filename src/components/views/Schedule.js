@@ -19,13 +19,12 @@ export default function Schedule () {
         let getData = async () => {
             let { data, error } = await supabase.from('assign_task').select('id,createdat, title, deadline').eq('assignedPerson', profile.id)
             setRowData (data)
-            console.log(data);
         }
         getData()
     },[])  
    
 
-    const handleView =  async (value) => {
+    const handleVeiw =  async (value) => {
         // console.log(values)
         const from = location.state?.from?.pathname || `/veiw/${value}`;
         navigate(from, { replace: true });
@@ -63,7 +62,7 @@ export default function Schedule () {
         {
             Header: "Veiw",
             accessor: "id",
-            Cell: ({value}) => <button onClick={() => handleView(value)} className="text-black" >Veiw</button>
+            Cell: ({value}) => <button onClick={() => handleVeiw(value)} className="text-black" >Veiw</button>
             // Cell: ({value}) => (<button onClick={this.editRow({value})}>Edit</button>)
         },
         {
