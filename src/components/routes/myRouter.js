@@ -38,6 +38,7 @@ export default function myRouter() {
    <Router>
         <Routes>
             <Route path="/" element={<Login/>}/>
+            <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="*" element={<Missing />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
