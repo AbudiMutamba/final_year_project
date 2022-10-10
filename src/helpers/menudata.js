@@ -11,7 +11,7 @@ export const Menus = {
   
   member : [
     {title: "DASHBOARD", src: <ImHome size={25} />, link: '/dashboard'},
-    {title: "ATTENDENCE", src:<RiTimerLine size={25} />, link: '/attendence'},
+    {title: "ATTENDANCE", src:<RiTimerLine size={25} />, link: '/attendance'},
     {title: "WORK SCHEDULE", src:<TbCalendarTime size={25} />, link: '/schedule', subLinks:[
       {title: "ASSIGNED TASKS", link:'/schedule'},
       {title: "AUDIO TASK", link:'/audio'}
@@ -30,7 +30,7 @@ export const Menus = {
 
   admin : [
     {title: "DASHBOARD", src: <ImHome size={25} />, link: '/dashboard'},
-    {title: "ATTENDENCE", src:<RiTimerLine size={25} />, link: '/allattendence'},
+    {title: "ATTENDANCE", src:<RiTimerLine size={25} />, link: '/allattendance'},
     {title: "WORK SCHEDULE", src:<TbCalendarTime size={25} />, link: '/assigntask', subLinks: [
       // {title: "CALENDER", link: '/calendar'},
       {title: "ASSIGN TASK", link: '/assigntask'},
@@ -51,7 +51,7 @@ export const Menus = {
 
   super_admin: [
     {title: "DASHBOARD", src: <ImHome size={25} />, link: '/dashboard'},
-    {title: "ATTENDENCE", src:<RiTimerLine size={25} />, link: '/allattendence'},
+    {title: "ATTENDANCE", src:<RiTimerLine size={25} />, link: '/allattendance'},
     {title: "WORK SCHEDULE", src:<TbCalendarTime size={25} />, link: '/assigntask', subLinks: [
       // {title: "CALENDER", link: '/calendar'},
       {title: "ASSIGN TASK", link: '/assigntask'},

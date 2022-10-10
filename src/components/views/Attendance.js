@@ -10,7 +10,7 @@ import moment from 'moment'
 
 
 
-export default function Attendence() {
+export default function Attendance() {
     const [rowdata, setRowData] = useState([])
     // const [show, setShow] = useState(true)
     const [ user, profile] = useOutletContext();
@@ -126,7 +126,7 @@ export default function Attendence() {
   return (
     <div className="container mx-auto px-10">
         
-        <h1 className='font-bold p-5'>ATTENDENCE</h1>
+        <h1 className='font-bold p-5'>ATTENDANCE</h1>
             < ToastContainer />
             {/* <div className='p-8 rounded-xl bg-zinc-100 border'> */}
         

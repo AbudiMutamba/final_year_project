@@ -1,11 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
-// import * as Yup from "yup";
-// import supabase from "./helpers/supabase";
-// import { useAuth } from "./hooks/useAuth";
-// import { Loader } from "../helpers/Loader";
-// import Alert from "../helpers/Alert";
+import * as Yup from "yup";
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { supabase } from "../helpers/supabase";
@@ -14,10 +10,6 @@ import { useOutletContext } from 'react-router-dom'
 
 
 export default function AssignWork() {
-	// const [submitting, setSubmitting] = React.useState(false);
-	// const [error, setError] = React.useState(false);
-	// const [msg, setMsg] = React.useState("");
-	// const { user } = useAuth();
     const [activities,setActivities] = useState([]);
     const [ profile] = useOutletContext();
     const [ names, setNames] = useState([])
@@ -32,18 +24,23 @@ export default function AssignWork() {
         getUser()
 	}, []);
     
+    const assignSchema = Yup.object().shape({
+        workon:Yup.string().required("Required"),
+        workwith:Yup.string().required("Required"),
+        date: Yup.date(),
+        moredetails:Yup.string().required("Required"),
+    });
 
 	const handleSubmit = async (values, { resetForm }) => {
 
         const {data, error} = await supabase
-            .from('assign_task')
+            .from('tasks')
             .insert ({
                 // user_id: names.id,
                 title: values.workon,
-                assignedPerson: values.workwith,
+                assigned_person: values.workwith,
                 description: values.moredetails,
                 deadline: values.date,
-                // project: values.project 
          })
         if (error){
             toast.error(error.message, {
@@ -71,9 +68,9 @@ export default function AssignWork() {
                                 workon:"",
                                 workwith: "",
                                 date: "",
-                                // project: "",
                                 moredetails:""
                             }}
+                            validationSchema={assignSchema}
                             onSubmit={ handleSubmit}
                             >
                             {({ isSubmitting, isValid, values, setFieldValue}) => (

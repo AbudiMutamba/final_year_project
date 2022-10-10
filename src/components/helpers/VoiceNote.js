@@ -36,10 +36,10 @@ export default function VoiceNote() {
   const handleSubmit = async (values, { resetForm }) => {
 
     const {data, error} = await supabase
-      .from('voice_note')
+      .from('tasks')
       .insert ({
-            url_link: audioResult,
-            user_id: values.workwith,
+            voice_note: audioResult,
+            assigned_person: values.workwith,
             title: values.workon
       })
       if (error){
@@ -57,11 +57,11 @@ export default function VoiceNote() {
   const handleDownload = () => {
     const data = audioResult
     // console.log(data)
-    // const blob = new Blob( {data}, {type: 'audio/ogg'})
-    // const href = URL.createObjectURL(blob)
+    const blob = new Blob( {data}, {type: 'audio/ogg'})
+    const href = URL.createObjectURL(blob)
     // console.log(href)
     const a = Object.assign(document.createElement("a"), {
-      data,
+      href,
       style:"display:none",
       download: "Task"
     })

@@ -3,7 +3,7 @@ import Login from '../views/Login';
 import SignUp from '../views/SignUp';
 import Dashboard from '../views/Dashboard'
 import MyCalendar from '../views/MyCalendar'
-import Attendence from '../views/Attendence';
+import Attendance from '../views/Attendance';
 import AssignTask from '../views/AssignTask';
 import NeedbasedTask from '../views/NeedbasedTask';
 import TaskProgress from '../views/TaskProgress'
@@ -22,7 +22,7 @@ import {
 } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute';
 import ScheduleHistory from '../views/ScheduleHistory';
-import Adminattendence from '../views/Adminattendence';
+import Adminattendance from '../views/Adminattendance';
 import Adminverify from '../views/Adminverify';
 import AdminVerificationHistory from '../views/AdminVerificationHistory';
 import AdminhealthStatus from '../views/AdminhealthStatus'
@@ -46,8 +46,8 @@ export default function myRouter() {
             
             <Route element={<PrivateRoute  />}>
               <Route path="/dashboard" element={<Dashboard />}/>
-              <Route path="/attendence" element={<Attendence/>}/>
-              <Route path="/allattendence" element={<Adminattendence/>}/>
+              <Route path="/attendance" element={<Attendance/>}/>
+              <Route path="/allattendance" element={<Adminattendance/>}/>
               <Route path="/map/:lat/:log" element={<Maps/>}/>
               <Route path="/calendar" element={<MyCalendar/>}/>
               <Route path="/schedule" element={<Schedule/>}/>

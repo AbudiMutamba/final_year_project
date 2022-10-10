@@ -14,7 +14,7 @@ export default function Adminverify() {
     const navigate = useNavigate();
     useEffect ( () => {
         let getData = async () => {
-            let { data, error } = await supabase.from('attendence').select('*')
+            let { data, error } = await supabase.from('tasks').select('comments, created_at, status, remarks')
              setRowData (data)
         }
         getData()

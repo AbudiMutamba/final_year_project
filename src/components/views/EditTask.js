@@ -1,49 +1,72 @@
 
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { supabase } from "../helpers/supabase";
 import DatePicker from 'react-datepicker';
 import { useOutletContext, useParams } from 'react-router-dom'
+import moment from 'moment'
 
 
 export default function EditTask() {
     const [ activities,setActivities ] = useState([]);
     const [ profile ] = useOutletContext();
     const [ names, setNames] = useState({})
+    const [rowdata, setRowData] = useState({});
     const { id } = useParams();
-
+    // console.log({id})
 	useEffect( () => {
-        let getUser = async () => {
-            let { data, error } = await supabase.from('assign_task').select('*').eq('id', id).single()
+        let getData = async () => {
+            let { data, error } = await supabase.from('tasks').select('*').eq('id', id).single()
+            // console.log(data)
             // console.log("data is", data)
             //  if(error) throw error
-             setNames(data)
-        }
-        getUser()
-	}, [names]);
 
-    
+             setRowData(data)
+             
+             let { data: users, errors } = await supabase.from('profiles').select('username, id').eq('roles', 'member')
+            // console.log("data is", datas)
+            //  if(errors) throw errors
+             setNames(users)
+             
+        }
+        // let getUser = async () => {
+        //     let { data, error } = await supabase.from('profiles').select('username, id').eq('roles', 'member')
+        //     // console.log("data is", data)
+        //      if(error) throw error
+        //      setNames(data)
+        // }
+        getData()
+	}, []);
+
+    const editSchema = Yup.object().shape({
+        title:Yup.string().required("Required"),
+        workwith:Yup.string().required("Required"),
+        assignedto:Yup.string(),
+        date: Yup.date(),
+        moredetails:Yup.string().required("Required"),
+    });
 
 	const handleSubmit = async (values, { resetForm }) => {
-
+        console.log(values)
         const {data, error} = await supabase
-            .from('assign_task')
+            .from('task')
             .update ({
                 // user_id: names.id,
-                title: values.title,
-                assignedPerson: values.workwith,
-                description: values.moredetails,
-                deadline: values.date,
-                // project: values.project 
+                title: values?.title,
+                assigned_person: values?.workwith,
+                new_assigned_person: values?.assignedto,
+                description: values?.moredetails,
+                deadline: values?.date,
          })
         if (error){
             toast.error(error.message, {
             position: "top-center"
         });
         }else {
-            toast.success("Assigned", {
+            toast.success("Updated", {
             position: "top-center"
         });
            resetForm();
@@ -60,27 +83,31 @@ export default function EditTask() {
                     < ToastContainer />
 					<h1 className='font-bold p-5'> Edit Task</h1>
                         <Formik
-                            // initialValues={{
-                            //     title: "",
-                            //     workwith: "",
-                            //     date: "",
-                            //     // project: "",
-                            //     moredetails:""
-                            // }}
+                            initialValues={{
+                                title:"",
+                                workwith:"",
+                                assignedto:"",
+                                date: "",
+                                moredetails:""
+                            }}
+                            validationSchema={editSchema}
                             onSubmit={ handleSubmit}
                             >
-                            {({ isSubmitting, isValid, values, setFieldValue,  handleChange}) => (
+                            {({ isSubmitting, isValid, values, setFieldValue,  handleChange, errors}) => (
                                 <Form className="p-8 rounded-xl bg-zinc-100 border">
                                     <div className="py-2">
                                         <label>Title of Task</label>
-                                        <Field
+                                        <input
+                                            id="name"
                                             placeholder="title"
                                             className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline "
-                                            type="text"
                                             name="title"
+                                            type="text"
                                             onChange={handleChange("title")}
-                                            defaultValue= {names.title}
+                                            // value={rowdata.title}
+                                            defaultValue={rowdata.title}
                                         />
+        
                                         
                                     </div>
                                     <div className="py-2">
@@ -89,33 +116,49 @@ export default function EditTask() {
                                             as="select"
                                             name="workwith"
                                             className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"
-                                            // defaultValue={names.assignedPerson}
+                                            defaultValue={rowdata.assigned_person}
                                             >
                                             <option >- Select -</option>
-                                            {/* {names && names.map((name, index) => 
-                                                <option value={name.id}>{name.username}</option>
-                                            )} */}
+                                            {names && names?.length>0 && names.map((user, index) => 
+                                                <option value={user.id}>{user.username}</option>
+                                            )}
                                             
                                         </Field>
                                     </div>
+                                    <div className="py-2">
+                                            <label>Who was to be assinged the task?</label>
+                                            <Field
+                                                as="select"
+                                                name="assignedto"
+                                                className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline">
+                                                <option>- Select -</option>
+                                                {names && names?.length>0 && names.map((name, index) => 
+                                                    <option value={name.id}>{name.username}</option>
+                                                )}
+                                            </Field>
+                                        </div>
                                     <div className="py-2">
                                         <label>Description of task</label>
                                         <Field
                                             as="textarea"
                                             name="moredetails"
                                             className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline " 
-                                            // defaultValue={names.description}
+                                            defaultValue={rowdata.description}
                                             />
                                     </div>
                                     <div className="py-2">
                                         <label>Deadline</label>
-                                        <DatePicker placeholderText="Select Date" name="date" selected={values.date } onChange={(date) => setFieldValue("date",date)}  className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"
-                                        // defaultValue={names.deadline}
-                                        />
+                                        <input defaultValue={rowdata?.deadline} name="date" type="date" onChange={(date) => setFieldValue("date",date)}  className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"
+     Z                                        />
+                                      
                                         
                                     </div>
                                     <button
-                                        type="submit"
+                                        onClick={() => {
+                                            console.log(values)
+                                            console.log(errors)
+                                        }}
+                                        // type="submit"
                                         className="py-2 px-5 transition hover:-translate-y-1 hover:bg-orange-600 duration-300 mx-auto max-w-md rounded-full border bg-emerald-300">
                                         Save
                                     </button>

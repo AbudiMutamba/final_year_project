@@ -1,11 +1,7 @@
 
 import React,{ useState, useEffect} from "react";
 import { Formik, Form, Field } from "formik";
-// import * as Yup from "yup";
-// import supabase from "./helpers/supabase";
-// import { useAuth } from "./hooks/useAuth";
-// import { Loader } from "../helpers/Loader";
-// import Alert from "../helpers/Alert";
+import * as Yup from "yup";
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { supabase } from "../helpers/supabase";
@@ -34,15 +30,22 @@ export default function NeedbasedWork() {
         getUser()
 	}, []);
 
+    const needSchema = Yup.object().shape({
+        workon:Yup.string().required("Required"),
+        workwith:Yup.string().required("Required"),
+        assignedto:Yup.string().required("Required"),
+        date: Yup.date(),
+        moredetails:Yup.string().required("Required"),
+    });
 	
 	const handleSubmit = async (values, { resetForm }) => {
 	
         const {data, error} = await supabase
-        .from('needbased_tasks')
+        .from('tasks')
         .insert ({
             title: values.workon,
-            assignedPerson: values.workwith,
-            assignedto: values.assignedto,
+            assigned_person: values.workwith,
+            new_assigned_person: values.assignedto,
             description: values.moredetails,
             deadline: values.date,
             // project: values.project 
@@ -66,20 +69,6 @@ export default function NeedbasedWork() {
 
 	return (
 		<section className="px-10">
-			{/* <header>
-				{error && msg && (
-					<Alert
-						className="bg-red-100 border border-red-700 text-red-700 rounded-md p-2"
-						msg={msg}
-					/>
-				)}
-				{!error && msg && (
-					<Alert
-						className="bg-green-100 border border-green-700 text-green-700 rounded-md p-2"
-						msg={msg}
-					/>
-				)}
-			</header> */}
 			<main >
 				<div>
                     < ToastContainer />
@@ -91,9 +80,9 @@ export default function NeedbasedWork() {
                                     workwith: "",
                                     assignedto:"",
                                     date: "",
-                                    // project: "",
                                     moredetails:""
                                 }}
+                                validationSchema={needSchema}
                                 onSubmit={ handleSubmit}
                                 >
                                 {({ isSubmitting, isValid, values, setFieldValue }) => (

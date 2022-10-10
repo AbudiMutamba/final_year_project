@@ -17,39 +17,44 @@ export default function Schedule () {
 
     useEffect ( () => {
         let getData = async () => {
-            let { data, error } = await supabase.from('assign_task').select('id,createdat, title, deadline').eq('assignedPerson', profile.id)
+            let { data, error } = await supabase.from('tasks').select('id,created_at, title, deadline').eq('assigned_person', profile.id)
             setRowData (data)
         }
         getData()
     },[])  
    
-
-    const handleVeiw =  async (value) => {
-        // console.log(values)
+    const handleVeiw = (value) => {
         const from = location.state?.from?.pathname || `/veiw/${value}`;
         navigate(from, { replace: true });
-            // let { data, error } = await supabase
-            // .from('attendence')
-            // .select('location')
-            // .match()
-      
+
     }
-    const handleFinished =  async () => {
-        // console.log(values)
-        const from = location.state?.from?.pathname || '';
-        navigate(from, { replace: true });
-            // let { data, error } = await supabase
-            // .from('attendence')
-            // .select('location')
-            // .match()
-      
+
+    const handleAccept = async(value) => {
+        const { data, error } = await supabase
+        .from('tasks')
+        .delete()
+        .eq('id', value)
+        if (error){
+            toast.error(error.message, {
+            position: "top-center"
+        });
+        }else {
+            toast.success("Deleted", {
+            position: "top-center"
+        });
+        // setDel({...del, value})setRowData(
+             setRowData([...rowdata], value)
     }
+    }
+
+
+
     
 
     const columns = [
         {
             Header: "Date",
-            accessor: "createdat",
+            accessor: "created_at",
         },
         {
             Header: "Title",
@@ -60,17 +65,29 @@ export default function Schedule () {
             accessor: "deadline",
         },
         {
-            Header: "Veiw",
+            Header: "Action", 
             accessor: "id",
-            Cell: ({value}) => <button onClick={() => handleVeiw(value)} className="text-black" >Veiw</button>
-            // Cell: ({value}) => (<button onClick={this.editRow({value})}>Edit</button>)
+            Cell: ({value}) => {
+                return(
+                        <div>
+                            <button onClick={() => handleVeiw(value)} className="text-black px-2" >veiw</button>
+                            <button onClick={() => handleAccept(value)} className="text-black" >accept</button>
+                        </div>
+                )
+            }            
         },
-        {
-            Header: "Finished",
-            accessor: "finished",
-            Cell: ({value}) => <input type="checkbox"onClick={() => handleFinished(value)} className="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" />
-            // Cell: ({value}) => (<button onClick={this.editRow({value})}>Edit</button>)
-        },
+        // {
+        //     Header: "Veiw",
+        //     accessor: "id",
+        //     Cell: ({value}) => <button onClick={() => handleVeiw(value)} className="text-black" >Veiw</button>
+        //     // Cell: ({value}) => (<button onClick={this.editRow({value})}>Edit</button>)
+        // },
+        // {
+        //     Header: "Finished",
+        //     accessor: "finished",
+        //     Cell: ({value}) => <input type="checkbox"onClick={() => handleFinished(value)} className="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" />
+        //     // Cell: ({value}) => (<button onClick={this.editRow({value})}>Edit</button>)
+        // },
     ]
   return (
     <div className="container mx-auto px-10">

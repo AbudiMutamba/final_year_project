@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
-export default function Adminattendence() {
+export default function Adminattendance() {
     const [rowdata, setRowData] = useState([]);
     const location = useLocation();
     const navigate = useNavigate();
@@ -63,7 +63,7 @@ export default function Adminattendence() {
     ]
   return (
     <div className="container mx-auto px-10">
-        <h1 className='font-bold p-5'>ATTENDENCE</h1>
+        <h1 className='font-bold p-5'>ATTENDANCE</h1>
             < ToastContainer />
                 <div>
                     <Table columns={columns} data={rowdata}/>
