@@ -41,6 +41,7 @@ export default function AssignWork() {
                 assigned_person: values.workwith,
                 description: values.moredetails,
                 deadline: values.date,
+                status:"pending"
          })
         if (error){
             toast.error(error.message, {

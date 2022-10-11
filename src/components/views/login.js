@@ -95,9 +95,6 @@ export default function Login() {
                 >
                   Sign In
                 </button>
-                <Link to="/signup" className=" p-2 my-2 inline-block align-baseline font-semibold text-sm  hover:text-orange-600">
-						        SignUp
-					      </Link>
                 <Link to="/forgotpassword" className=" p-2 my-2 inline-block align-baseline font-semibold text-sm  hover:text-orange-600">
 						        ForgotPassword?
 					      </Link>

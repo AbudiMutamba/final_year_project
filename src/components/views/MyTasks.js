@@ -24,11 +24,11 @@ export default function MyTasks() {
         const from = location.state?.from?.pathname || `/task/${value}`;
         navigate(from, { replace: true });
     }
-    const handleDelete = async () => {
+    const handleDelete = async (value) => {
         const { data, error } = await supabase
         .from('my_tasks')
-        .delete('description')
-        .eq('description')
+        .delete()
+        .eq('id', value)
         if (error){
             toast.error(error.message, {
             position: "top-center"
@@ -50,24 +50,19 @@ export default function MyTasks() {
             Header: "Title",
             accessor: "title",
         },
-        // {
-        //     Header: "Audio",
-        //     accessor: "audio",
-        // },
-        // {
-        //     Header: "Status",
-        //     accessor: "status",
-        // },
         {
-            Header: "Edit",
+            Header: "Action",
             accessor: "id",
-            Cell: ({value}) => <button onClick={() => handleEdit(value)} className="text-black" >Edit</button>
+            Cell: ({value}) => {
+                return(
+                        <div>
+                            <button onClick={() => handleEdit(value)} className="text-black px-2" >Edit</button>
+                            <button onClick={() => handleDelete(value)} className="text-black" >Delete</button>
+                        </div>
+                )
+            }  
         },
-        {
-            Header: "Delete",
-            accessor: "description",
-            Cell: ({value}) => <button onClick={() => handleDelete(value)} className="text-black" >Delete</button>
-        },
+
         
     ]
 

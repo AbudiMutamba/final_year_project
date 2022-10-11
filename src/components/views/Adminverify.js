@@ -12,9 +12,10 @@ export default function Adminverify() {
    const [profile] = useOutletContext()
    const location = useLocation();
     const navigate = useNavigate();
+
     useEffect ( () => {
         let getData = async () => {
-            let { data, error } = await supabase.from('tasks').select('comments, created_at, status, remarks')
+            let { data, error } = await supabase.from('tasks').select('id, seen_by_employee, comments, title, created_at, status, remarks')
              setRowData (data)
         }
         getData()
@@ -22,73 +23,60 @@ export default function Adminverify() {
 
     const handleVeiw =  async (value) => {
         // console.log(values)
-        const from = location.state?.from?.pathname || `/veiw/${value}`;
+        const from = location.state?.from?.pathname || `/verify/${value}`;
         navigate(from, { replace: true });
-            // let { data, error } = await supabase
-            // .from('attendence')
-            // .select('location')
-            // .match()
+            
       
     }
-    const handleAccept =  async (value) => {
+    const handleEdit =  async (value) => {
         // console.log(values)
-        const from = location.state?.from?.pathname || `/veiw/${value}`;
+        const from = location.state?.from?.pathname || `/verify/${value}`;
         navigate(from, { replace: true });
-            // let { data, error } = await supabase
-            // .from('attendence')
-            // .select('location')
-            // .match()
-      
-    }
-    const handleReject =  async (value) => {
-        // console.log(values)
-        const from = location.state?.from?.pathname || `/veiw/${value}`;
-        navigate(from, { replace: true });
-            // let { data, error } = await supabase
-            // .from('attendence')
-            // .select('location')
-            // .match()
+            
       
     }
 
     const columns = [
         {
             Header: "Date",
-            accessor: "date",
+            accessor: "created_at",
         },
-        // {
-        //     Header: "Name",
-        //     accessor: "id",
-        // },
+
         {
             Header: "Title",
             accessor: "title",
         },
+        
         {
-            Header: "Veiw",
-            accessor: "veiw",
-            Cell: ({value}) => <button onClick={() => handleVeiw(value)} className="text-black" >Veiw</button>
+            Header: "Action",
+            accessor: "id",
+            Cell: ({value}) => {
+                return(
+                        <div>
+                            <button onClick={() => handleVeiw(value)} className="text-black px-2 ">Veiw</button>
+                            <button onClick={() => handleEdit(value)} className="text-black" >Edit</button>
+                        </div>
+                )
+            } 
         },
         {
-            Header: "Accept",
-            accessor: "accept",
-            Cell: ({value}) => <input type="checkbox"onClick={() => handleAccept(value)} className="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" />
-
+            Header: "Seen",
+            id: "seen_by_employee",
+            accessor: d => d.seen_by_employee.toString()
         },
         {
-            Header: "Reject",
-            accessor: "reject",
-            Cell: ({value}) => <input type="checkbox"onClick={() => handleReject(value)} className="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" />
-
+            Header: "Status",
+            accessor: "status",
         },
+        
     ]
   return (
-    <div className="container mx-auto px-10">
+    <div className="container mx-auto px-2">
         
         <h1 className='font-bold p-5'>VERIFICATION</h1>
             < ToastContainer />
             <div>
-                <Table columns={columns} data={rowdata}  pageSizeOptions = {[1,2,4, 6]}  />
+                <Table columns={columns} data={rowdata}/>
             </div>
            
     </div>

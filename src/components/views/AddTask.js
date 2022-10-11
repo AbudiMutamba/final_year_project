@@ -1,6 +1,7 @@
 
 import React,{ useState, useEffect} from "react";
 import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 import { supabase } from "../helpers/supabase";
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,10 +12,6 @@ import { useOutletContext } from 'react-router-dom'
 
 
 export default function AddTask() {
-	// const [submitting, setSubmitting] = React.useState(false);
-	// const [error, setError] = React.useState(false);
-	// const [msg, setMsg] = React.useState("");
-	// const { user } = useAuth();
     const [ user, profile] = useOutletContext();
     const [activities,setActivities] = useState([]);
     const [userId, setuserId] = useState();
@@ -29,7 +26,13 @@ export default function AddTask() {
 	}, []);
    
 
-
+    const editSchema = Yup.object().shape({
+        title:Yup.string().required("Required"),
+        moredetails:Yup.string().required("Required"),
+        challenges:Yup.string().required("Required"),
+        start:Yup.string().required("Required"),
+        finish:Yup.string().required("Required")
+    });
 	const handleSubmit = async (values, { resetForm }) => {
 		const {data, error} = await supabase
         .from('my_tasks')
@@ -60,39 +63,29 @@ export default function AddTask() {
 
 	return (
 		<section className="px-10">
-			{/* <header>
-				{error && msg && (
-					<Alert
-						className="bg-red-100 border border-red-700 text-red-700 rounded-md p-2"
-						msg={msg}
-					/>
-				)}
-				{!error && msg && (
-					<Alert
-						className="bg-green-100 border border-green-700 text-green-700 rounded-md p-2"
-						msg={msg}
-					/>
-				)}
-			</header> */}
 			<main >
-				<ToastContainer/>
+				
 				<div>
+                    <ToastContainer/>
                     <h1 className='font-bold p-5'>ADD TASK</h1>
                         <Formik
                             initialValues={{
-                                workon:"",
+                                title:"",
                                 challenges: "",
                                 moredetails:"",
+                                start:"",
+                                finish:"",
                             }}
+                            validationSchema={editSchema}
                             onSubmit={ handleSubmit }
                             >
-                            {({ isSubmitting, isValid }) => (
+                            {({ isSubmitting, isValid,values, errors }) => (
                                 <Form className="p-8 rounded-xl bg-zinc-100 border">
                                     <div className="py-2">
                                         <label>Title of Task</label>
                                         <Field
                                             placeholder="title"
-                        className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline "
+                                            className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline "
                                             type="text"
                                             name="title"
                                         />
@@ -129,6 +122,10 @@ export default function AddTask() {
                                         
                                     </div>
                                     <button
+                                        onClick={() => {
+                                            console.log(values)
+                                            console.log(errors)
+                                        }}
                                         type="submit"
                                         className="py-2 px-5 transition hover:-translate-y-1 hover:bg-orange-600 duration-300 mx-auto max-w-md rounded-full border bg-emerald-300">
                                         Add

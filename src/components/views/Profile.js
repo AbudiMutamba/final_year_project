@@ -219,7 +219,7 @@ export default function Profile() {
               }}
             </Formik>
             {/* handleTermination */}
-            <Formik initialValues={{ password: "" }}>
+            {/* <Formik initialValues={{ password: "" }}>
               {({ values, errors, touched, handleChange, handleBlur }) => {
                 return (
                   <Form
@@ -300,14 +300,14 @@ export default function Profile() {
                             </div>
                           </ConfirmModal>
                         )}
-                        {editPop && <EditModal setEditPop={setEditPop} />}
+                        
                       </div>
                     </div>
                   </Form>
                 );
               }}
-            </Formik>
-            
+            </Formik> */}
+            {editPop && <EditModal setEditPop={setEditPop} />}
           </>
         ) : (
           <div className="display flex justify-center">

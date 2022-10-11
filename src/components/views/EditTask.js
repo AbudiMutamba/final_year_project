@@ -42,17 +42,17 @@ export default function EditTask() {
 	}, []);
 
     const editSchema = Yup.object().shape({
-        title:Yup.string().required("Required"),
-        workwith:Yup.string().required("Required"),
+        title:Yup.string(),
+        workwith:Yup.string(),
         assignedto:Yup.string(),
-        date: Yup.date(),
-        moredetails:Yup.string().required("Required"),
+        // date: Yup.date(),
+        moredetails:Yup.string(),
     });
 
 	const handleSubmit = async (values, { resetForm }) => {
-        console.log(values)
+        // console.log(values)
         const {data, error} = await supabase
-            .from('task')
+            .from('tasks')
             .update ({
                 // user_id: names.id,
                 title: values?.title,
@@ -60,7 +60,7 @@ export default function EditTask() {
                 new_assigned_person: values?.assignedto,
                 description: values?.moredetails,
                 deadline: values?.date,
-         })
+         }).eq('id', id)
         if (error){
             toast.error(error.message, {
             position: "top-center"
@@ -84,11 +84,11 @@ export default function EditTask() {
 					<h1 className='font-bold p-5'> Edit Task</h1>
                         <Formik
                             initialValues={{
-                                title:"",
-                                workwith:"",
-                                assignedto:"",
-                                date: "",
-                                moredetails:""
+                                title:rowdata.title,
+                                workwith:rowdata.assigned_person,
+                                assignedto:rowdata.new_assigned_person,
+                                date: rowdata.deadline,
+                                moredetails:rowdata.description
                             }}
                             validationSchema={editSchema}
                             onSubmit={ handleSubmit}
@@ -115,6 +115,7 @@ export default function EditTask() {
                                         <Field
                                             as="select"
                                             name="workwith"
+                                            onChange={handleChange("workwith")}
                                             className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"
                                             defaultValue={rowdata.assigned_person}
                                             >
@@ -130,6 +131,7 @@ export default function EditTask() {
                                             <Field
                                                 as="select"
                                                 name="assignedto"
+                                                onChange={handleChange("assignedto")}
                                                 className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline">
                                                 <option>- Select -</option>
                                                 {names && names?.length>0 && names.map((name, index) => 
@@ -142,23 +144,24 @@ export default function EditTask() {
                                         <Field
                                             as="textarea"
                                             name="moredetails"
+                                            onChange={handleChange("moredetails")}
                                             className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline " 
-                                            defaultValue={rowdata.description}
+                                            defaultValue={rowdata?.description}
                                             />
                                     </div>
                                     <div className="py-2">
                                         <label>Deadline</label>
-                                        <input defaultValue={rowdata?.deadline} name="date" type="date" onChange={(date) => setFieldValue("date",date)}  className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"
-     Z                                        />
+                                        <input defaultValue={rowdata?.deadline} name="date" type="date" onChange={handleChange("date")}  className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"
+                                         />
                                       
                                         
                                     </div>
                                     <button
-                                        onClick={() => {
-                                            console.log(values)
-                                            console.log(errors)
-                                        }}
-                                        // type="submit"
+                                        // onClick={() => {
+                                        //     console.log(values)
+                                        //     console.log(errors)
+                                        // }}
+                                        type="submit"
                                         className="py-2 px-5 transition hover:-translate-y-1 hover:bg-orange-600 duration-300 mx-auto max-w-md rounded-full border bg-emerald-300">
                                         Save
                                     </button>

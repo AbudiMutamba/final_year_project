@@ -17,7 +17,7 @@ export default function Schedule () {
 
     useEffect ( () => {
         let getData = async () => {
-            let { data, error } = await supabase.from('tasks').select('id,created_at, title, deadline').eq('assigned_person', profile.id)
+            let { data, error } = await supabase.from('tasks').select('id,created_at, title, deadline, status').eq('assigned_person', profile.id)
             setRowData (data)
         }
         getData()
@@ -70,27 +70,20 @@ export default function Schedule () {
             Cell: ({value}) => {
                 return(
                         <div>
-                            <button onClick={() => handleVeiw(value)} className="text-black px-2" >veiw</button>
-                            <button onClick={() => handleAccept(value)} className="text-black" >accept</button>
+                            <button onClick={() => handleVeiw(value)} className="text-black px-2 ">Veiw</button>
+                            <button onClick={() => handleAccept(value)} className="text-black" >Edit</button>
                         </div>
                 )
             }            
         },
-        // {
-        //     Header: "Veiw",
-        //     accessor: "id",
-        //     Cell: ({value}) => <button onClick={() => handleVeiw(value)} className="text-black" >Veiw</button>
-        //     // Cell: ({value}) => (<button onClick={this.editRow({value})}>Edit</button>)
-        // },
-        // {
-        //     Header: "Finished",
-        //     accessor: "finished",
-        //     Cell: ({value}) => <input type="checkbox"onClick={() => handleFinished(value)} className="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" />
-        //     // Cell: ({value}) => (<button onClick={this.editRow({value})}>Edit</button>)
-        // },
+        {
+            Header: "Status",
+            accessor: "status",
+        },
+      
     ]
   return (
-    <div className="container mx-auto px-10">
+    <div className="container mx-auto px-2">
         <h1 className='font-bold p-5'>WORK SCHEDULE</h1>
             < ToastContainer />
                 <div>

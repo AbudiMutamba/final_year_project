@@ -48,7 +48,7 @@ export default function NeedbasedWork() {
             new_assigned_person: values.assignedto,
             description: values.moredetails,
             deadline: values.date,
-            // project: values.project 
+            status:"pending"
         })
         if (error){
             toast.error(error.message, {
@@ -131,23 +131,6 @@ export default function NeedbasedWork() {
                                             <label>Deadline</label>
                                             <DatePicker placeholderText="Select Date" name="date" selected={values.date } onChange={(date) => setFieldValue("date",date)}  className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"/>
                                         </div>
-                                        {/* <div className="py-2">
-                                            <label>On what project?</label>
-                                            <Field
-                                                as="select"
-                                                name="project"
-                                                className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline">
-                                                <option value="">
-                                                    - Select Project -
-                                                </option>
-                                                <option value="Tube App">
-                                                    Tube App
-                                                </option>
-                                                <option value="Ablestate Workspace">
-                                                    Ablestate Workspace
-                                                </option>
-                                            </Field>
-                                        </div> */}
                                         <button
                                             type="submit"
                                             className="py-2 px-5  transition hover:-translate-y-1 hover:bg-orange-600 duration-300 mx-auto max-w-md rounded-full border bg-emerald-300">

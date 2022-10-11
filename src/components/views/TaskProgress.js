@@ -38,11 +38,11 @@ export default function TaskProgress() {
     let getData = async () => {
         let { data, error } = await supabase.from('tasks').select('*')
         if( error ) throw error
-        console.log("data: ", data)
+        // console.log("data: ", data)
         data.forEach(
           task => {
             if( (new Date(task.deadline).getTime()) > Date.now() &&  selectedUser === (task.assigned_person || task.new_assigned_person)) {
-              console.log(task)
+              // console.log(task)
               dataObj[moment(task.created_at).format("MMM")] ++
             }
           }
@@ -61,14 +61,7 @@ export default function TaskProgress() {
       name: Yup.string().required("Required"),
     });
 
-
-
-    
-
-    
-
-    console.log(dataObj)
-
+    // console.log(dataObj)
 
     const data = {
         labels: Object.keys(dataObj),

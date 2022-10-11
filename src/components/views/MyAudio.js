@@ -17,15 +17,16 @@ export default function MyAudio() {
     useEffect ( () => {
         let getData = async () => {
             let { data, error } = await supabase.from('voice_note').select('created_at, title, url_link, user_id').eq('user_id', profile.id)
+            console.log(data)
             setRowData (data)
         
         }
         getData()
     },[])  
-    const handleSubmit =  async (values) => {
-        console.log(values)
-        // const from = location.state?.from?.pathname || `/map/${lat}/${lng}`;
-        // navigate(from, { replace: true });
+    const handleSubmit =  async (value) => {
+        console.log(value)
+        const from = location.state?.from?.pathname || `/listen/${value}`;
+        navigate(from, { replace: true });
         //     // let { data, error } = await supabase
         //     // .from('attendence')
         //     // .select('location')
