@@ -46,35 +46,35 @@ export default function HealthForm() {
 
 	const handleSubmit = async (values, { resetForm }) => {
 		console.log(values)
-		// const {data, error} = await supabase
-        // .from('health_form')
-        // .insert ({
-		// 		user_id: names.id,
-        //         backpain: values.backpain,
-		// 		chestpain: values.chestpain,
-		// 		cough: values.cough,
-		// 		fever: values.cough,
-		// 		headache: values.headache,
-		// 		sorethroat: values.sorethroat,
-		// 		shortnessofbreath: values.shortnessofbreath,
-		// 		sneezing: values.sneezing,
-		// 		tiredness: values.tiredness,
-		// 		sleepduration: values.sleepduration,
-		// 		morningexerciseduration: values.morningexerciseduration,
-		// 		proof: values.proof
-		// })	
-        // if (error){
-        //     toast.error(error.message, {
-        //     position: "top-center"
-        // });
-        // }else {
-        //     toast.success("Success", {
-        //     position: "top-center"
-        // });
-        //    resetForm();
-        //    setActivities([...activities, values]);
+		const {data, error} = await supabase
+        .from('health_form')
+        .insert ({
+				user_id: names.id,
+                backpain: values.backpain,
+				chestpain: values.chestpain,
+				cough: values.cough,
+				fever: values.cough,
+				headache: values.headache,
+				sorethroat: values.sorethroat,
+				shortnessofbreath: values.shortnessofbreath,
+				sneezing: values.sneezing,
+				tiredness: values.tiredness,
+				sleepduration: values.sleepduration,
+				morningexerciseduration: values.morningexerciseduration,
+				proof: values.proof
+		})	
+        if (error){
+            toast.error(error.message, {
+            position: "top-center"
+        });
+        }else {
+            toast.success("Success", {
+            position: "top-center"
+        });
+           resetForm();
+           setActivities([...activities, values]);
 		
-	    // };
+	    };
 	};
 
 	return (
