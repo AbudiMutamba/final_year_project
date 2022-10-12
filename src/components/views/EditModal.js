@@ -59,17 +59,17 @@ function EditModal({ setEditPop }) {
                 const { error, data } = await supabase
                   .from("profiles")
                   .update({
-                    name: name,
+                    username: name,
                     dob: dob,
                     gender: gender,
-                    email_address: email_address,
+                    email: email_address,
                     phone_number: phone_number,
                     id_passport_number: id_passport_number,
                     present_address: present_address,
                     marital_status: marital_status,
                     fathers_address: fathers_address,
                     fathers_name: fathers_name,
-                    avatar: avatar,
+                    avatar_url: avatar,
                   })
                   .eq("id", profile.id)
                   .single();

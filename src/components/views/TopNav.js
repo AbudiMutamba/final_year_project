@@ -1,12 +1,14 @@
-import { MdOutlineNotificationImportant } from 'react-icons/md'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { MdOutlineNotificationImportant } from 'react-icons/md'
+import { Link, } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useOutletContext } from 'react-router-dom'
+import NotificationContext from "../modals/NotificationContext";
 
-export default function TopNav() {
+export default function TopNav({user}) {
   const [showMenu, setShowMenu] = useState(false)
-  const { user ,signOut } = useAuth()
+  const [showNote, setShowNote] = useState(false);
+  const {signOut } = useAuth()
   const navigate = useNavigate()
 
   if (showMenu) {
@@ -16,19 +18,37 @@ export default function TopNav() {
       }
     };
   }
-
   return (
     <div className='flex justify-end items-center space-x-4  bg-zinc-100 px-5'>
+          
+          <div
+          className="mx-3 cursor-pointer relative dark:text-black"
+          onClick={(event) => {
+            setShowNote(!showNote);
+            event.stopPropagation();
+          }}
+          >
+          {/* <MdNotifications size={25} /> */}
           <MdOutlineNotificationImportant />
-          <p className='inline-block '>Hello Abudi</p>
+          <NotificationContext show={showNote} />
+        </div>
+
+
+
+          <p className='inline-block text-green-700'>Hello {user?.username !== undefined && user.username !== null
+                      ? ` ${user?.username.split(" ")[0]}`
+                      : " You"}</p>
           <div className='relative dialog' onClick={(event) => {
               setShowMenu(!showMenu);
               event.stopPropagation();
             }}>
-            <div className="m-3 flex -space-x-2 overflow-hidden cursor-pointer"
+            <div className="m-3  flex -space-x-2 overflow-hidden cursor-pointer"
               onClick={() => setShowMenu(!showMenu)}
             >
-                <img className="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
+              <div
+                  className="w-10 h-10 bg-accent rounded-full mx-2 overflow-hidden bg-cover"
+                  style={{ backgroundImage: `url(${user?.avatar_url})` }}
+                ></div>
             </div>
             {showMenu && 
               <ul className="bg-white absolute z-10 outline outline-1 outline-[#E4E6E5] top-[60px] right-0 py-2">

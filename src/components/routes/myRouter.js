@@ -33,6 +33,7 @@ import ScheduleVeiw from '../views/ScheduleVeiw';
 import EditMyTasks from '../views/EditMyTasks';
 import VoiceNote from '../helpers/VoiceNote';
 import MyAudio from '../views/MyAudio';
+import  { AudioRecorder } from '../views/voicenotes/AudioRecorder';
 import AdminVerifyTask from '../views/AdminVerifyTask';
 export default function MyRouter() {
   const [loading, setLoading] = useState(true);
@@ -75,6 +76,7 @@ export default function MyRouter() {
                   <Route path="/verify/:id" element={<AdminVerifyTask/>}/>
                   <Route path="/voicenote" element={<VoiceNote/>}/>
                   <Route path="/audio" element={<MyAudio/>}/>
+                  {/* <Route path "/edit" element={<AudioRecorder/>}/> */}
                   <Route path="/needbasedtask" element={<NeedbasedTask/>}/>
                   <Route path="/schedulehistory" element={<ScheduleHistory/>}/>
                   <Route path="/veiw/:id" element={<ScheduleVeiw/>}/>

@@ -3,8 +3,7 @@ import Table from '../helpers/Table'
 import { supabase } from '../helpers/supabase'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import moment from 'moment'
-import Moment from 'react-moment';
+
 
 export default function AdminVerificationHistory() {
    const [rowdata, setRowData] = useState([]);

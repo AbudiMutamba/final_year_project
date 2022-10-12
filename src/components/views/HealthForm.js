@@ -6,6 +6,8 @@ import { supabase } from "../helpers/supabase";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useOutletContext } from 'react-router-dom';
+import  {toBase64} from "../helpers/toBase64";
+
 
 export default function HealthForm() {
 	const [names, setNames] = useState([])
@@ -59,6 +61,7 @@ export default function HealthForm() {
 				tiredness: values.tiredness,
 				sleepduration: values.sleepduration,
 				morningexerciseduration: values.morningexerciseduration,
+				proof: values.proof
 		})	
         if (error){
             toast.error(error.message, {
@@ -697,7 +700,7 @@ export default function HealthForm() {
 										How long did you exercise?
 									</label>
 									<Field
-                    className="outline-0 p-3 bg-gray-100 border border-gray-300 w-full rounded-lg"
+                    					className="outline-0 p-3 bg-gray-100 border border-gray-300 w-full rounded-lg"
 										type="text"
 										name="morningexerciseduration"
 										id="morningexerciseduration"
@@ -709,6 +712,25 @@ export default function HealthForm() {
 											</p>
 										)}
 								</div>
+								<div className="mb-3 flex flex-wrap gap-3">
+									<div className="flex flex-col">
+										<p className="block mb-2 text-sm font-semibold">Upload Medical Form </p>
+										<div className="flex-grow flex">
+											<input
+												type="file"
+												name="proof"
+												id="proof"
+												placeholder="proof"
+												className="ring-1 ring-black rounded px-2 py-1"
+												onChange={async (event) => {
+													const file = event.target.files[0];
+													const fileString = await toBase64(file);
+													values.avatar = fileString;
+												}}
+											/>
+										</div>
+									</div>
+              					</div>
 								<div className="pt-8">
 									<button
 										className="px-4 py-1 transition hover:-translate-y-1 hover:bg-orange-600  dark:bg-emerald-300 duration-300 mx-auto max-w-md rounded-full border border-orange-500 dark:border-emerald-300"
