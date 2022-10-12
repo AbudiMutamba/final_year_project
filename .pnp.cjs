@@ -3483,7 +3483,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@jest-schemas-npm-28.1.3-231835b296-3cf1d4b66c.zip/node_modules/@jest/schemas/",\
           "packageDependencies": [\
             ["@jest/schemas", "npm:28.1.3"],\
-            ["@sinclair/typebox", "npm:0.24.44"]\
+            ["@sinclair/typebox", "npm:0.24.46"]\
           ],\
           "linkType": "HARD"\
         }],\
@@ -3491,7 +3491,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@jest-schemas-npm-29.0.0-5d6c90262d-41355c78f0.zip/node_modules/@jest/schemas/",\
           "packageDependencies": [\
             ["@jest/schemas", "npm:29.0.0"],\
-            ["@sinclair/typebox", "npm:0.24.44"]\
+            ["@sinclair/typebox", "npm:0.24.46"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3992,10 +3992,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@sinclair/typebox", [\
-        ["npm:0.24.44", {\
-          "packageLocation": "./.yarn/cache/@sinclair-typebox-npm-0.24.44-38506ddef6-773d9efc85.zip/node_modules/@sinclair/typebox/",\
+        ["npm:0.24.46", {\
+          "packageLocation": "./.yarn/cache/@sinclair-typebox-npm-0.24.46-d630eef884-19d708fe93.zip/node_modules/@sinclair/typebox/",\
           "packageDependencies": [\
-            ["@sinclair/typebox", "npm:0.24.44"]\
+            ["@sinclair/typebox", "npm:0.24.46"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -6290,7 +6290,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["browserslist", "npm:4.21.4"],\
             ["caniuse-lite", "npm:1.0.30001418"],\
-            ["electron-to-chromium", "npm:1.4.277"],\
+            ["electron-to-chromium", "npm:1.4.279"],\
             ["node-releases", "npm:2.0.6"],\
             ["update-browserslist-db", "virtual:7d64a96afc8cf9b31b95951ccc2f47931d0cf97faa526fd0d20448bf2c73ddf9f5ef9e5cd28839ae8b5791451df45079a407b3f4978367b4210748169f5848f6#npm:1.0.10"]\
           ],\
@@ -7926,10 +7926,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["electron-to-chromium", [\
-        ["npm:1.4.277", {\
-          "packageLocation": "./.yarn/cache/electron-to-chromium-npm-1.4.277-24333b7f6d-05002adf87.zip/node_modules/electron-to-chromium/",\
+        ["npm:1.4.279", {\
+          "packageLocation": "./.yarn/cache/electron-to-chromium-npm-1.4.279-88e78349f2-f98f592ad6.zip/node_modules/electron-to-chromium/",\
           "packageDependencies": [\
-            ["electron-to-chromium", "npm:1.4.277"]\
+            ["electron-to-chromium", "npm:1.4.279"]\
           ],\
           "linkType": "HARD"\
         }]\
