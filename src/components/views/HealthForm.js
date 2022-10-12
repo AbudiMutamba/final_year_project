@@ -46,35 +46,35 @@ export default function HealthForm() {
 
 	const handleSubmit = async (values, { resetForm }) => {
 		console.log(values)
-		const {data, error} = await supabase
-        .from('health_form')
-        .insert ({
-				user_id: names.id,
-                backpain: values.backpain,
-				chestpain: values.chestpain,
-				cough: values.cough,
-				fever: values.cough,
-				headache: values.headache,
-				sorethroat: values.sorethroat,
-				shortnessofbreath: values.shortnessofbreath,
-				sneezing: values.sneezing,
-				tiredness: values.tiredness,
-				sleepduration: values.sleepduration,
-				morningexerciseduration: values.morningexerciseduration,
-				proof: values.proof
-		})	
-        if (error){
-            toast.error(error.message, {
-            position: "top-center"
-        });
-        }else {
-            toast.success("Success", {
-            position: "top-center"
-        });
-           resetForm();
-           setActivities([...activities, values]);
+		// const {data, error} = await supabase
+        // .from('health_form')
+        // .insert ({
+		// 		user_id: names.id,
+        //         backpain: values.backpain,
+		// 		chestpain: values.chestpain,
+		// 		cough: values.cough,
+		// 		fever: values.cough,
+		// 		headache: values.headache,
+		// 		sorethroat: values.sorethroat,
+		// 		shortnessofbreath: values.shortnessofbreath,
+		// 		sneezing: values.sneezing,
+		// 		tiredness: values.tiredness,
+		// 		sleepduration: values.sleepduration,
+		// 		morningexerciseduration: values.morningexerciseduration,
+		// 		proof: values.proof
+		// })	
+        // if (error){
+        //     toast.error(error.message, {
+        //     position: "top-center"
+        // });
+        // }else {
+        //     toast.success("Success", {
+        //     position: "top-center"
+        // });
+        //    resetForm();
+        //    setActivities([...activities, values]);
 		
-	    };
+	    // };
 	};
 
 	return (
@@ -103,7 +103,7 @@ export default function HealthForm() {
 						}}
 						validationSchema={checkinSchema}
 						onSubmit={handleSubmit}>
-						{({ errors, touched }) => (
+						{({ errors, touched, values,error}) => (
 							<Form>
 								<div className="py-2">
 									<p className="mb-2 text-sm font-semibold">
@@ -725,7 +725,7 @@ export default function HealthForm() {
 												onChange={async (event) => {
 													const file = event.target.files[0];
 													const fileString = await toBase64(file);
-													values.avatar = fileString;
+													values.proof = fileString;
 												}}
 											/>
 										</div>
@@ -734,7 +734,12 @@ export default function HealthForm() {
 								<div className="pt-8">
 									<button
 										className="px-4 py-1 transition hover:-translate-y-1 hover:bg-orange-600  dark:bg-emerald-300 duration-300 mx-auto max-w-md rounded-full border border-orange-500 dark:border-emerald-300"
+										onClick={() => {
+                                            console.log(values)
+                                            console.log(errors)
+                                        }}
 										type="submit">
+										
 										Submit
 									</button>
 								</div>

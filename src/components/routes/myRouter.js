@@ -33,8 +33,9 @@ import ScheduleVeiw from '../views/ScheduleVeiw';
 import EditMyTasks from '../views/EditMyTasks';
 import VoiceNote from '../helpers/VoiceNote';
 import MyAudio from '../views/MyAudio';
-import  { AudioRecorder } from '../views/voicenotes/AudioRecorder';
+import  Recorder from '../views/voicenotes/Recorder';
 import AdminVerifyTask from '../views/AdminVerifyTask';
+import AdminHealthfiles from '../views/AdminHealthfiles';
 export default function MyRouter() {
   const [loading, setLoading] = useState(true);
   const preloader = document.getElementById("preloader");
@@ -74,9 +75,10 @@ export default function MyRouter() {
                   <Route path="/assigntask" element={<AssignTask/>}/>
                   <Route path="/edittask/:id" element={<EditTask/>}/>
                   <Route path="/verify/:id" element={<AdminVerifyTask/>}/>
-                  <Route path="/voicenote" element={<VoiceNote/>}/>
-                  <Route path="/audio" element={<MyAudio/>}/>
-                  {/* <Route path "/edit" element={<AudioRecorder/>}/> */}
+                  {/* <Route path="/voicenote" element={<VoiceNote/>}/> */}
+                  <Route path="/voicenote" element={<Recorder/>}/>
+                  {/* <Route path="/audio" element={<MyAudio/>}/> */}
+                  {/* <Route path="/audio" element={<Recorder/>}/> */}
                   <Route path="/needbasedtask" element={<NeedbasedTask/>}/>
                   <Route path="/schedulehistory" element={<ScheduleHistory/>}/>
                   <Route path="/veiw/:id" element={<ScheduleVeiw/>}/>
@@ -91,6 +93,7 @@ export default function MyRouter() {
                   <Route path="/healthform" element={<HealthForm/>} /> 
                   <Route path="/mystatus" element={<HealthStatus/>} /> 
                   <Route path="/allhealthstatus" element={<AdminhealthStatus/>} /> 
+                  <Route path="/healthfile" element={<AdminHealthfiles/>} /> 
                   <Route path="/unauthorized" element={<Unauthorized/>} />  
               </Route>
               

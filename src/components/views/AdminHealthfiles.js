@@ -7,37 +7,32 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function AdminHealthfiles() {
    const [rowdata, setRowData] = useState([]);
+
    useEffect ( () => {
     let getData = async () => {
-        let { data, error } = await supabase.from('tasks').select('id, seen_by_employee, comments, title, created_at, status, remarks')
+        let { data, error } = await supabase.from('health_form').select('id, proof, created_at')
         console.log(data) 
         setRowData (data)
     }
     getData()
+    // if (url) downloadImage(url)
 },[]) 
 
-    // const columns = [
-    //     {
-    //         Header: "Date",
-    //         accessor: "date",
-    //     },
-    //     // {
-    //     //     Header: "Name",
-    //     //     accessor: "id",
-    //     // },
-    //     {
-    //         Header: "Title",
-    //         accessor: "title",
-    //     },
-    //     {
-    //         Header: "Description",
-    //         accessor: "edit",
-    //     },
-    //     // {
-    //     //     Header: "Delete",
-    //     //     accessor: "delete",
-    //     // },
-    // ]
+    const handleVeiw = async (value) => {
+        const { data, error } = await supabase
+        .storage
+        .from('health-pdf')
+        .download(value)
+        if (error){
+            toast.error(error.message, {
+            position: "top-center"
+        });
+        }else{
+            toast.success("Success", {
+            position: "top-center"
+            });
+        }
+    }
     const columns = [
         {
             Header: "Date",
@@ -45,30 +40,20 @@ export default function AdminHealthfiles() {
         },
 
         {
-            Header: "Title",
-            accessor: "title",
+            Header: "Name",
+            accessor: "id",
         },
         
-        // {
-        //     Header: "Action",
-        //     accessor: "id",
-        //     Cell: ({value}) => {
-        //         return(
-        //                 <div>
-        //                     <button onClick={() => handleVeiw(value)} className="text-black px-2 ">Veiw</button>
-        //                     <button onClick={() => handleEdit(value)} className="text-black" >Edit</button>
-        //                 </div>
-        //         )
-        //     } 
-        // },
         {
-            Header: "Seen",
-            id: "seen_by_employee",
-            accessor: d => d.seen_by_employee.toString()
-        },
-        {
-            Header: "Status",
-            accessor: "status",
+            Header: "Action",
+            accessor: "proof",
+            Cell: ({value}) => {
+                return(
+                        <div>
+                            <button onClick={() => handleVeiw(value)} className="text-black px-2 ">Download</button>
+                        </div>
+                )
+            } 
         },
         
     ]

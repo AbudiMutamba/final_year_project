@@ -16,28 +16,6 @@ export default function AdminVerificationHistory() {
     getData()
 },[]) 
 
-    // const columns = [
-    //     {
-    //         Header: "Date",
-    //         accessor: "date",
-    //     },
-    //     // {
-    //     //     Header: "Name",
-    //     //     accessor: "id",
-    //     // },
-    //     {
-    //         Header: "Title",
-    //         accessor: "title",
-    //     },
-    //     {
-    //         Header: "Description",
-    //         accessor: "edit",
-    //     },
-    //     // {
-    //     //     Header: "Delete",
-    //     //     accessor: "delete",
-    //     // },
-    // ]
     const columns = [
         {
             Header: "Date",

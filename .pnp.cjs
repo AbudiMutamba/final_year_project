@@ -28,7 +28,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@baxibaba/react-audio-recorder", "virtual:2f21968667a47cc07853f3f44d7f4a5e1e2dd3138e77daca362e354f39495fd967db1362243374986cf4bacdaeb8ad0fa82089b7f1f44b645fef7aa8586e229a#npm:1.0.1"],\
             ["@supabase/supabase-js", "npm:2.0.0"],\
             ["@testing-library/jest-dom", "npm:5.16.5"],\
             ["@testing-library/react", "virtual:2f21968667a47cc07853f3f44d7f4a5e1e2dd3138e77daca362e354f39495fd967db1362243374986cf4bacdaeb8ad0fa82089b7f1f44b645fef7aa8586e229a#npm:13.4.0"],\
@@ -2850,28 +2849,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/helper-string-parser", "npm:7.19.4"],\
             ["@babel/helper-validator-identifier", "npm:7.19.1"],\
             ["to-fast-properties", "npm:2.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@baxibaba/react-audio-recorder", [\
-        ["npm:1.0.1", {\
-          "packageLocation": "./.yarn/cache/@baxibaba-react-audio-recorder-npm-1.0.1-8c54616d69-2b107e6de4.zip/node_modules/@baxibaba/react-audio-recorder/",\
-          "packageDependencies": [\
-            ["@baxibaba/react-audio-recorder", "npm:1.0.1"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:2f21968667a47cc07853f3f44d7f4a5e1e2dd3138e77daca362e354f39495fd967db1362243374986cf4bacdaeb8ad0fa82089b7f1f44b645fef7aa8586e229a#npm:1.0.1", {\
-          "packageLocation": "./.yarn/__virtual__/@baxibaba-react-audio-recorder-virtual-c9f7a2c4ec/0/cache/@baxibaba-react-audio-recorder-npm-1.0.1-8c54616d69-2b107e6de4.zip/node_modules/@baxibaba/react-audio-recorder/",\
-          "packageDependencies": [\
-            ["@baxibaba/react-audio-recorder", "virtual:2f21968667a47cc07853f3f44d7f4a5e1e2dd3138e77daca362e354f39495fd967db1362243374986cf4bacdaeb8ad0fa82089b7f1f44b645fef7aa8586e229a#npm:1.0.1"],\
-            ["@types/react", null],\
-            ["react", "npm:18.2.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/react",\
-            "react"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -8003,7 +7980,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["employee_webapp", "workspace:."],\
-            ["@baxibaba/react-audio-recorder", "virtual:2f21968667a47cc07853f3f44d7f4a5e1e2dd3138e77daca362e354f39495fd967db1362243374986cf4bacdaeb8ad0fa82089b7f1f44b645fef7aa8586e229a#npm:1.0.1"],\
             ["@supabase/supabase-js", "npm:2.0.0"],\
             ["@testing-library/jest-dom", "npm:5.16.5"],\
             ["@testing-library/react", "virtual:2f21968667a47cc07853f3f44d7f4a5e1e2dd3138e77daca362e354f39495fd967db1362243374986cf4bacdaeb8ad0fa82089b7f1f44b645fef7aa8586e229a#npm:13.4.0"],\

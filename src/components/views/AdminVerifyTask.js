@@ -151,10 +151,10 @@ export default function AdminVerifyTask() {
                                         </label>
                                     </div>
                                     <button
-                                        onClick={() => {
-                                            console.log(values)
-                                            console.log(errors)
-                                        }}
+                                        // onClick={() => {
+                                        //     console.log(values)
+                                        //     console.log(errors)
+                                        // }}
                                         type="submit"
                                         className="py-2 px-5 transition hover:-translate-y-1 hover:bg-orange-600 duration-300 mx-auto max-w-md rounded-full border bg-emerald-300">
                                         Send

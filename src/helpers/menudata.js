@@ -46,7 +46,10 @@ export const Menus = {
     ]},
     {title: "PROFILE", src:<BsPersonCircle size={25} />, link: '/profile'},
     {title: "MEMBERS", src:<FaUserFriends size={25} />, link: '/members'},
-    {title: "HEALTH STATUS", src: <GiHealthNormal size={25} />, link: '/allhealthstatus'},
+    {title: "HEALTH STATUS", src: <GiHealthNormal size={25} />, link: '/allhealthstatus', subLinks: [
+      {title: "HEALTH STATUS", link: '/allhealthstatus'},
+      {title: "HEALTH FILES", link: '/healthfile'},
+    ]},
   ],
 
   super_admin: [
