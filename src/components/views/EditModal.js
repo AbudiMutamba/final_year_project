@@ -15,7 +15,7 @@ function EditModal({ setEditPop }) {
     ...profile,
     password: "",
   };
-  console.log(profile)
+  // console.log(profile)
   // const { id } = supabase.auth.user();
   const [loading, setLoading] = useState(false);
 
@@ -53,7 +53,7 @@ function EditModal({ setEditPop }) {
 
           setLoading(true);
           supabase
-            .rpc("check_password", { current_password: password, _user_id: profile.id })
+            .rpc("check_password", { current_password: password})
             .then(async ({ data }) => {
               if (data) {
                 const { error, data } = await supabase
@@ -73,7 +73,7 @@ function EditModal({ setEditPop }) {
                   })
                   .eq("id", profile.id)
                   .single();
-
+                  
                 if (error) {
                   setLoading(false);
                   toast.error(`${error?.message}`, { position: "top-center" });
@@ -282,8 +282,13 @@ function EditModal({ setEditPop }) {
               <div className="flex justify-end gap-3 mt-3">
                 <input
                   className="bg-primary px-3 py-1 outline outline-1 outline-primary rounded-md text-white"
+                  onChange={() => {
+                    console.log(values)
+                    console.log(errors)
+                }}
                   type="submit"
                   value="Save"
+                  
                 />
               </div>
             </Form>

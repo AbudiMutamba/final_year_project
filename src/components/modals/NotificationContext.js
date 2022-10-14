@@ -28,7 +28,7 @@ function NotificationContext({ show}) {
             }
         };
 
-        getNotifications();
+        getNotifications().catch(error => console.log(error));
     })
         
 

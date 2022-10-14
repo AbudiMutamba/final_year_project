@@ -2,19 +2,21 @@
 import  React,{ useEffect, useState} from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useLocation, useNavigate, Navigate, Link} from "react-router-dom";
+import { useLocation, useNavigate, Navigate, Link } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import Logo from "../assets/logo1.png";
+import { supabase } from "../helpers/supabase";
 
 
 export default function Login() {
-  const { user, setUser, signIn,} = useAuth() 
+  const { user, setUser, signIn} = useAuth() 
   const [errorMsg, setErrorMsg] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/dashboard" ;
 
   // React.useEffect(() => {
+
 	// document.title = "M&E - Login"
   // },[]);
 
@@ -24,9 +26,9 @@ export default function Login() {
   });
 
 
-  return user?.session ? (
-    <Navigate to={from} replace />
-  ) : (
+  return user?.session ? 
+   user
+   : (
     // <div className="flex flex-col justify-center items-center h-screen">
     <div className='md:h-screen flex flex-col justify-center items-center bg-gray-100'>
       <div className="p-10 md:bg-white md:border border-gray-300 md:rounded-md w-full md:w-1/3 items-center">
@@ -36,13 +38,28 @@ export default function Login() {
           validationSchema={loginSchema}
           onSubmit={async (values, {setSubmitting, resetForm}) => {
             
-            const { data, error } = await signIn(values);
+            const { data: { user }, error } = await signIn(values);
             if (error) { 
               setErrorMsg(error.message);
+
               // console.log(error)
             } else{
-              setUser(data.user);
-              navigate(from , { replace: true });
+              const { data, error } = await supabase.from('profiles').select().eq('id', user.id).single()
+              if( error ) {
+                // console.log(error)
+                throw error
+              } else {
+                // console.log(data)
+
+                
+                if( data.roles === 'member') {
+                  navigate('/attendance' );
+                } else if (data.roles === 'admin') {
+                  navigate('/dashboard')
+                }
+              }
+
+
             }
             resetForm();
             // console.log(response)

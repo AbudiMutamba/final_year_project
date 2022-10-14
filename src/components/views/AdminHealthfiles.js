@@ -3,35 +3,39 @@ import Table from '../helpers/Table'
 import { supabase } from '../helpers/supabase'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-
+import { triggerBase64Download } from 'common-base64-downloader-react';
 
 export default function AdminHealthfiles() {
    const [rowdata, setRowData] = useState([]);
 
    useEffect ( () => {
     let getData = async () => {
-        let { data, error } = await supabase.from('health_form').select('id, proof, created_at')
-        console.log(data) 
+        let { data, error } = await supabase.from('health_form').select('id, user_name, proof, created_at')
+        // console.log(data) 
         setRowData (data)
     }
     getData()
-    // if (url) downloadImage(url)
-},[]) 
+
+    },[]) 
 
     const handleVeiw = async (value) => {
-        const { data, error } = await supabase
-        .storage
-        .from('health-pdf')
-        .download(value)
-        if (error){
-            toast.error(error.message, {
-            position: "top-center"
-        });
-        }else{
-            toast.success("Success", {
-            position: "top-center"
-            });
-        }
+        // console.log(value)
+        // const { data, error } = await supabase
+        // .storage
+        // .from('health-pdf')
+        // .download(value)
+        // if (error){
+        //     toast.error(error.message, {
+        //     position: "top-center"
+        // });
+        // }else{
+        //     toast.success("Success", {
+        //     position: "top-center"
+        //     });
+        // }
+        // let base64ToString = Buffer.from(obj, "base64").toString();
+        // base64ToString = JSON.parse(base64ToString);
+        triggerBase64Download(value, 'my_download_name')
     }
     const columns = [
         {
@@ -41,7 +45,7 @@ export default function AdminHealthfiles() {
 
         {
             Header: "Name",
-            accessor: "id",
+            accessor: "user_name",
         },
         
         {

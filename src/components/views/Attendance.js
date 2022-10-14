@@ -17,10 +17,10 @@ export default function Attendance() {
     const [max_date_attendence, setMax_date_attendence] = useState({})
     const location = useGeoLocation()
     const currentDateTime = moment().format();
-    
+    // console.log(user)
     useEffect ( () => {
         let getData = async () => {
-            let { data, error } = await supabase.from('attendence').select('*').eq('user_id', profile.id)
+            let { data, error } = await supabase.from('attendence').select('*').eq('user_id', user.id)
             if(error) throw error
             let max_date_attendence = data[0]
             data.forEach((attendence) => {
@@ -44,7 +44,7 @@ export default function Attendance() {
              
         }
         getData().catch(error => console.log(error))
-        console.log(user)
+        // console.log(user)
     },[]) 
 
 
@@ -89,9 +89,12 @@ export default function Attendance() {
               
     const onCheckOutClick = async() => {
         
-            const { data, error } = await supabase.rpc('update_duration', { attendence_id: max_date_attendence.id } )
+            const { data, error } = await supabase.rpc('total_working_duration', { attendence_id: max_date_attendence.id, check_out_time: new Date()
+                .toISOString()
+                .toLocaleString("en-GB", { timeZone: "UTC" }) } )
             console.log(data)
             if (error){
+                console.log(error)
                 toast.error(error.message, {
                     position: "top-center"
                 });

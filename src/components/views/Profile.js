@@ -30,7 +30,7 @@ export default function Profile() {
       supabase
         .rpc("check_password", {
           current_password: values.old_password,
-          // _user_id: id,
+          _user_id: profile.id,
         })
         .then(async ({ data }) => {
           if (data) {

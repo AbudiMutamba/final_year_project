@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 export default function Map() {
   const { lat, log} = useParams();
-
+  
 
   function LocationMarker() {
     const [position, setPosition] = useState(null)

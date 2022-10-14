@@ -45,10 +45,11 @@ export default function HealthForm() {
 
 
 	const handleSubmit = async (values, { resetForm }) => {
-		console.log(values)
+		// console.log(values)
 		const {data, error} = await supabase
         .from('health_form')
         .insert ({
+				user_name: names.username,
 				user_id: names.id,
                 backpain: values.backpain,
 				chestpain: values.chestpain,
@@ -734,10 +735,10 @@ export default function HealthForm() {
 								<div className="pt-8">
 									<button
 										className="px-4 py-1 transition hover:-translate-y-1 hover:bg-orange-600  dark:bg-emerald-300 duration-300 mx-auto max-w-md rounded-full border border-orange-500 dark:border-emerald-300"
-										onClick={() => {
-                                            console.log(values)
-                                            console.log(errors)
-                                        }}
+										// onClick={() => {
+                                        //     console.log(values)
+                                        //     console.log(errors)
+                                        // }}
 										type="submit">
 										
 										Submit

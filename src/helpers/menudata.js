@@ -10,7 +10,7 @@ import { MdAddTask } from 'react-icons/md';
 export const Menus = {
   
   member : [
-    {title: "DASHBOARD", src: <ImHome size={25} />, link: '/dashboard'},
+    // {title: "DASHBOARD", src: <ImHome size={25} />, link: '/dashboard'},
     {title: "ATTENDANCE", src:<RiTimerLine size={25} />, link: '/attendance'},
     {title: "WORK SCHEDULE", src:<TbCalendarTime size={25} />, link: '/schedule', subLinks:[
       {title: "ASSIGNED TASKS", link:'/schedule'},

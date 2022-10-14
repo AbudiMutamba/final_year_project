@@ -12,6 +12,8 @@ export default function SideNav({user, open, setOpen}) {
               user.roles === "admin" ? "admin" : "member"
   const [selectedIndex, setSelectedIndex] = useState(null)
 
+  const menuList = user.roles === "member" ? [1, 2,Menus[`member`].length-1] : [2,3,Menus[`${role}`].length-1];
+
   return (
     <div className='flex fixed bottom-0 left-0'>
         <div className={`${open ? 'w-72' : 'w-20'} duration-300 p-5 pt-8 w-72 h-screen bg-zinc-100 relative`}>
@@ -34,7 +36,8 @@ export default function SideNav({user, open, setOpen}) {
                   <span className={`${!open && "hidden"} origin-left duration-200`}>
                     {Menu.title}
                   </span>
-                  {[2,3,Menus[`${role}`].length-1].includes(index) && (
+                  {
+                  menuList.includes(index) && (
                         <i onClick={() => {
                           selectedIndex === index ? setSelectedIndex(null) : setSelectedIndex(index)
                         }}>
@@ -43,7 +46,7 @@ export default function SideNav({user, open, setOpen}) {
                   )}
                 </div>
                 </NavLink>
-                {[2,3,Menus[`${role}`].length-1].includes(index) && selectedIndex === index &&
+                {menuList.includes(index) && selectedIndex === index &&
                   <div className='bg-white rounded-lg'>
                     {Menu.subLinks.map((item, index) =>
                     <div className="py-1 px-3 cursor-pointer dark:text-secondary-text hover:bg-orange-600">

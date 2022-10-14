@@ -9,7 +9,8 @@ import { useAuth } from "../auth/AuthContext";
 
 export default function Members() {
     const [rowdata, setRowData] = useState([]);
-    const {Invite} = useAuth() 
+    const [errorMsg, setErrorMsg] = useState(null);
+    const {magicLink} = useAuth() 
    
 	useEffect( () => {
         let getUser = async () => {
@@ -59,7 +60,16 @@ export default function Members() {
                     initialValues={{ email: ""}}
                     validationSchema={loginSchema}
                     onSubmit={async (values, {setSubmitting, resetForm}) => {
-                    
+                        // const { data, error } = await magicLink(values);
+                        // if (error) { 
+                        // setErrorMsg(error.message);
+                        // // console.log(error)
+                        // } else{
+                        // setUser(data.user);
+                        // navigate(from , { replace: true });
+                        // }
+                        // resetForm();
+                        // console.log(response)
                         const response = await fetch("/api/hello", {
                             method: "POST",
                             headers: {

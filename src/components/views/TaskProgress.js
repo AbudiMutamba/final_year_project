@@ -67,7 +67,7 @@ export default function TaskProgress() {
         labels: Object.keys(dataObj),
         datasets: [
           {
-            label: "First dataset",
+            label: "Number of Tasks past the deadline",
             data: Object.values(dataObj),
             fill: false,
             backgroundColor: "rgba(75,192,192,0.2)",
@@ -100,7 +100,7 @@ export default function TaskProgress() {
                     className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline "
                     onChange={(event) => {
                       setSelectedUser(event.target.value)
-                      console.log(event.target.value)
+                      // console.log(event.target.value)
                     }}
                     >
                     <option>- Select -</option>
