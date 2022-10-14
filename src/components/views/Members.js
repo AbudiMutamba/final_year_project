@@ -9,9 +9,7 @@ import { useAuth } from "../auth/AuthContext";
 
 export default function Members() {
     const [rowdata, setRowData] = useState([]);
-    const [errorMsg, setErrorMsg] = useState(null);
-    const {magicLink} = useAuth() 
-   
+    
 	useEffect( () => {
         let getUser = async () => {
             let { data, error } = await supabase.from('profiles').select('username, email, roles, telephone, address').eq('roles', 'member')
@@ -24,6 +22,7 @@ export default function Members() {
     
     const loginSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email address').required("email is required!"),
+        password: Yup.string().min(6, 'Password has to be longer than 6 characters!').required("Password is required!"),
       });
 
 
@@ -55,27 +54,21 @@ export default function Members() {
     <div className="container  mx-auto px-2">
         <ToastContainer/>
         <h1 className='font-bold p-5'>MEMBERS LIST</h1>  
-            <div className="px-10 pb-5">
-            <Formik
+            <div className="px-10 pb-5 ">
+            <Formik 
                     initialValues={{ email: ""}}
                     validationSchema={loginSchema}
                     onSubmit={async (values, {setSubmitting, resetForm}) => {
-                        // const { data, error } = await magicLink(values);
-                        // if (error) { 
-                        // setErrorMsg(error.message);
-                        // // console.log(error)
-                        // } else{
-                        // setUser(data.user);
-                        // navigate(from , { replace: true });
-                        // }
-                        // resetForm();
-                        // console.log(response)
+
                         const response = await fetch("/api/hello", {
                             method: "POST",
                             headers: {
                               "Content-Type": "application/json"
                             },
-                            body: JSON.stringify({ email: values.email })
+                            body: JSON.stringify({ 
+                                email: values.email,
+                                password: values.password
+                            })
                         })
 
                         console.log(response)
@@ -101,6 +94,26 @@ export default function Members() {
                             />
                             {errors.email && touched.email && (
                             <p className="text-red-500 text-xs italic">{errors.email}</p>
+                            )}
+                        </div>
+                        <div className="mb-6">
+                            <label
+                            className="block text-sm font-bold mb-2"
+                            htmlFor="password"
+                            >
+                            Password
+                            </label>
+                            <Field
+                            className="p-2 appearance-none leading-tight outline-0 bg-gray-100 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="******************"
+                            />
+                            {errors.password && touched.password && (
+                            <p className="text-red-500 text-xs italic">
+                                {errors.password}
+                            </p>
                             )}
                         </div>
                         <button
