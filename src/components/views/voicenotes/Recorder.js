@@ -6,7 +6,7 @@ export default function Recorder() {
   const [recording, setRecording] = useState(false);
   const recorder = useRef();
   const [data, setData] = useState();
-  // let size = bytesToSize(recorder.getBlob().size);
+
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({
@@ -15,13 +15,10 @@ export default function Recorder() {
       .then((stream) => {
         recorder.current = RecordRTC(stream, {
           type: "audio",
-          mimeType: "audio/wav",
-          bufferSize: 16384,
-          sampleRate: 96000,
-          recorderType: RecordRTC.StereoAudioRecorder,
+          // recorderType: RecordRTC.StereoAudioRecorder,
           // checkForInactiveTracks: true,
-          timeSlice: PER_MS,
-          numberOfAudioChannels: 2,
+          // timeSlice: PER_MS,
+          // numberOfAudioChannels: 2,
           // previewStream: function(stream)
           ondataavailable: (blob) => {
             // event fired PER_MS interval
@@ -29,11 +26,11 @@ export default function Recorder() {
 
           }
         });
+        // let blob = recorder.current.getBlob();
+        // invokeSaveAsDialog(blob);
       });
   }, []);
-      // console.log(recorder.current.getBlob())
-      let size = bytesToSize(recorder.current.getBlob().size);
-      console.log(size)
+      // console.log(recorder.current.blob)
   return (
     <div className="App">
       <button
@@ -41,11 +38,13 @@ export default function Recorder() {
           setRecording((prev) => {
             if (!prev) {
               recorder.current.startRecording();
-              recorder.current.Recorderfunction()
+  
             } else {
               recorder.current.stopRecording();
-              recorder.current.save("task");
-              
+            //   recorder.current.save(function(task) {
+            //     let blob = recorder.getBlob();
+            //     invokeSaveAsDialog(blob);
+            // })
             }
 
             return !prev;
