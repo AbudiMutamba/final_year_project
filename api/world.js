@@ -8,7 +8,7 @@ const supabaseKey = process.env.SUPABASE_ROLE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 
-export default async function  hello (req, res)  {
+export default async function (req, res)  {
   // res.statusCode = 200;
   // res.json({ message: 'It works' });
   try {
