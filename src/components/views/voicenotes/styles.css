@@ -1,0 +1,41 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  .App video {
+    border-radius: 6px;
+    width: 90%;
+    margin: auto;
+    max-width: 700px;
+  }
+  
+  .buttons {
+    margin: 40px 0;
+  }
+  
+  .buttons button {
+    margin: 5px;
+    background: rgb(33, 166, 255);
+    border: none;
+    padding: 6px 12px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .buttons button:hover {
+    filter: contrast(0.8);
+  }
+  
+  button:active {
+    transform: translateY(1px);
+  }
+  
+  .danger {
+    background: rgb(255, 65, 65) !important;
+  }
+  
+  body {
+    margin: 0;
+  }
+  
