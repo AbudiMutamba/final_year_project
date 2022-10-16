@@ -5,7 +5,7 @@ const supabaseUrl = process.env.SUPABASE_URL
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-export default async ( req, res ) => {
+export default function async ( req, res ) {
     // try {
     //     const { email, password } = req.body
 
