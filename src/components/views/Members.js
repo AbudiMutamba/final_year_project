@@ -56,7 +56,7 @@ export default function Members() {
         <h1 className='font-bold p-5'>MEMBERS LIST</h1>  
             <div className="px-10 pb-5 ">
             <Formik 
-                    initialValues={{ email: ""}}
+                    initialValues={{ email: "",password: ""}}
                     validationSchema={loginSchema}
                     onSubmit={async (values, {setSubmitting, resetForm}) => {
 
