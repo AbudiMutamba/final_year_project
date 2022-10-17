@@ -10,7 +10,7 @@ export default function AdminVerificationHistory() {
    useEffect ( () => {
     let getData = async () => {
         let { data, error } = await supabase.from('tasks').select('id, seen_by_employee, comments, title, created_at, status, remarks')
-        console.log(data) 
+        // console.log(data) 
         setRowData (data)
     }
     getData()

@@ -11,6 +11,8 @@ import DatePicker from 'react-datepicker';
 export default function Recorder() {
   const [ profile] = useOutletContext();
   const [ names, setNames] = useState([])
+  const [activities,setActivities] = useState([]);
+  const [vid, setVid] = useState()
   const video = useRef(null);
   let recorder;
 
@@ -25,11 +27,11 @@ export default function Recorder() {
   }, []);
 
   const handleSubmit = async (values, { resetForm }) => {
-
+   console.log(video.current.src)
     const {data, error} = await supabase
       .from('tasks')
       .insert ({
-            voice_note: audioResult,
+            voice_note: video.current.src,
             assigned_person: values.workwith,
             title: values.workon,
             deadline: values.date,
@@ -89,6 +91,7 @@ export default function Recorder() {
     recorder.camera.stop();
     recorder.destroy();
     recorder = null;
+    setVid(file)
   };
 
   const captureCamera = (callback) => {
@@ -105,6 +108,7 @@ export default function Recorder() {
       });
   };
 
+  console.log(video)
   return (
     <div className='px-10'>
       <ToastContainer />
@@ -126,7 +130,7 @@ export default function Recorder() {
                 }}
                 onSubmit={ handleSubmit}
               >
-                {({ isSubmitting, isValid, values, setFieldValue}) => (
+                {({ isSubmitting, isValid, values, setFieldValue, resetForm}) => (
                   <Form >
                     <div className="py-2">
                         <label>Title of Task</label>

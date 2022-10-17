@@ -19,7 +19,7 @@ export default function AdminVerifyTask() {
 	useEffect( () => {
         let getData = async () => {
             let { data, error } = await supabase.from('tasks').select('*').eq('id', id).single()
-            console.log("data is", data)
+            // console.log("data is", data)
             //  if(error) throw error
              setRowData(data)
         }
@@ -36,7 +36,7 @@ export default function AdminVerifyTask() {
     });
 
 	const handleSubmit = async (values, { resetForm }) => {
-        console.log(values)
+        // console.log(values)
         const {data, error} = await supabase
             .from('tasks')
             .update ({

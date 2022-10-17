@@ -35,6 +35,4 @@ export default async function ( req, res ) {
         const response = {"Status":"Failure", "Details":error}
         return res.status(400).json(response)      
     }
-    res.statusCode = 200;
-    res.json({ message: 'It works' });
 }

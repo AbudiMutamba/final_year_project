@@ -90,9 +90,9 @@ export default function Attendance() {
               
     const onCheckOutClick = async() => {
             const currentDateTime1 = moment().format();
-            console.log(currentDateTime1)
+            // console.log(currentDateTime1)
             const { data, error } = await supabase.rpc('total_working_duration_1', { attendence_id: max_date_attendence.id, check_out_time: currentDateTime1} )
-            console.log(data)
+            // console.log(data)
             if (error){
                 console.log(error)
                 toast.error(error.message, {

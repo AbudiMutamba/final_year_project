@@ -5,7 +5,7 @@ import { supabase } from '../helpers/supabase'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useOutletContext } from 'react-router-dom'
-
+import { triggerBase64Download } from 'common-base64-downloader-react';
 
 export default function MyAudio() {
     const [rowdata, setRowData] = useState([]);
@@ -16,8 +16,8 @@ export default function MyAudio() {
 
     useEffect ( () => {
         let getData = async () => {
-            let { data, error } = await supabase.from('voice_note').select('created_at, title, url_link, user_id').eq('user_id', profile.id)
-            console.log(data)
+            let { data, error } = await supabase.from('tasks').select('created_at, title, voice_note,  assigned_person, id').eq('assigned_person', profile.id)
+            // console.log(data)
             setRowData (data)
         
         }
@@ -31,6 +31,7 @@ export default function MyAudio() {
         //     // .from('attendence')
         //     // .select('location')
         //     // .match()
+        // triggerBase64Download(value, 'my_download_name')
     }
     
 
@@ -45,13 +46,13 @@ export default function MyAudio() {
         },
         {
             Header: "Listen",
-            accessor: "url_link",
+            accessor: "voice_note",
             Cell: ({value}) => <button onClick={() => handleSubmit(value)} className="text-black" >Listen</button>
         },
     ]
   return (
     <div className="container mx-auto px-10">
-        <h1 className='font-bold p-5'>ATTENDENCE</h1>
+        <h1 className='font-bold p-5'>AUDIO TASKS</h1>
             < ToastContainer />
                 <div>
                     <Table columns={columns} data={rowdata}/>

@@ -77,7 +77,7 @@ export default function MyRouter() {
                   <Route path="/verify/:id" element={<AdminVerifyTask/>}/>
                   {/* <Route path="/voicenote" element={<VoiceNote/>}/> */}
                   <Route path="/voicenote" element={<Recorder/>}/>
-                  {/* <Route path="/audio" element={<MyAudio/>}/> */}
+                  <Route path="/audio" element={<MyAudio/>}/>
                   {/* <Route path="/audio" element={<Recorder/>}/> */}
                   <Route path="/needbasedtask" element={<NeedbasedTask/>}/>
                   <Route path="/schedulehistory" element={<ScheduleHistory/>}/>

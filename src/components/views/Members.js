@@ -70,7 +70,6 @@ export default function Members() {
                                 password: values.password
                             })
                         })
-
                         console.log(response)
 
                        
