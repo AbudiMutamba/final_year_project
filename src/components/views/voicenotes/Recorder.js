@@ -26,12 +26,11 @@ export default function Recorder() {
     getUser()
   }, []);
 
-  const handleSubmit = async (values, { resetForm }) => {
-   console.log(video.current.src)
+  const handleSubmit = async (values,  {resetForm}) => {
     const {data, error} = await supabase
       .from('tasks')
       .insert ({
-            voice_note: video.current.src,
+            voice_note: vid,
             assigned_person: values.workwith,
             title: values.workon,
             deadline: values.date,
@@ -48,6 +47,8 @@ export default function Recorder() {
        resetForm();
        setActivities([...activities, values]);
     };
+
+    
   }
 
 
@@ -75,12 +76,15 @@ export default function Recorder() {
     recorder?.stopRecording?.(stopRecordingCallback);
   };
 
-  const stopRecordingCallback = () => {
-    var blob = recorder.getBlob();
-    var fileName = "video.mp4";
-    var file = new File([blob], fileName, {
+  const stopRecordingCallback = async () => {
+    let blob = recorder.getBlob();
+    let fileName = "video.mp4";
+    
+    let file = new File([blob], fileName, {
       type: "video/mp4"
     });
+    console.log(file)
+    const filePath = `${file.lastModified}`
     RecordRTC.invokeSaveAsDialog(file); // or  invokeSaveAsDialog(file, fileName); or  invokeSaveAsDialog(blob, fileName);
     video.current.src = video.srcObject = null;
     video.current.muted = false;
@@ -91,7 +95,17 @@ export default function Recorder() {
     recorder.camera.stop();
     recorder.destroy();
     recorder = null;
-    setVid(file)
+    const { data, error } = await supabase.storage
+        .from('voice-notes')
+        .upload(`/public/${filePath}`, file)
+        if (error) {
+          console.log(error)
+          // throw error
+        } else {
+          setVid(data.path)
+          console.log(data)
+        }
+    
   };
 
   const captureCamera = (callback) => {
@@ -107,8 +121,7 @@ export default function Recorder() {
         console.error(error);
       });
   };
-
-  console.log(video)
+  console.log(vid)
   return (
     <div className='px-10'>
       <ToastContainer />
@@ -130,7 +143,7 @@ export default function Recorder() {
                 }}
                 onSubmit={ handleSubmit}
               >
-                {({ isSubmitting, isValid, values, setFieldValue, resetForm}) => (
+                {({ isSubmitting, isValid, values, setFieldValue, }) => (
                   <Form >
                     <div className="py-2">
                         <label>Title of Task</label>

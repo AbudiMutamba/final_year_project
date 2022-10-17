@@ -5,7 +5,7 @@ import { supabase } from '../helpers/supabase'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useOutletContext } from 'react-router-dom'
-import { triggerBase64Download } from 'common-base64-downloader-react';
+import RecordRTC from "recordrtc";
 
 export default function MyAudio() {
     const [rowdata, setRowData] = useState([]);
@@ -25,13 +25,23 @@ export default function MyAudio() {
     },[])  
     const handleSubmit =  async (value) => {
         console.log(value)
-        const from = location.state?.from?.pathname || `${value}`;
-        navigate(from, { replace: true });
+        // const from = location.state?.from?.pathname || `${value}`;
+        // navigate(from, { replace: true });
         //     // let { data, error } = await supabase
         //     // .from('attendence')
         //     // .select('location')
         //     // .match()
         // triggerBase64Download(value, 'my_download_name')
+        const { data, error } = await supabase.storage
+        .from('voice-notes')
+        .download(value)
+        if (error) {
+            throw error
+            // console.log(error);
+        }else {
+            // console.log(data)
+        }
+        RecordRTC.invokeSaveAsDialog(data);
     }
     
 
