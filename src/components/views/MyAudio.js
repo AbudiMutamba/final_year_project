@@ -25,7 +25,7 @@ export default function MyAudio() {
     },[])  
     const handleSubmit =  async (value) => {
         console.log(value)
-        const from = location.state?.from?.pathname || `/listen/${value}`;
+        const from = location.state?.from?.pathname || `${value}`;
         navigate(from, { replace: true });
         //     // let { data, error } = await supabase
         //     // .from('attendence')
