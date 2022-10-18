@@ -6,10 +6,13 @@ import { supabase } from "../helpers/supabase";
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from "../auth/AuthContext";
+import { useLocation, useNavigate, Navigate, Link } from "react-router-dom";
+
 
 export default function Members() {
     const [rowdata, setRowData] = useState([]);
-    
+    const { user, setUser, signIn, signUp} = useAuth() 
+    const navigate = useNavigate();
 	useEffect( () => {
         let getUser = async () => {
             let { data, error } = await supabase.from('profiles').select('username, email, roles, telephone, address').eq('roles', 'member')
@@ -56,21 +59,36 @@ export default function Members() {
         <h1 className='font-bold p-5'>MEMBERS LIST</h1>  
             <div className="px-10 pb-5 ">
             <Formik 
-                    initialValues={{ email: "",password: ""}}
+                    initialValues={{ email: "",password: "",roles:"member" }}
                     validationSchema={loginSchema}
                     onSubmit={async (values, {setSubmitting, resetForm}) => {
 
-                        const response = await fetch("/api/hello", {
-                            method: "POST",
-                            headers: {
-                              "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({ 
-                                email: values.email,
-                                password: values.password
-                            })
+                        const { data, error } = await signUp(values);
+                        if (error) { 
+                        // setErrorMsg(error.message);
+                        toast.error(error.message, {
+                            position: "top-center"
                         })
-                        console.log(response)
+                        // console.log(error)
+                        } else{
+                        // setUser(data.user);
+                        // navigate(from , { replace: true })
+                            toast.success("Success", {
+                            position: "top-center"
+                        });
+                        }
+                        resetForm();
+                        // const response = await fetch("/api/hello", {
+                        //     method: "POST",
+                        //     headers: {
+                        //       "Content-Type": "application/json"
+                        //     },
+                        //     body: JSON.stringify({ 
+                        //         email: values.email,
+                        //         password: values.password
+                        //     })
+                        // })
+                        // console.log(response)
 
                        
                     }}

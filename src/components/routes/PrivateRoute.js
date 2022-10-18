@@ -12,6 +12,7 @@ import SideNav from "../views/SideNav";
 const PrivateRoute = ({ allowedRoles }) => {
   // const matches = useMediaQuery("(min-width: 800px)");
   const [ disabled, setDisabled ] = useState(true)
+  // console.log(allowedRoles )
 
   // const [showSidebar, setShowSidebar] = useState(
   //   !JSON.parse(localStorage.getItem("sidebarCollapsed")) || false
@@ -19,7 +20,7 @@ const PrivateRoute = ({ allowedRoles }) => {
 
   const { user, darkMode } = useAuth();
   const [profile, setProfile] = useState({});
-  const [roles, setRoles] = useState(null);
+  const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const [open, setOpen] = useState(true)
@@ -30,10 +31,10 @@ const PrivateRoute = ({ allowedRoles }) => {
       .then((data) => {
         
         if (data) {
-          const { roles } = data;
-          setRoles(roles);
+          const { role } = data;
+          setRole(role);
           setProfile(data);
-          setDisabled(!(roles && roles?.length > 0))
+          setDisabled(!(role && role?.length > 0))
         }
       })
       .then(() => setLoading(false))
@@ -54,15 +55,15 @@ const PrivateRoute = ({ allowedRoles }) => {
                       {/* <Outlet context={[]} /> */}
                       {profile &&
                         (allowedRoles !== undefined ? (
-                          roles ? (
-                            roles.find((role) => allowedRoles.includes(role)) ? (
+                          role ? (
+                            allowedRoles.includes(role) ? (
                               loading ? (
                               <div className="flex-grow mx-5 my-2 overflow-y-auto h-full">
                                  <Spinner />
                               </div>
                                 ) : (
                                   <ErrorBoundary>
-                                    <Outlet context={[user, profile, setProfile, roles]} />
+                                    <Outlet context={[user, profile, setProfile, role]} />
                                   </ErrorBoundary>
                         )
                           ) : (
@@ -80,7 +81,7 @@ const PrivateRoute = ({ allowedRoles }) => {
                                   <Spinner />
                                 ) : (
                                   <ErrorBoundary>
-                                    <Outlet context={[user, profile, setProfile, roles]} />
+                                    <Outlet context={[user, profile, setProfile, role]} />
                                   </ErrorBoundary>
                                 )}
                               </div>
@@ -91,7 +92,7 @@ const PrivateRoute = ({ allowedRoles }) => {
                               <Spinner />
                             ) : (
                               <ErrorBoundary>
-                                <Outlet context={[user, profile, setProfile, roles]} />
+                                <Outlet context={[user, profile, setProfile, role]} />
                               </ErrorBoundary>
                             )}
                           </div>
@@ -100,6 +101,7 @@ const PrivateRoute = ({ allowedRoles }) => {
             </div>
         </div>
       </div>
+      
     ):(
     <>
       <Navigate to="/" state={{ from: location }} replace />

@@ -50,16 +50,12 @@ export default function Login() {
                 throw error
               } else {
                 // console.log(data)
-
-                
                 if( data.roles === 'member') {
                   navigate('/attendance' );
                 } else if (data.roles === 'admin') {
                   navigate('/dashboard')
                 }
               }
-
-
             }
             resetForm();
             // console.log(response)

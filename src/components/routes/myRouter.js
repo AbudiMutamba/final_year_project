@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import Login from '../views/Login';
 // import SignUp from '../views/SignUp';
 import Dashboard from '../views/Dashboard'
-import MyCalendar from '../views/MyCalendar'
+// import MyCalendar from '../views/MyCalendar'
 import Attendance from '../views/Attendance';
 import AssignTask from '../views/AssignTask';
 import NeedbasedTask from '../views/NeedbasedTask';
@@ -65,35 +65,35 @@ export default function MyRouter() {
                 <Route path="/forgotpassword" element={<ForgotPassword />} />
                 <Route path="/password_reset" element={<ResetPassword />} />
                 
-                <Route element={<PrivateRoute  />}>
-                  <Route path="/dashboard" element={<Dashboard />}/>
-                  <Route path="/attendance" element={<Attendance/>}/>
-                  <Route path="/allattendance" element={<Adminattendance/>}/>
-                  <Route path="/map/:lat/:log" element={<Maps/>}/>
-                  <Route path="/calendar" element={<MyCalendar/>}/>
-                  <Route path="/schedule" element={<Schedule/>}/>
-                  <Route path="/assigntask" element={<AssignTask/>}/>
-                  <Route path="/edittask/:id" element={<EditTask/>}/>
-                  <Route path="/verify/:id" element={<AdminVerifyTask/>}/>
+                <Route element={<PrivateRoute allowedRoles={["admin", "member"]} />}>
+                  <Route path="/dashboard" element={<Dashboard allowedRoles={["admin"]}/>}/>
+                  <Route path="/attendance" element={<Attendance allowedRoles={["member"]}/>}/>
+                  <Route path="/allattendance" element={<Adminattendance allowedRoles={["admin"]}/>}/>
+                  <Route path="/map/:lat/:log" element={<Maps allowedRoles={["admin"]}/>}/>
+                  {/* <Route path="/calendar" element={<MyCalendar/>}/> */}
+                  <Route path="/schedule" element={<Schedule allowedRoles={["member"]}/>}/>
+                  <Route path="/assigntask" element={<AssignTask allowedRoles={["admin"]}/>}/>
+                  <Route path="/edittask/:id" element={<EditTask allowedRoles={["admin"]}/>}/>
+                  <Route path="/verify/:id" element={<AdminVerifyTask allowedRoles={["admin"]}/>}/>
                   {/* <Route path="/voicenote" element={<VoiceNote/>}/> */}
-                  <Route path="/voicenote" element={<Recorder/>}/>
+                  <Route path="/voicenote" element={<Recorder allowedRoles={["admin"]}/>}/>
                   <Route path="/audio" element={<MyAudio/>}/>
                   {/* <Route path="/audio" element={<Recorder/>}/> */}
-                  <Route path="/needbasedtask" element={<NeedbasedTask/>}/>
-                  <Route path="/schedulehistory" element={<ScheduleHistory/>}/>
-                  <Route path="/veiw/:id" element={<ScheduleVeiw/>}/>
-                  <Route path="/taskprogress" element={<TaskProgress/>}/>
-                  <Route path="/mytasks" element={<MyTasks/>}/> 
-                  <Route path="/tasks" element={<AddTask/>}/> 
-                  <Route path="/task/:id" element={<EditMyTasks/>}/> 
-                  <Route path="/verifytask" element={<Adminverify/>}/> 
-                  <Route path="/verifiedtasks" element={<AdminVerificationHistory/>}/>
-                  <Route path="/profile" element={<Profile/>} />
-                  <Route path="/members" element={<Members/>} />
-                  <Route path="/healthform" element={<HealthForm/>} /> 
-                  <Route path="/mystatus" element={<HealthStatus/>} /> 
-                  <Route path="/allhealthstatus" element={<AdminhealthStatus/>} /> 
-                  <Route path="/healthfile" element={<AdminHealthfiles/>} /> 
+                  <Route path="/needbasedtask" element={<NeedbasedTask allowedRoles={["admin"]}/>}/>
+                  <Route path="/schedulehistory" element={<ScheduleHistory allowedRoles={["admin"]}/>}/>
+                  <Route path="/veiw/:id" element={<ScheduleVeiw allowedRoles={["admin", "member"]}/>}/>
+                  <Route path="/taskprogress" element={<TaskProgress allowedRoles={["admin"]}/>}/>
+                  <Route path="/mytasks" element={<MyTasks allowedRoles={["member"]}/>}/> 
+                  <Route path="/tasks" element={<AddTask allowedRoles={["member"]}/>}/> 
+                  <Route path="/task/:id" element={<EditMyTasks allowedRoles={["member"]}/>}/> 
+                  <Route path="/verifytask" element={<Adminverify allowedRoles={["admin"]}/>}/> 
+                  <Route path="/verifiedtasks" element={<AdminVerificationHistory allowedRoles={["admin"]}/>}/>
+                  <Route path="/profile" element={<Profile allowedRoles={["admin", "member"]}/>} />
+                  <Route path="/members" element={<Members allowedRoles={["admin"]}/>} />
+                  <Route path="/healthform" element={<HealthForm allowedRoles={["member"]}/>} /> 
+                  <Route path="/mystatus" element={<HealthStatus allowedRoles={["member"]}/>} /> 
+                  <Route path="/allhealthstatus" element={<AdminhealthStatus allowedRoles={["admin"]}/>} /> 
+                  <Route path="/healthfile" element={<AdminHealthfiles allowedRoles={["admin"]} />} /> 
                   <Route path="/unauthorized" element={<Unauthorized/>} />  
               </Route>
               

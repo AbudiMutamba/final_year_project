@@ -139,7 +139,7 @@ export default function Recorder() {
                 initialValues={{
                     workwith: "",
                     workon: "",
-                    deadline: "",
+                    date: "",
                 }}
                 onSubmit={ handleSubmit}
               >
@@ -168,7 +168,12 @@ export default function Recorder() {
                   </div>
                   <div className="py-2">
                       <label>Deadline</label>
-                      <DatePicker placeholderText="Select Date" name="date" selected={values.date } onChange={(date) => setFieldValue("date",date)}  className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"/>
+                      <Field
+                      type="date"
+                      name="date"
+                      className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"
+                      />
+                      {/* <DatePicker placeholderText="Select Date" name="date" selected={values.date } onChange={(date) => setFieldValue("date",date)}  className="p-2 appearance-none leading-tight outline-0 bg-gray-300 border border-gray-300 w-full rounded-lg focus:border-orange-400 focus:bg-white focus:outline-none focus:shadow-outline"/> */}
                   </div>
                   <button type="submit" className="py-2 px-5 transition hover:-translate-y-1 hover:bg-orange-600 duration-300 mx-auto max-w-md rounded-full border bg-emerald-300">
                      Assign

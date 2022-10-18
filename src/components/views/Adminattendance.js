@@ -60,7 +60,7 @@ export default function Adminattendance() {
         },
     ]
   return (
-    <div className="container mx-auto px-10">
+    <div className="container mx-auto px-2">
         <h1 className='font-bold p-5'>ATTENDANCE</h1>
             < ToastContainer />
                 <div>

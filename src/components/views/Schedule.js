@@ -28,24 +28,13 @@ export default function Schedule () {
         navigate(from, { replace: true });
 
     }
+    const handleEdit = (value) => {
+        const from = location.state?.from?.pathname || `/veiw/${value}`;
+        navigate(from, { replace: true });
 
-    const handleAccept = async(value) => {
-        const { data, error } = await supabase
-        .from('tasks')
-        .delete()
-        .eq('id', value)
-        if (error){
-            toast.error(error.message, {
-            position: "top-center"
-        });
-        }else {
-            toast.success("Deleted", {
-            position: "top-center"
-        });
-        // setDel({...del, value})setRowData(
-             setRowData([...rowdata], value)
     }
-    }
+
+    
 
 
 
@@ -71,7 +60,7 @@ export default function Schedule () {
                 return(
                         <div>
                             <button onClick={() => handleVeiw(value)} className="text-black px-2 ">Veiw</button>
-                            <button onClick={() => handleAccept(value)} className="text-black" >Edit</button>
+                            <button onClick={() => handleEdit(value)} className="text-black" >Edit</button>
                         </div>
                 )
             }            
