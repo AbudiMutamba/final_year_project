@@ -63,33 +63,43 @@ export default function Members() {
                     validationSchema={loginSchema}
                     onSubmit={async (values, {setSubmitting, resetForm}) => {
 
-                        const { data, error } = await signUp(values);
-                        if (error) { 
-                        // setErrorMsg(error.message);
-                        toast.error(error.message, {
-                            position: "top-center"
-                        })
-                        // console.log(error)
-                        } else{
-                        // setUser(data.user);
-                        // navigate(from , { replace: true })
-                            toast.success("Success", {
-                            position: "top-center"
-                        });
-                        }
-                        resetForm();
+                        // const { data, error } = await signUp(values);
+                        // if (error) { 
+                        // // setErrorMsg(error.message);
+                        // toast.error(error.message, {
+                        //     position: "top-center"
+                        // })
+                        // // console.log(error)
+                        // } else{
+                        // // setUser(data.user);
+                        // console.log(data)
+                        // // navigate(from , { replace: true })
+                        //     toast.success("Success", {
+                        //     position: "top-center"
+                        // });
+                        // }
+                        // resetForm();
                         // const response = await fetch("/api/hello", {
                         //     method: "POST",
                         //     headers: {
                         //       "Content-Type": "application/json"
                         //     },
+                        //     credentials: "same-origin",
                         //     body: JSON.stringify({ 
                         //         email: values.email,
-                        //         password: values.password
+                        //         // password: values.password
                         //     })
                         // })
                         // console.log(response)
 
+                        const { data: user, error } = await fetch("/api/inviteUser", {
+                            method: "POST",
+                            headers: new Headers({ "Content-Type": "application/json" }),
+                            credentials: "same-origin",
+                            body: JSON.stringify({ email: values.email}),
+                          });
+                          console.log(user)
+                          console.log(error)
                        
                     }}
             >
@@ -113,7 +123,7 @@ export default function Members() {
                             <p className="text-red-500 text-xs italic">{errors.email}</p>
                             )}
                         </div>
-                        <div className="mb-6">
+                        {/* <div className="mb-6">
                             <label
                             className="block text-sm font-bold mb-2"
                             htmlFor="password"
@@ -132,7 +142,7 @@ export default function Members() {
                                 {errors.password}
                             </p>
                             )}
-                        </div>
+                        </div> */}
                         <button
                         className="px-4 py-1 transition bg-emerald-300 hover:-translate-y-1 hover:bg-orange-600 duration-300 w-full rounded-full border"
                         type="submit"

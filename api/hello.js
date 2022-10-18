@@ -7,22 +7,22 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 export default async function ( req, res ) {
     try {
-        const { email, password } = req.body
+        const { email } = req.body
 
         if ( !email ) {
             const response = { "Status":"Failure","Details": "Email address not provided"}
             return res.status(400).json(response)
         }
 
-        if ( !password ) {
-            const response = { "Status": "Failure", "Details": "Password not provided"}
-            return res.status(400).json(response)
-        }
+        // if ( !password ) {
+        //     const response = { "Status": "Failure", "Details": "Password not provided"}
+        //     return res.status(400).json(response)
+        // }
 
-        const { data: user, error } = await supabase.auth.api.createUser({
+        const { data: user, error } = await supabase.auth.api.inviteUserByEmail({
             email,
-            password,
-            password_confirm: true
+            // password,
+            // password_confirm: true
         })
 
         if ( error ) throw error
