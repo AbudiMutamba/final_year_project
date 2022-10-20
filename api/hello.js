@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL
@@ -27,7 +27,7 @@ const handler = async ( req, res ) => {
         const { data: user, error } = await supabase.auth.api.createUser({
             email,
             password,
-            password_confirm: true
+            email_confirm: true
         })
 
         if ( error ) throw error
