@@ -6,19 +6,18 @@ import { supabase } from "../helpers/supabase";
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from "../auth/AuthContext";
-import { useLocation, useNavigate, Navigate, Link } from "react-router-dom";
-import axios from 'axios';
+
 
 
 export default function Members() {
     const [rowdata, setRowData] = useState([]);
-    const { user, setUser, signIn, signUp} = useAuth() 
-    const navigate = useNavigate();
+    const {signUp} = useAuth() 
 	useEffect( () => {
         let getUser = async () => {
-            let { data, error } = await supabase.from('profiles').select('username, email, roles, telephone, address').eq('roles', 'member')
+            let { data, error } = await supabase.from('profiles').select('id, username, email, roles, telephone').eq('roles', 'member')
             // console.log("data is", data)
              if(error) throw error
+            // console.log(error)
              setRowData(data)
         }
         getUser()
@@ -68,48 +67,23 @@ export default function Members() {
                             validationSchema={loginSchema}
                             onSubmit={async (values, {setSubmitting, resetForm}) => {
 
-                                // const { data, error } = await signUp(values);
-                                // if (error) { 
-                                // // setErrorMsg(error.message);
-                                // toast.error(error.message, {
-                                //     position: "top-center"
-                                // })
-                                // // console.log(error)
-                                // } else{
-                                // // setUser(data.user);
-                                // console.log(data)
-                                // // navigate(from , { replace: true })
-                                //     toast.success("Success", {
-                                //     position: "top-center"
-                                // });
-                                // }
-                                // resetForm();
-                                // const response = await fetch("/api/hello", {
-                                //     method: "POST",
-                                //     headers: {
-                                //       "Content-Type": "application/json"
-                                //     },
-                                //     credentials: "same-origin",
-                                //     body: JSON.stringify({ 
-                                //         email: values.email,
-                                //         password: values.password
-                                //     })
-                                // })
-                                // console.log(response)
-
-                                // const { data: user, error } = await fetch("/api/inviteUser", {
-                                //     method: "POST",
-                                //     headers: new Headers({ "Content-Type": "application/json" }),
-                                //     credentials: "same-origin",
-                                //     body: JSON.stringify({ email: values.email}),
-                                // });
-                                await axios.post("/api/hello",{
-                                    username: values.username,
-                                    email: values.email,
-                                    password: values.password
-                                }).then(res => console.log(res))
-                                .catch(error => console.log(error))
-                            
+                                const { data, error } = await signUp(values)
+                                .then(async (res) => {
+                                    // console.log(res.data.user.id)
+                                    const response= await supabase.from("profiles")
+                                    .update({
+                                        username: values.username,
+                                        roles:values.roles,
+                                        email: values.email
+                                    })
+                                    .eq("id", res.data.user.id)
+                                    if(res.error){
+                                        toast.error(error.message, {
+                                            position: "top-center"
+                                        })
+                                    }
+                                })
+                                resetForm();
                             }}
                     >
                         {({ errors, touched, resetForm}) => (

@@ -29,7 +29,6 @@ const PrivateRoute = ({ allowedRoles }) => {
     // Getting information that is required in all components.
     getProfile(user)
       .then((data) => {
-        
         if (data) {
           const { role } = data;
           setRole(role);
@@ -40,7 +39,7 @@ const PrivateRoute = ({ allowedRoles }) => {
       .then(() => setLoading(false))
       .catch((error) => console.log(error));
   }, [user?.session]);
-  
+  // console.log(profile)
   return user?.role === "authenticated"  ? (
       <div className={`${darkMode ? "dark" : ""}`} >
         <div

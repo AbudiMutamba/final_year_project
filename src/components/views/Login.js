@@ -41,7 +41,6 @@ export default function Login() {
             const { data: { user }, error } = await signIn(values);
             if (error) { 
               setErrorMsg(error.message);
-
               // console.log(error)
             } else{
               const { data, error } = await supabase.from('profiles').select().eq('id', user.id).single()
@@ -50,10 +49,10 @@ export default function Login() {
                 throw error
               } else {
                 // console.log(data)
-                if( data.roles === 'member') {
-                  navigate('/attendance' );
-                } else if (data.roles === 'admin') {
+                if( data.roles === 'admin') {
                   navigate('/dashboard')
+                } else if (data.roles === 'member') {
+                  navigate('/attendance' );
                 }
               }
             }

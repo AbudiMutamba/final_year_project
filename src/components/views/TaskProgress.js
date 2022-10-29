@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import Table from '../helpers/Table'
 import {supabase} from "../helpers/supabase";
 import moment from 'moment'
 import { useOutletContext } from 'react-router-dom'
@@ -19,18 +18,12 @@ export default function TaskProgress() {
   const [ users, setUsers] = useState([])
   const [ selectedUser, setSelectedUser ] = useState("")
   const [dataObj, setDataObj] = useState({
-    "Jan": 0,
-    "Feb": 0,
-    "Mar": 0,
-    "Apr": 0,
-    "May": 0,
-    "Jun": 0,
-    "Jul": 0, 
-    "Aug": 0,
-    "Sep": 0,
-    "Oct": 0,
-    "Nov": 0,
-    "Dec": 0
+    "Assigned Tasks":0,
+    "Finished Tasks": 0,
+    "Pending Tasks": 0,
+    "Rejected Tasks": 0,
+    "Past Deadline": 0,
+
   })
   
 
@@ -39,15 +32,45 @@ export default function TaskProgress() {
         let { data, error } = await supabase.from('tasks').select('*')
         if( error ) throw error
         // console.log("data: ", data)
-        data.forEach(
-          task => {
-            if( (new Date(task.deadline).getTime()) > Date.now() &&  selectedUser === (task.assigned_person || task.new_assigned_person)) {
+        const deadlines = data.filter(task => {
+            if( (new Date(task.deadline).getTime()) < Date.now() &&  selectedUser === (task.assigned_person || task.new_assigned_person) ) {
               // console.log(task)
-              dataObj[moment(task.created_at).format("MMM")] ++
+              return task
+              // dataObj[moment(task.created_at).format("MMM")] ++
+              // return moment(task.created_at)
             }
           }
-    
         )
+        dataObj["Past Deadline"] = deadlines.length
+
+        const assigned_tasks = data.filter( task => {
+          if(selectedUser === (task.assigned_person || task.new_assigned_person)){
+            return task
+          }
+        })
+        dataObj["Assigned Tasks"] = assigned_tasks.length
+
+        const finished_tasks = data.filter( task => {
+          if(task.status === "approved" && selectedUser === (task.assigned_person || task.new_assigned_person)){
+            return task
+          }
+        })
+        dataObj["Finished Tasks"] = finished_tasks.length
+
+        const Rejected_tasks = data.filter( task => {
+          if(task.status === "rejected" && selectedUser === (task.assigned_person || task.new_assigned_person)){
+            return task
+          }
+        })
+        dataObj["Rejected Tasks"] = Rejected_tasks.length
+
+        const Pending_tasks = data.filter( task => {
+          if(task.status === "pending" && selectedUser === (task.assigned_person || task.new_assigned_person)){
+            return task
+          }
+        })
+        dataObj["Pending Tasks"] = Pending_tasks.length
+        
 
         let { data: users, error: errors } = await supabase.from('profiles').select('username, id').eq('roles', 'member')
         if( errors ) throw errors
@@ -67,7 +90,7 @@ export default function TaskProgress() {
         labels: Object.keys(dataObj),
         datasets: [
           {
-            label: "Number of Tasks past the deadline",
+            label: "Task Progress",
             data: Object.values(dataObj),
             fill: false,
             backgroundColor: "rgba(75,192,192,0.2)",

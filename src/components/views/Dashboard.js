@@ -36,9 +36,9 @@ export default function Dashboard() {
       if(error) throw error
       data.forEach(
           task => {
-            if((new Date(task.deadline).getTime()) > Date.now()){
+            if((new Date(task.deadline).getTime()) < Date.now() && (task.status === "pending" || "rejected")){
               // console.log(task)
-              dataObj[moment(task.created_at).format("MMM")]++
+              dataObj[moment(task.created_at).format("MMM")] ++
             }
           }
         

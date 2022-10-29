@@ -31,7 +31,7 @@ import Schedule from '../views/Schedule';
 import EditTask from '../views/EditTask';
 import ScheduleVeiw from '../views/ScheduleVeiw';
 import EditMyTasks from '../views/EditMyTasks';
-import VoiceNote from '../helpers/VoiceNote';
+// import VoiceNote from '../helpers/VoiceNote';
 import MyAudio from '../views/MyAudio';
 import  Recorder from '../views/voicenotes/Recorder';
 import AdminVerifyTask from '../views/AdminVerifyTask';

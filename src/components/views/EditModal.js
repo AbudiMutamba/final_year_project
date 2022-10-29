@@ -13,7 +13,6 @@ function EditModal({ setEditPop }) {
   const [user, profile, setProfile ]= useOutletContext();
   const initialValues = {
     ...profile,
-    password: "",
   };
   // console.log(profile)
   // const { id } = supabase.auth.user();
@@ -29,12 +28,12 @@ function EditModal({ setEditPop }) {
       <h1 className="font-bold dark:text-white">Edit Details</h1>
       <Formik
         initialValues={initialValues}
-        validationSchema={Yup.object({
-          password: Yup.string()
-            .trim()
-            .min(8, "Password must be atleast 8 characters")
-            .required("Password is required"),
-        })}
+        // validationSchema={Yup.object({
+        //   password: Yup.string()
+        //     .trim()
+        //     .min(8, "Password must be atleast 8 characters")
+        //     .required("Password is required"),
+        // })}
         onSubmit={async (values) => {
           const {
             password,
@@ -52,46 +51,71 @@ function EditModal({ setEditPop }) {
           } = values;
 
           setLoading(true);
-          supabase
-            .rpc("check_password", { current_password: password})
-            .then(async ({ data }) => {
-              if (data) {
-                const { error, data } = await supabase
-                  .from("profiles")
-                  .update({
-                    username: name,
-                    dob: dob,
-                    gender: gender,
-                    email: email_address,
-                    phone_number: phone_number,
-                    id_passport_number: id_passport_number,
-                    present_address: present_address,
-                    marital_status: marital_status,
-                    fathers_address: fathers_address,
-                    fathers_name: fathers_name,
-                    avatar_url: avatar,
-                  })
-                  .eq("id", profile.id)
-                  .single();
+          // supabase
+          //   .rpc("check_password", { current_password: password})
+          //   .then(async ({ data }) => {
+          //     if (data) {
+          //       const { error, data } = await supabase
+          //         .from("profiles")
+          //         .update({
+          //           username: name,
+          //           dob: dob,
+          //           gender: gender,
+          //           email: email_address,
+          //           phone_number: phone_number,
+          //           id_passport_number: id_passport_number,
+          //           present_address: present_address,
+          //           marital_status: marital_status,
+          //           fathers_address: fathers_address,
+          //           fathers_name: fathers_name,
+          //           avatar_url: avatar,
+          //         })
+          //         .eq("id", profile.id)
+          //         .single();
                   
-                if (error) {
-                  setLoading(false);
-                  toast.error(`${error?.message}`, { position: "top-center" });
-                } else {
-                  // setLoading(false)
-                  // setEditPop(false)
-                  // setProfile({...profile, ...data})
-                }
-              } else {
-                setLoading(false);
-                toast.error(`Wrong password.`, { position: "top-center" });
-              }
-              setLoading(false);
-            })
-            .catch((error) => {
-              setLoading(false);
-              console.log(`Error ${error}`);
-            });
+          //       if (error) {
+          //         setLoading(false);
+          //         toast.error(`${error?.message}`, { position: "top-center" });
+          //       } else {
+          //         // setLoading(false)
+          //         // setEditPop(false)
+          //         // setProfile({...profile, ...data})
+          //       }
+          //     } else {
+          //       setLoading(false);
+          //       toast.error(`Wrong password.`, { position: "top-center" });
+          //     }
+          //     setLoading(false);
+          //   })
+          //   .catch((error) => {
+          //     setLoading(false);
+          //     console.log(`Error ${error}`);
+          //   });
+          const { error, data } = await supabase
+          .from("profiles")
+          .update({
+            username: name,
+            dob: dob,
+            gender: gender,
+            email: email_address,
+            telephone: phone_number,
+            id_passport_number: id_passport_number,
+            present_address: present_address,
+            marital_status: marital_status,
+            fathers_address: fathers_address,
+            fathers_name: fathers_name,
+            avatar_url: avatar,
+          })
+          .eq("id", profile.id)
+          .single();
+          if (error) {
+            setLoading(false);
+            toast.error(`${error?.message}`, { position: "top-center" });
+          } else {
+            setLoading(false)
+            setEditPop(false)
+            setProfile({...profile})
+          }
             
         }}
       >
@@ -258,14 +282,26 @@ function EditModal({ setEditPop }) {
                   </div>
                 </div>
               </div>
-
+              
+              <div className="mt-3">
+                <button
+                  // onClick={() => {
+                  //     console.log(values)
+                  //     console.log(errors)
+                  // }}
+                  type="submit"
+                  value="Save"
+                  className="py-2 px-5 transition hover:-translate-y-1 hover:bg-orange-600 duration-300 mx-auto max-w-md rounded-full border bg-emerald-300">
+                  Add
+              </button>
+              </div>
               {/* <div className='mb-3 flex flex-wrap gap-3'> */}
               {/* <div className='flex flex-col'> */}
               {/* <p>Enter password to save changes</p>
                   <div className='flex-grow flex'> */}
               {/* <input type="password" name="password" id="password" placeholder='Password' className='ring-1 ring-black rounded px-2 py-1 focus:ring focus:outline-none focus:ring-primary dark:bg-dark-bg-600' onChange={handleChange} onBlur={handleBlur} value={values?.password}/>
                     {touched?.password && errors?.password && <div className="error">{errors?.password}</div>} */}
-              <InputField
+              {/* <InputField
                 label="Enter password to save changes"
                 id="password"
                 reference="password"
@@ -274,12 +310,12 @@ function EditModal({ setEditPop }) {
                 handleBlur={handleBlur}
                 handleChange={handleChange}
                 type="password"
-              />
+              /> */}
               {/* </div> */}
               {/* </div> */}
               {/* </div> */}
 
-              <div className="flex justify-end gap-3 mt-3">
+              {/* <div className="flex justify-end gap-3 mt-3">
                 <input
                   className="bg-primary px-3 py-1 outline outline-1 outline-primary rounded-md text-white"
                   onChange={() => {
@@ -290,7 +326,7 @@ function EditModal({ setEditPop }) {
                   value="Save"
                   
                 />
-              </div>
+              </div> */}
             </Form>
           );
         }}

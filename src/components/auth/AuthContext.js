@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // get session data if there is an active session
-    const session = supabase.auth.session
+    const session = supabase.auth.getSession
     // console.log(session)
     setUser(session?.user ?? null);
     setLoading(false);
@@ -26,8 +26,9 @@ export const AuthProvider = ({ children }) => {
         setUser(session?.user ?? null)
         if ( session?.user ) {
           const { data, error } = await supabase.from('profiles').select().eq('id', session.user.id)
-          if (error) throw error
-          setRole(data.roles)
+          // if (error) throw error
+          // console.log(error)
+          setRole(data[0].roles)
         }
         setLoading(false);
       }
@@ -46,15 +47,13 @@ export const AuthProvider = ({ children }) => {
   } else {
     html.classList.remove("darkClass");
   }
-
+  
   // create signUp, signIn, signOut functions, toggleDarkMode
   const value = {
     signUp: (data) => supabase.auth.signUp(data),
     signIn: async (data) => await supabase.auth.signInWithPassword(data),
-    Invite: async (data) => await supabase.auth.inviteUserByEmail(data.email),
-    magicLink: async (data) => await supabase.auth.signInWithOtp(data.email),
     resetPassword: (data) => supabase.auth.resetPasswordForEmail(data,{redirectTo: "http://localhost:3000/password_reset"}),
-    updatePassword: (data) => supabase.auth.updateUser(data),
+    updatePassword: (data) => supabase.auth.update(data),
     signOut: () => supabase.auth.signOut(),
     toggleDarkMode: () => {
       localStorage.setItem("darkMode", !darkMode);
@@ -69,7 +68,7 @@ export const AuthProvider = ({ children }) => {
     profile
   };
 
-  // console.log(user)
+  // console.log(role)
 
   // use a provider to pass down the value
   return (

@@ -24,7 +24,7 @@ const handler = async ( req, res ) => {
             return res.status(400).json(response)
         }
 
-        const { data: user, error } = await supabase.auth.api.createUser({
+        const { data: user, error } = await supabase.auth.api.signup({
             email,
             password,
             email_confirm: true
